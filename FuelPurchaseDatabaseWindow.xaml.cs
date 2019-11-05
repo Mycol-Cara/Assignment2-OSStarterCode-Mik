@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,28 +13,25 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using MySql.Data.MySqlClient;
-using System.Data;
 
 namespace CarRentalSystem
 {
     /// <summary>
-    /// Interaction logic for DatabaseWindow.xaml
+    /// Interaction logic for FuelPurchaseDatabaseWindow.xaml
     /// </summary>
-    public partial class DatabaseWindow : Window
+    public partial class FuelPurchaseDatabaseWindow : Window
     {
-        public DatabaseWindow()
+        public FuelPurchaseDatabaseWindow()
         {
             InitializeComponent();
             BindData();
         }
-
         public void BindData()
         {
             String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
             MySqlConnection con = new MySqlConnection(conStr);
             con.Open();
-            MySqlCommand cmd = new MySqlCommand("select * from vehicletable",con);
+            MySqlCommand cmd = new MySqlCommand("select * from fuelpurchasestable", con);
             MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             adp.Fill(dt);
@@ -40,7 +39,8 @@ namespace CarRentalSystem
             dataGrid.ItemsSource = dt.DefaultView;
             cmd.Dispose();
             con.Close();
-            
+
+
         }
     }
 }

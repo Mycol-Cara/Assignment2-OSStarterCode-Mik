@@ -57,13 +57,34 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="FuelPurchase.cs" />
+    <Compile Include="FuelPurchaseDatabaseWindow.xaml.cs">
+      <DependentUpon>FuelPurchaseDatabaseWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="JourneyDatabseWindow.xaml.cs">
+      <DependentUpon>JourneyDatabseWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LauncherWindow.xaml.cs">
       <DependentUpon>LauncherWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Service.cs" />
+    <Compile Include="ServiceDatabaseWindow.xaml.cs">
+      <DependentUpon>ServiceDatabaseWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vehicle.cs" />
     <Compile Include="VehicleStarter.cs" />
-    <Page Include="DatabaseWindow.xaml">
+    <Page Include="FuelPurchaseDatabaseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="JourneyDatabseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ServiceDatabaseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VehicleDatabaseWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -71,22 +92,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DatabaseWindow.xaml.cs">
-      <DependentUpon>DatabaseWindow.xaml</DependentUpon>
+    <Compile Include="VehicleDatabaseWindow.xaml.cs">
+      <DependentUpon>VehicleDatabaseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Journey.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

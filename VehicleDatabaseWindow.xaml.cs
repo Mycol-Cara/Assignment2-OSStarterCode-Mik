@@ -32,7 +32,8 @@ namespace CarRentalSystem
 
         public void BindData()
         {
-            String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
+            //String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
+            String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = testdata; password=Password1;";
 
             try
             { 
@@ -62,7 +63,8 @@ namespace CarRentalSystem
                 {
                     MySqlCommand cmd = new MySqlCommand();
                     cmd.Connection = con;
-                    cmd.CommandText = "INSERT INTO `vehicletable`(`Field`,`Field Name`,`Type`,`Size`,`Primary Key`,`Foreign Key`,`Null`,`Zero Fill`,`Auto Increment`,`Default`,`Unsigned`) VALUES((1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11))";
+                    //cmd.CommandText = "INSERT INTO `vehicletable`(`Field`,`Field Name`,`Type`,`Size`,`Primary Key`,`Foreign Key`,`Null`,`Zero Fill`,`Auto Increment`,`Default`,`Unsigned`) VALUES((1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11))";
+                    cmd.CommandText = "INSERT INTO `vehicleseed`(`ID`,`NAME`,`MODEL`,`YEAR`,`REGO`,`CAPACITY`,`INITIALS`) VALUES((1),(2),(3),(4),(5),(6),(7))";
                     cmd.ExecuteNonQuery();
                 } catch(MySqlException mse)
                 {
@@ -86,7 +88,8 @@ namespace CarRentalSystem
         {
             if (con != null)
             {
-                MySqlCommand cmd = new MySqlCommand("select * from vehicletable", con);
+                //MySqlCommand cmd = new MySqlCommand("select * from vehicletable", con);
+                MySqlCommand cmd = new MySqlCommand("select * from vehicleseed", con);
                 MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
                 adp.Fill(dt);
                 cmd.Dispose(); adp.Dispose();

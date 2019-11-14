@@ -94,5 +94,11 @@ namespace CarRentalSystem
                 cmd.Dispose(); adp.Dispose();
             }
         }
+
+        private void AddServoBtn_Click(object sender, RoutedEventArgs e)
+        {
+            AddServiceWindow asw = new AddServiceWindow();
+            asw.ShowDialog();
+        }
     }
 }

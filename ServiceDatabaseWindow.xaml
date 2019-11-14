@@ -15,6 +15,7 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="Service Records" FontSize="22" Foreground="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <DataGrid x:Name="dataGrid" Grid.Row="1" Margin="10" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True"></DataGrid>
+        <Button x:Name="AddServoBtn" Content="Add Service" HorizontalAlignment="Left" Height="36" Margin="558,291,0,-36" Grid.Row="1" VerticalAlignment="Top" Width="124" Click="AddServoBtn_Click"/>
 
 
     </Grid>

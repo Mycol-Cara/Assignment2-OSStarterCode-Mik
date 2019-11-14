@@ -1,0 +1,28 @@
+﻿<Window x:Class="CarRentalSystem.AddVehiclesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarRentalSystem"
+        mc:Ignorable="d"
+        Title="AddVehiclesWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="ConfirmBtn" Content="Confirm" HorizontalAlignment="Left" Margin="579,345,0,0" VerticalAlignment="Top" Width="133" Height="37"/>
+        <TextBox x:Name="VehicleIDtxt" HorizontalAlignment="Left" Height="33" Margin="167,83,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
+        <TextBox x:Name="Maketxt" HorizontalAlignment="Left" Height="33" Margin="167,146,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
+        <TextBox x:Name="Modeltxt" HorizontalAlignment="Left" Height="33" Margin="167,204,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
+        <TextBox x:Name="Yeartxt" HorizontalAlignment="Left" Height="33" Margin="167,261,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
+        <TextBox x:Name="Regotxt" HorizontalAlignment="Left" Height="33" Margin="556,83,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
+        <TextBox x:Name="Fueltxt" HorizontalAlignment="Left" Height="33" Margin="556,146,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
+        <TextBox x:Name="Tanktxt" HorizontalAlignment="Left" Height="33" Margin="556,204,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
+        <TextBox x:Name="Initialtxt" HorizontalAlignment="Left" Height="33" Margin="556,261,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
+        <Label x:Name="VehicleIDLbl" Content="Vehicle ID" HorizontalAlignment="Left" Margin="38,83,0,0" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="MakeLbl" Content="Make" HorizontalAlignment="Left" Margin="38,146,0,0" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="ModelLbl" Content="Model" HorizontalAlignment="Left" Margin="38,211,0,0" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="YearLbl" Content="Year" HorizontalAlignment="Left" Margin="38,268,0,0" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="RegoLbl" Content="&#xD;&#xA;Rego#" HorizontalAlignment="Left" Margin="434,67,0,0" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="FuelTypeLbl" Content="Fuel Type" HorizontalAlignment="Left" Margin="434,146,0,0" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="TankLbl" Content="Tank Capacity" HorizontalAlignment="Left" Margin="434,209,0,0" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="InitialLbl" Content="Initials" HorizontalAlignment="Left" Margin="434,268,0,0" VerticalAlignment="Top" Width="81"/>
+    </Grid>
+</Window>

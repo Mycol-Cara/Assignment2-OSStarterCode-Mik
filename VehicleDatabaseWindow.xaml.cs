@@ -95,5 +95,11 @@ namespace CarRentalSystem
                 cmd.Dispose(); adp.Dispose();
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            AddVehiclesWindow avw = new AddVehiclesWindow();
+            avw.ShowDialog();
+        }
     }
 }

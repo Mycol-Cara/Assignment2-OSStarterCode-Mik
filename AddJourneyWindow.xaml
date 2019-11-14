@@ -1,0 +1,21 @@
+﻿<Window x:Class="CarRentalSystem.AddJourneyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarRentalSystem"
+        mc:Ignorable="d"
+        Title="AddJourneyWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="ConfirmBtn" Content="Confirm" HorizontalAlignment="Left" Margin="579,345,0,0" VerticalAlignment="Top" Width="133" Height="37" Click="ConfirmBtn_Click"/>
+        <TextBox x:Name="Idtxt" HorizontalAlignment="Left" Height="33" Margin="191,83,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
+        <TextBox x:Name="vehicleIdtxt" HorizontalAlignment="Left" Height="33" Margin="191,146,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
+        <TextBox x:Name="DTtxt" HorizontalAlignment="Left" Height="33" Margin="191,204,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
+        <TextBox x:Name="Journeytxt" HorizontalAlignment="Left" Height="33" Margin="191,261,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
+        <Label x:Name="IdLbl" Content=" ID" HorizontalAlignment="Left" Margin="38,83,0,0" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="vehicleIdLbl" Content="VehicleID" HorizontalAlignment="Left" Margin="38,146,0,0" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="DTlLbl" Content="Distance Travelled" HorizontalAlignment="Left" Margin="38,211,0,0" VerticalAlignment="Top" Width="112"/>
+        <Label x:Name="JourneyLbl" Content="Journey at" HorizontalAlignment="Left" Margin="38,268,0,0" VerticalAlignment="Top" Width="81"/>
+
+    </Grid>
+</Window>

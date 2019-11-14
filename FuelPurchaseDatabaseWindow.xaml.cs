@@ -42,5 +42,11 @@ namespace CarRentalSystem
 
 
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            AddFuelRecordsWindow arw = new AddFuelRecordsWindow();
+            arw.ShowDialog();
+        }
     }
 }

@@ -15,6 +15,7 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="Journey Records" FontSize="22" Foreground="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <DataGrid x:Name="dataGrid" Grid.Row="1" Margin="10" IsSynchronizedWithCurrentItem="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGenerateColumns="True"></DataGrid>
+        <Button Content="Add Journey" HorizontalAlignment="Left" Height="37" Margin="549,291,0,-41" Grid.Row="1" VerticalAlignment="Top" Width="133" Click="Button_Click"/>
 
 
 

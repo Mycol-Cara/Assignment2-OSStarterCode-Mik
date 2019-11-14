@@ -56,9 +56,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddJourneyWindow.xaml.cs">
+      <DependentUpon>AddJourneyWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddServiceWindow.xaml.cs">
+      <DependentUpon>AddServiceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddVehiclesWindow.xaml.cs">
+      <DependentUpon>AddVehiclesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FuelPurchase.cs" />
     <Compile Include="FuelPurchaseDatabaseWindow.xaml.cs">
       <DependentUpon>FuelPurchaseDatabaseWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddFuelRecordsWindow.xaml.cs">
+      <DependentUpon>AddFuelRecordsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="JourneyDatabseWindow.xaml.cs">
       <DependentUpon>JourneyDatabseWindow.xaml</DependentUpon>
@@ -66,17 +78,40 @@
     <Compile Include="LauncherWindow.xaml.cs">
       <DependentUpon>LauncherWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LoginForm.xaml.cs">
+      <DependentUpon>LoginForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Service.cs" />
     <Compile Include="ServiceDatabaseWindow.xaml.cs">
       <DependentUpon>ServiceDatabaseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vehicle.cs" />
     <Compile Include="VehicleStarter.cs" />
+    <Page Include="AddJourneyWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddServiceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddVehiclesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FuelPurchaseDatabaseWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AddFuelRecordsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="JourneyDatabseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoginForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

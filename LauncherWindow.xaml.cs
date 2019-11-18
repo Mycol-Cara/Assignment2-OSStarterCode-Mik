@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,18 +21,20 @@ namespace CarRentalSystem
     /// </summary>
     public partial class LauncherWindow : Window
     {
+        public List<Vehicle> vehicleData;
         public LauncherWindow()
         {
             InitializeComponent();
+            vehicleData = new List<Vehicle>(); //Need an option to load in the data
         }
 
 
         private void LaunchVehiclesBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();                // giving opacity to the main window
-            VehicleDatabaseWindow vdw = new VehicleDatabaseWindow();
-            vdw.ShowDialog();
 
+            VehicleLauncher vl = new VehicleLauncher(copyToArrayList(vehicleData));
+            vl.ShowDialog();
            
             afterEffects();
 
@@ -40,8 +43,8 @@ namespace CarRentalSystem
         private void LaunchJourniesBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();
-            JourneyDatabseWindow jdw = new JourneyDatabseWindow();
-            jdw.ShowDialog();
+            //JourneyDatabseWindow jdw = new JourneyDatabseWindow();
+            //jdw.ShowDialog();
 
             afterEffects();
         }
@@ -49,8 +52,8 @@ namespace CarRentalSystem
         private void LaunchFuelPurchaseBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();
-            FuelPurchaseDatabaseWindow fdw = new FuelPurchaseDatabaseWindow();
-            fdw.ShowDialog();
+            //FuelPurchaseDatabaseWindow fdw = new FuelPurchaseDatabaseWindow();
+            //fdw.ShowDialog();
 
             afterEffects();
 
@@ -59,8 +62,8 @@ namespace CarRentalSystem
         private void LaunchServicesBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();
-            ServiceDatabaseWindow sdw = new ServiceDatabaseWindow();
-            sdw.ShowDialog();
+            //ServiceDatabaseWindow sdw = new ServiceDatabaseWindow();
+            //sdw.ShowDialog();
 
             afterEffects();
 
@@ -76,6 +79,24 @@ namespace CarRentalSystem
             this.VisualOpacity = 1;
             this.VisualEffect = null;
           
+        }
+        private ArrayList copyArrayList(ArrayList AL)
+        { //This can use to copy the public variable of companies to avoid just pointing to it
+            ArrayList newAL = new ArrayList();
+            for (int i = 0; i < AL.Count; i++) //Clone all values to the new list!
+            {
+                newAL.Add((Vehicle)AL[i]);
+            }
+            return newAL;
+        }
+        private ArrayList copyToArrayList(List<Vehicle> L)
+        { //This can use to copy the public variable of companies to avoid just pointing to it
+            ArrayList newAL = new ArrayList();
+            for (int i = 0; i < L.Count; i++) //Clone all values to the new list!
+            {
+                newAL.Add((Vehicle) L[i]);
+            }
+            return newAL;
         }
     }
 }

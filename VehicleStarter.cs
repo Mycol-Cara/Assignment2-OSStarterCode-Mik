@@ -19,7 +19,7 @@ namespace CarRentalSystem
             */
         public static void main(String[] args)
         {
-            Vehicle v = new Vehicle("Ford", "T812", 2014);
+            Vehicle v = new Vehicle("Ford", "T812", 2014,  0,"AAA123",60); //Vehicle v = new Vehicle("Ford", "T812", 2014);
 
             // Vehicle sample distance
             v.addFuel(new Random().NextDouble() * 10, 1.3);

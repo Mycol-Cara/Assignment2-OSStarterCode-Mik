@@ -29,7 +29,7 @@ namespace CarRentalSystem
 
         public void BindData()
         {
-            String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
+            String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = testdata; password=Password1;";
             MySqlConnection con = new MySqlConnection(conStr);
             con.Open();
             MySqlCommand cmd = new MySqlCommand("select * from journeytable", con);

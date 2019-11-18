@@ -13,7 +13,7 @@ namespace CarRentalSystem
 
         private int lastServiceOdometerKm = 0;
         private int serviceCount = 0;
-        // TODO add lastServiceDate
+        private DateTime lastServiceDate; // DateTime(year, month, day);
 
         // return the last service
         public int getLastServiceOdometerKm()
@@ -26,16 +26,23 @@ namespace CarRentalSystem
          * saves it and increase serviceCount.
          * @param distance 
          */
-        public void recordService(int distance)
+        public void recordService(int distance, DateTime serviceDate)
         {
             this.lastServiceOdometerKm = distance;
             this.serviceCount++;
+            this.lastServiceDate = serviceDate; //Added last service date to this record!
         }
 
         // return how many services the car has had
         public int getServiceCount()
         {
             return this.serviceCount;
+        }
+
+        // return the last service date
+        public DateTime getLastServiceDate()
+        {
+            return this.lastServiceDate;
         }
 
         /**

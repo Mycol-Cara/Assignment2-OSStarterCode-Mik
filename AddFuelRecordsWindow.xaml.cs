@@ -17,11 +17,15 @@ namespace CarRentalSystem
     /// <summary>
     /// Interaction logic for FuelRecordsWindow.xaml
     /// </summary>
-    public partial class FuelRecordsWindow : Window
+    public partial class AddFuelRecordsWindow : Window
     {
-        public FuelRecordsWindow()
+        public AddFuelRecordsWindow()
         {
             InitializeComponent();
+        }
+        private void ConfirmBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

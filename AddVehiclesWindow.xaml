@@ -5,24 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarRentalSystem"
         mc:Ignorable="d"
-        Title="AddVehiclesWindow" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="ConfirmBtn" Content="Confirm" HorizontalAlignment="Left" Margin="579,345,0,0" VerticalAlignment="Top" Width="133" Height="37"/>
-        <TextBox x:Name="VehicleIDtxt" HorizontalAlignment="Left" Height="33" Margin="167,83,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
-        <TextBox x:Name="Maketxt" HorizontalAlignment="Left" Height="33" Margin="167,146,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
-        <TextBox x:Name="Modeltxt" HorizontalAlignment="Left" Height="33" Margin="167,204,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
-        <TextBox x:Name="Yeartxt" HorizontalAlignment="Left" Height="33" Margin="167,261,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
-        <TextBox x:Name="Regotxt" HorizontalAlignment="Left" Height="33" Margin="556,83,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
-        <TextBox x:Name="Fueltxt" HorizontalAlignment="Left" Height="33" Margin="556,146,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
-        <TextBox x:Name="Tanktxt" HorizontalAlignment="Left" Height="33" Margin="556,204,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
-        <TextBox x:Name="Initialtxt" HorizontalAlignment="Left" Height="33" Margin="556,261,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
-        <Label x:Name="VehicleIDLbl" Content="Vehicle ID" HorizontalAlignment="Left" Margin="38,83,0,0" VerticalAlignment="Top" Width="81"/>
-        <Label x:Name="MakeLbl" Content="Make" HorizontalAlignment="Left" Margin="38,146,0,0" VerticalAlignment="Top" Width="81"/>
-        <Label x:Name="ModelLbl" Content="Model" HorizontalAlignment="Left" Margin="38,211,0,0" VerticalAlignment="Top" Width="81"/>
-        <Label x:Name="YearLbl" Content="Year" HorizontalAlignment="Left" Margin="38,268,0,0" VerticalAlignment="Top" Width="81"/>
-        <Label x:Name="RegoLbl" Content="&#xD;&#xA;Rego#" HorizontalAlignment="Left" Margin="434,67,0,0" VerticalAlignment="Top" Width="81"/>
-        <Label x:Name="FuelTypeLbl" Content="Fuel Type" HorizontalAlignment="Left" Margin="434,146,0,0" VerticalAlignment="Top" Width="81"/>
-        <Label x:Name="TankLbl" Content="Tank Capacity" HorizontalAlignment="Left" Margin="434,209,0,0" VerticalAlignment="Top" Width="81"/>
-        <Label x:Name="InitialLbl" Content="Initials" HorizontalAlignment="Left" Margin="434,268,0,0" VerticalAlignment="Top" Width="81"/>
+        Title="Add Vehicle" Height="307" Width="431.69">
+    <Grid Background="#FFD5ECE9">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="243*"/>
+            <ColumnDefinition Width="178*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Manufacturer:" HorizontalAlignment="Left" Height="26" Margin="25,20,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="ManufacturerTxt" HorizontalAlignment="Left" Height="23" Margin="129,22,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272" Grid.ColumnSpan="2"/>
+
+        <Label Content="Model:" HorizontalAlignment="Left" Height="26" Margin="24,52,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="ModelTxt" HorizontalAlignment="Left" Height="23" Margin="129,52,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272" Grid.ColumnSpan="2"/>
+
+        <Label Content="Year:" HorizontalAlignment="Left" Height="26" Margin="24,82,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="MakeYearTxt" HorizontalAlignment="Left" Height="23" Margin="129,82,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272" Grid.ColumnSpan="2"/>
+
+        <Label Content="Odometer (Km):" HorizontalAlignment="Left" Height="26" Margin="24,112,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="OdometerReadingTxt" HorizontalAlignment="Left" Height="23" Margin="129,112,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272" Grid.ColumnSpan="2"/>
+
+        <Label Content="Registration:" HorizontalAlignment="Left" Height="26" Margin="24,142,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="RegistrationTxt" HorizontalAlignment="Left" Height="23" Margin="129,142,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272" Grid.ColumnSpan="2"/>
+
+        <Label Content="Tank Capacity (L):" HorizontalAlignment="Left" Height="26" Margin="24,172,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="TankCapacityTxt" HorizontalAlignment="Left" Height="23" Margin="129,172,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272" Grid.ColumnSpan="2"/>
+
+        <Button x:Name="SaveBtn" Click="SaveBtn_Click"  Content="Save" HorizontalAlignment="Left" Margin="22,234,0,0" VerticalAlignment="Top" Width="100" Background="#FF86F176"/>
+        <Button x:Name="CancelBtn" Click="CancelBtn_Click" Content="Cancel" HorizontalAlignment="Left" Margin="56,234,0,0" VerticalAlignment="Top" Width="100" Grid.Column="1" Background="#FFE2625C"/>
+
     </Grid>
 </Window>

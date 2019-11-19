@@ -25,12 +25,12 @@ namespace CarRentalSystem
     {
 
         //protected EditCompany editCompany;
-        //protected DeleteCompany deleteCompany;
 
         protected AddVehiclesWindow addVehiclesWin;
         protected ArrayList vehicles;
         public ArrayList displayedVehicles { get; set; }
 
+        private Boolean adminMode;
         public VehicleLauncher(ArrayList existingVehicles)
         {
             InitializeComponent();
@@ -44,9 +44,25 @@ namespace CarRentalSystem
 
             //Data context for displayed list of companies
             this.DataContext = this;
+
+            //Set up admin buttons to be non accesible to customer
+            setAdminMode(false);
         }
 
-
+        private void setAdminMode(Boolean mode)
+        {
+            adminMode = mode; //set admin mode
+            AddVehicleBtn.IsHitTestVisible = mode; //set admin button activity
+            VehicleHistoryBtn.IsHitTestVisible = mode;
+            EditVehicleBtn.IsHitTestVisible = mode;
+            DeleteVehicleBtn.IsHitTestVisible = mode;
+            double opac = 1.0;
+            if (!mode) { opac = 0.5; } //admin button opacities
+            EditVehicleBtn.Opacity = opac;
+            AddVehicleBtn.Opacity = opac;
+            VehicleHistoryBtn.Opacity = opac;
+            DeleteVehicleBtn.Opacity = opac;
+        }
 
         private void beforeEffects()
         {
@@ -74,66 +90,93 @@ namespace CarRentalSystem
         }
 
         private void EditVehicleBtn_Click(object sender, RoutedEventArgs e)
-        { }
-
-        /*
-        private void EditCompanyBtn_Click(object sender, RoutedEventArgs e)
-        {
+        { 
             beforeEffects();
             //Get indicies to edit
-            IList iL = DisplayLvw.SelectedItems; //selected items (companies)
+            IList iL = DisplayLvw.SelectedItems; //selected items (vehicles)
             int[] selectInd = new int[iL.Count]; //Selected indicies array
             for (int i = 0; i < iL.Count; i++)
             {
-                selectInd[i] = companies.IndexOf((Company)iL[i]); //Store all the indices for editing
+                selectInd[i] = vehicles.IndexOf((Vehicle)iL[i]); //Store all the indices for editing
             }
             //Run the edits
-            for (int i = 0; i < selectInd.Length; i++) //Loop through the edits (because we can select more than one company to edit!)
+            for (int i = 0; i < selectInd.Length; i++) //Loop through the edits (because we can select more than one vehicle to edit!)
             {
-                editCompany = new EditCompany((Company)companies[(selectInd[i])]); //Send company to from list to be edited
-                editCompany.ShowDialog();
+                EditVehiclesWindow editVehiclesWin = new EditVehiclesWindow((Vehicle)vehicles[(selectInd[i])]); //Send vehicle to from list to be edited
+                editVehiclesWin.ShowDialog();
                 //Check if saved or not
-                if (editCompany.getSaveState()) //If a company was saved!
+                if (editVehiclesWin.getSaveState() && editVehiclesWin.getValidity()) //If a vehicle was saved!
                 {
-                    Company c = editCompany.getCompany(); //Get the saved comopany
-                    companies[(selectInd[i])] = c; //Overide the company at the editted location!
-                    Console.WriteLine("Saved: " + c.getName());
+                    Vehicle V = editVehiclesWin.getVehicle(); //Get the saved vehicle
+                    vehicles[(selectInd[i])] = V; //Overide the vehicle at the editted location!
+                    Console.WriteLine("Vehicle Edited");
                 }
             }
 
             afterEffects();
         }
-        */
+        
 
         private void DeleteVehicleBtn_Click(object sender, RoutedEventArgs e)
-        { }
-            /*
-            private void DeleteCompanyBtn_Click(object sender, RoutedEventArgs e)
+        {
+            IList iL = DisplayLvw.SelectedItems; //selected items from list view (vehicles)
+            if (iL.Count > 0) //Only proceed if theere is selection
             {
                 beforeEffects();
 
-                IList iL = DisplayLvw.SelectedItems; //selected items from list view (companies)
                 int[] selectInd = new int[iL.Count]; //Selected indicies array
                 for (int i = 0; i < iL.Count; i++)
                 {
-                    selectInd[i] = companies.IndexOf((Company)iL[i]); //Store all the indices
+                    selectInd[i] = vehicles.IndexOf((Vehicle)iL[i]); //Store all the indices
                 }
 
-                deleteCompany = new DeleteCompany("Standard"); //Delete company verification using standard proceedure (message)
-                deleteCompany.ShowDialog();
+                DeleteVehiclesWindow deleteVehiclesWin = new DeleteVehiclesWindow("Standard"); //Delete  vehicle verification using standard proceedure (message)
+                deleteVehiclesWin.ShowDialog();
 
-                if (deleteCompany.deletionVerified()) //Check that the user said Yes to the delete action!
+                if (deleteVehiclesWin.deletionVerified()) //Check that the user said Yes to the delete action!
                 {
-                    //Removal of the selected companies
+                    //Removal of the selected vehicles
                     for (int j = selectInd.Length - 1; j >= 0; j = j - 1) //start at the end (Length-1) and count backwards
                     { //Loop through selected items
-                        companies.RemoveAt(selectInd[j]);
+                        vehicles.RemoveAt(selectInd[j]);
                     }
                 }
 
                 afterEffects();
             }
-            */
+        }
+
+        //TODO New Buttons!
+        private void ViewDetailsBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void RentBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AdminLoginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (!adminMode) //current inactive
+            {
+                //Open admin window
+                //TODO get username & password
+                //if username and password correct{
+                setAdminMode(!adminMode); //turn on if user and password correct
+                //}
+            } else //currently active
+            {
+                setAdminMode(!adminMode); //turn off, no need for password
+            }
+            
+        }
+
+        private void VehicleHistoryBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
 
         private void ReturnBtn_Click(object sender, RoutedEventArgs e)
@@ -152,28 +195,48 @@ namespace CarRentalSystem
         private void performFilterAndRefresh(String keyWord)
         {
             
-            displayedVehicles = copyArrayList(vehicles); //Initialise displayed companies (before filter)
+            displayedVehicles = copyArrayList(vehicles); //Initialise displayed vehicles (before filter)
             
-            /*
+            
             if (keyWord.Length > 0) //Only if there is a keyword try to filter!
             {
-                Company c; //Company var
+                Vehicle V; //Company var
                 int i = 0; //Index var
-                while (i < displayedCompanies.Count) //loop through companies to display
+                while (i < displayedVehicles.Count) //loop through companies to display
                 {
-                    c = (Company)displayedCompanies[i]; //get company
-                    if (match(keyWord, c.getName())) //evaluate if there is a match with keyword
+                    V = (Vehicle)displayedVehicles[i]; //get company
+                    if (match(keyWord, V.getManufacturer())) //evaluate if there is a match with keyword
+                    {
+                        i++; //iterate past the match, do nothing
+                    } 
+                    else if (match(keyWord, V.getModel()))
+                    {
+                        i++; //iterate past the match, do nothing
+                    }
+                    else if (match(keyWord, V.getMakeYear().ToString()))
+                    {
+                        i++; //iterate past the match, do nothing
+                    }
+                    else if (match(keyWord, V.getRegistrationNumber()))
+                    {
+                        i++; //iterate past the match, do nothing
+                    }
+                    else if (match(keyWord, V.getOdometerReading().ToString()))
+                    {
+                        i++; //iterate past the match, do nothing
+                    }
+                    else if (match(keyWord, V.getTankCapacity().ToString()))
                     {
                         i++; //iterate past the match, do nothing
                     }
                     else
                     {
-                        displayedCompanies.RemoveAt(i); //Remove the non match!
+                        displayedVehicles.RemoveAt(i); //Remove the non match!
                     }
                 }
             }
-            */
-            //Console.WriteLine(JsonConvert.SerializeObject(displayedCompanies)); //Check object in console
+            
+            //Console.WriteLine(JsonConvert.SerializeObject(displayedVehicles)); //Check object in console
 
             //Manually reset binding and refresh -works! (note XAML binding only seemed to work on window creation!)
             DisplayLvw.SetBinding(ListView.ItemsSourceProperty,
@@ -209,5 +272,7 @@ namespace CarRentalSystem
             }
             return newAL;
         }
+
+       
     }
 }

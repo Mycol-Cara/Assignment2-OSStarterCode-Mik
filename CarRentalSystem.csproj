@@ -65,6 +65,12 @@
     <Compile Include="AddVehiclesWindow.xaml.cs">
       <DependentUpon>AddVehiclesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DeleteVehiclesWindow.xaml.cs">
+      <DependentUpon>DeleteVehiclesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditVehiclesWindow.xaml.cs">
+      <DependentUpon>EditVehiclesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FuelPurchase.cs" />
     <Compile Include="FuelPurchaseDatabaseWindow.xaml.cs">
       <DependentUpon>FuelPurchaseDatabaseWindow.xaml</DependentUpon>
@@ -96,6 +102,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddVehiclesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DeleteVehiclesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditVehiclesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

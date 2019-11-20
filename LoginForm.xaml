@@ -5,13 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarRentalSystem"
         mc:Ignorable="d"
-        Title="Login" Height="450" Width="800">
+        Title="Admin Login" Height="189.858" Width="455.882">
     <Grid>
-        <StackPanel HorizontalAlignment="Left" Height="420" VerticalAlignment="Top" Width="792" Background="Black">
-            <StackPanel Height="100" Background="Orange"/>
-            <Label x:Name="userNamelbl" Content="Label" Margin="0,80,554,0" />
-            <Label x:Name="passwordlbl" Content="Label" Margin="0,100,554,0" />
-        </StackPanel>
+        <Label Content="Username:" HorizontalAlignment="Left" Height="26" Margin="24,22,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="UsernameTxt" Text="Admin1" HorizontalAlignment="Left" Height="23" Margin="129,22,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272"/>
+
+        <Label Content="Password:" HorizontalAlignment="Left" Height="26" Margin="24,52,0,0" VerticalAlignment="Top" Width="100"/>
+        <PasswordBox x:Name="PasswordTxt" HorizontalAlignment="Left" Height="23" Margin="129,52,0,0"  VerticalAlignment="Top" Width="272"/>
+
+        <Label x:Name="MessageTxt" Content="" HorizontalAlignment="Left" Height="26" Margin="24,78,0,0" VerticalAlignment="Top" Width="377"/>
+
+        <Button x:Name="LoginBtn" Click="LoginBtn_Click" Content="Login" HorizontalAlignment="Left" Margin="22,114,0,0" VerticalAlignment="Top" Width="100" Background="#FF86F176"/>
+        <Button x:Name="CancelBtn" Click="CancelBtn_Click" Content="Cancel" HorizontalAlignment="Left" Margin="301,114,0,0" VerticalAlignment="Top" Width="100" Background="#FFE2625C"/>
+
 
     </Grid>
 </Window>

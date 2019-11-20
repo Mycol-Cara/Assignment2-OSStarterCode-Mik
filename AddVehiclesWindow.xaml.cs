@@ -27,9 +27,7 @@ namespace CarRentalSystem
         public AddVehiclesWindow()
         {       
             InitializeComponent();
-            //String iconPath = System.AppDomain.CurrentDomain.BaseDirectory + "icon4.png";
             this.Title = "    New Vehicle";
-            //this.Icon = BitmapFrame.Create(new Uri(iconPath));
             this.V = new Vehicle("Ford", "T812", 2014, 0,"AAA123",60); //Default vehicle!
             saveState = false;           //when window constructed has not been saved yet
             validVehicle = true;

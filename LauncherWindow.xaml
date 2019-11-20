@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarRentalSystem"
         mc:Ignorable="d"
-        Title="Car Rental System" Height="200" Width="360" ResizeMode="NoResize">
+        Title="Car Rental System" Height="200" Width="336.472" ResizeMode="NoResize" Background="LightGoldenrodYellow">
     <Grid>
-        <Button x:Name="LaunchVehiclesBtn" Click="LaunchVehiclesBtn_Click" Content="Vehicles" Height="40" FontSize="14" HorizontalAlignment="Left" Margin="30,30,0,0" VerticalAlignment="Top" Width="125"/>
-        <Button x:Name="LaunchJourniesBtn" Click="LaunchJourniesBtn_Click" Content="Journies" Height="40" FontSize="14" HorizontalAlignment="Left" Margin="200,30,0,0" VerticalAlignment="Top" Width="125"/>
-        <Button x:Name="LaunchFuelPurchaseBtn" Click="LaunchFuelPurchaseBtn_Click" Content="Fuel Purchases" Height="40" FontSize="14" HorizontalAlignment="Left" Margin="30,100,0,0" VerticalAlignment="Top" Width="125"/>
-        <Button x:Name="LaunchServicesBtn" Click="LaunchServicesBtn_Click" Content="Services" Height="40" FontSize="14" HorizontalAlignment="Left" Margin="200,100,0,0" VerticalAlignment="Top" Width="125"/>
+        <Button x:Name="LaunchVehiclesBtn" Click="LaunchVehiclesBtn_Click" Content="View Vehicles" Height="55" FontSize="14" HorizontalAlignment="Left" Margin="186,30,0,0" VerticalAlignment="Top" Width="110" Background="Beige"/>
+        <Button x:Name="LoadDatabaseBtn" Click="LoadDatabaseBtn_Click" Content="Connect to Database" Height="55" FontSize="14" HorizontalAlignment="Left" Margin="30,30,0,0" VerticalAlignment="Top" Width="146" Background="LightBlue"/>
+        <Button x:Name="SaveDatabaseBtn" Click="SaveDatabaseBtn_Click" Content="Update Database" Height="40" FontSize="14" HorizontalAlignment="Left" Margin="147,100,0,0" VerticalAlignment="Top" Width="149" Background="LightGreen"/>
+        <Button x:Name="AdminLoginBtn" Click="AdminLoginBtn_Click" Content="Admin Tools" Height="40" FontSize="14" HorizontalAlignment="Left" Margin="30,100,0,0" VerticalAlignment="Top" Width="107" Background="WhiteSmoke"/>
     </Grid>
 </Window>

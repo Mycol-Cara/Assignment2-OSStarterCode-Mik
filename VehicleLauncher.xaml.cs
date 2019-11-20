@@ -23,20 +23,13 @@ namespace CarRentalSystem
     /// </summary>
     public partial class VehicleLauncher : Window
     {
-
-        //protected EditCompany editCompany;
-
-        protected AddVehiclesWindow addVehiclesWin;
         protected ArrayList vehicles;
         public ArrayList displayedVehicles { get; set; }
-
         private Boolean adminMode;
-        public VehicleLauncher(ArrayList existingVehicles)
+        public VehicleLauncher(ArrayList existingVehicles, Boolean adminMode)
         {
             InitializeComponent();
-            //String iconPath = System.AppDomain.CurrentDomain.BaseDirectory + "icon4.png";
             this.Title = "    Vehicle Launcher";
-            //this.Icon = BitmapFrame.Create(new Uri(iconPath));
 
             //Get the (a copy of) vehicle list 
             vehicles = existingVehicles;
@@ -46,7 +39,8 @@ namespace CarRentalSystem
             this.DataContext = this;
 
             //Set up admin buttons to be non accesible to customer
-            setAdminMode(false);
+            this.adminMode = adminMode;
+            setAdminMode(adminMode);
         }
 
         private void setAdminMode(Boolean mode)
@@ -63,6 +57,7 @@ namespace CarRentalSystem
             VehicleHistoryBtn.Opacity = opac;
             DeleteVehicleBtn.Opacity = opac;
         }
+        public Boolean getAdminMode() { return this.adminMode; }
 
         private void beforeEffects()
         {
@@ -78,7 +73,7 @@ namespace CarRentalSystem
         private void AddVehicleBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();
-            addVehiclesWin = new AddVehiclesWindow();
+            AddVehiclesWindow addVehiclesWin = new AddVehiclesWindow();
             addVehiclesWin.ShowDialog();
             if (addVehiclesWin.getSaveState() && addVehiclesWin.getValidity()) //If a vehicle was saved!
             {
@@ -154,17 +149,29 @@ namespace CarRentalSystem
 
         private void RentBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            IList iL = DisplayLvw.SelectedItems; //selected items from list view (vehicles)
+            if (iL.Count > 0) //Only proceed if theere is selection
+            {
+                RentalWindow rentalWin = new RentalWindow(iL.Count);
+                rentalWin.ShowDialog();
+                //TODO advanced customer detail and contact with customer!
+            } else
+            {
+                MessageBox.Show("Please select a vehicle to rent!");
+            }
+            
         }
 
         private void AdminLoginBtn_Click(object sender, RoutedEventArgs e)
         {
             if (!adminMode) //current inactive
             {
-                //Open admin window
-                //TODO get username & password
-                //if username and password correct{
-                setAdminMode(!adminMode); //turn on if user and password correct
+                LoginForm form = new LoginForm();
+                form.ShowDialog();
+                if (form.getResult()) //Password worked
+                {
+                    setAdminMode(!adminMode); //turn on if user and password correct
+                }
                 //}
             } else //currently active
             {
@@ -258,9 +265,14 @@ namespace CarRentalSystem
             return parent.Contains(child); //Return contains boolean!
         }
 
-        public ArrayList getVehicleList()
+        public ArrayList getVehicleArrayList()
         {
             return copyArrayList(vehicles);
+        }
+
+        public List<Vehicle> getVehicleList()
+        {
+            return arrayListToList(vehicles);
         }
 
         private ArrayList copyArrayList(ArrayList AL)
@@ -273,6 +285,16 @@ namespace CarRentalSystem
             return newAL;
         }
 
-       
+        private List<Vehicle> arrayListToList(ArrayList AL)
+        {
+            List<Vehicle> newL = new List<Vehicle>();
+            for (int i = 0; i < AL.Count; i++) //Clone all values to the new list!
+            {
+                newL.Add((Vehicle)AL[i]);
+            }
+            return newL;
+        }
+
+
     }
 }

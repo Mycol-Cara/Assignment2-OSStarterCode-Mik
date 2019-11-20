@@ -26,9 +26,7 @@ namespace CarRentalSystem
         public EditVehiclesWindow(Vehicle V)
         {
             InitializeComponent();
-            //String iconPath = System.AppDomain.CurrentDomain.BaseDirectory + "icon4.png";
             this.Title = "    Edit Vehicle";
-            //this.Icon = BitmapFrame.Create(new Uri(iconPath));
             this.V = V;
             saveState = false;           //when window constructed has not been saved yet
             validVehicle = true;

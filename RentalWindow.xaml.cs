@@ -15,37 +15,26 @@ using System.Windows.Shapes;
 namespace CarRentalSystem
 {
     /// <summary>
-    /// Interaction logic for LoginForm.xaml
+    /// Interaction logic for RentalWindow.xaml
     /// </summary>
-    public partial class LoginForm : Window
+    public partial class RentalWindow : Window
     {
-        private Boolean result;
-        public LoginForm()
+        public RentalWindow(int numberOfVehicles)
         {
             InitializeComponent();
-            result = false;
+            this.Title = "Rental Request for " + numberOfVehicles + " Vehicle(s)";
         }
 
-        private void LoginBtn_Click(object sender, RoutedEventArgs e)
+        private void SendBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (UsernameTxt.Text == "Admin1" && PasswordTxt.Password == "Password1")
-            {
-                result = true;
-                this.Close();
-            } else
-            {
-                MessageTxt.Content = "Incorrect username or password";
-            }
+            //TODO verify customer details!!!
+            MessageBox.Show("We will contact you to confirm your request shortly!");
+            this.Close();
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        public Boolean getResult()
-        {
-            return this.result;
         }
     }
 }

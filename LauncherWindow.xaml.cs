@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace CarRentalSystem
 {
@@ -22,52 +24,78 @@ namespace CarRentalSystem
     public partial class LauncherWindow : Window
     {
         public List<Vehicle> vehicleData;
+
+        private Boolean adminMode;
         public LauncherWindow()
         {
             InitializeComponent();
             vehicleData = new List<Vehicle>(); //Need an option to load in the data
+            
+            LaunchVehiclesBtn.IsHitTestVisible = false; //can't use until database loaded
+            LaunchVehiclesBtn.Opacity = 0.5;
+            setAdminMode(false); //set usability for admin button (save database)
         }
+
 
 
         private void LaunchVehiclesBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();                // giving opacity to the main window
 
-            VehicleLauncher vl = new VehicleLauncher(copyToArrayList(vehicleData));
+            VehicleLauncher vl = new VehicleLauncher(copyToArrayList(vehicleData), adminMode);
             vl.ShowDialog();
-           
+            vehicleData = new List<Vehicle>();
+            vehicleData = vl.getVehicleList(); //update data
+
+            this.adminMode = vl.getAdminMode(); //get the admin mode, incase has disabled...
+            setAdminMode(this.adminMode);
+
             afterEffects();
 
         }
 
-        private void LaunchJourniesBtn_Click(object sender, RoutedEventArgs e)
+        private void LoadDatabaseBtn_Click(object sender, RoutedEventArgs e)
         {
-            beforeEffects();
-            //JourneyDatabseWindow jdw = new JourneyDatabseWindow();
-            //jdw.ShowDialog();
-
-            afterEffects();
+            //loading data 
+            String path = System.AppDomain.CurrentDomain.BaseDirectory + "saveFile.txt"; //Path
+            if (File.Exists(path))
+            {                     // reading only if exists
+                string readText = File.ReadAllText(path); //Reading the text from file
+                //Console.WriteLine(readText);
+                vehicleData = new List<Vehicle>();
+                vehicleData = JsonConvert.DeserializeObject<List<Vehicle>>(readText);
+            }
+            else { MessageBox.Show("Could not find saved file!"); }
+            LaunchVehiclesBtn.IsHitTestVisible = true; //now vehicle view is usable
+            LaunchVehiclesBtn.Opacity = 1.0;
         }
 
-        private void LaunchFuelPurchaseBtn_Click(object sender, RoutedEventArgs e)
+        private void SaveDatabaseBtn_Click(object sender, RoutedEventArgs e)
         {
-            beforeEffects();
-            //FuelPurchaseDatabaseWindow fdw = new FuelPurchaseDatabaseWindow();
-            //fdw.ShowDialog();
-
-            afterEffects();
-
+            //Convert companies to JSON using JSON .NET package
+            string jsonVehicles = JsonConvert.SerializeObject(vehicleData);
+            String path = System.AppDomain.CurrentDomain.BaseDirectory + "saveFile.txt"; //Path
+            File.WriteAllText(path, jsonVehicles); //Write text to file
+            MessageBox.Show("Database saved locally"); //Let the user know the file was saved...
         }
 
-        private void LaunchServicesBtn_Click(object sender, RoutedEventArgs e)
+        private void AdminLoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            beforeEffects();
-            //ServiceDatabaseWindow sdw = new ServiceDatabaseWindow();
-            //sdw.ShowDialog();
-
-            afterEffects();
-
+            if (!adminMode) //current inactive
+            {
+                LoginForm form = new LoginForm();
+                form.ShowDialog();
+                if (form.getResult()) //Password worked
+                {
+                    setAdminMode(!adminMode); //turn on if user and password correct
+                }
+            }
+            else //currently active
+            {
+                setAdminMode(!adminMode); //turn off, no need for password
+            }
         }
+
 
         private void beforeEffects()
         {
@@ -97,6 +125,17 @@ namespace CarRentalSystem
                 newAL.Add((Vehicle) L[i]);
             }
             return newAL;
+        }
+
+        private void setAdminMode(Boolean mode)
+        {
+            adminMode = mode; //set admin mode
+            SaveDatabaseBtn.IsHitTestVisible = mode; //set admin button activity
+
+            double opac = 1.0;
+            if (!mode) { opac = 0.5; } //admin button opacities
+            SaveDatabaseBtn.Opacity = opac;
+
         }
     }
 }

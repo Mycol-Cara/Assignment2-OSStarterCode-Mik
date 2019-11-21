@@ -24,12 +24,14 @@ namespace CarRentalSystem
     public partial class LauncherWindow : Window
     {
         public List<Vehicle> vehicleData;
+        public List<Service> serviceData;
 
         private Boolean adminMode;
         public LauncherWindow()
         {
             InitializeComponent();
-            vehicleData = new List<Vehicle>(); //Need an option to load in the data
+            vehicleData = new List<Vehicle>();
+            serviceData = new List<Service>();
             
             LaunchVehiclesBtn.IsHitTestVisible = false; //can't use until database loaded
             LaunchVehiclesBtn.Opacity = 0.5;
@@ -56,26 +58,61 @@ namespace CarRentalSystem
 
         private void LoadDatabaseBtn_Click(object sender, RoutedEventArgs e)
         {
-            //loading data 
-            String path = System.AppDomain.CurrentDomain.BaseDirectory + "saveFile.txt"; //Path
+            //Vehicles
+            string readText;
+            String path = System.AppDomain.CurrentDomain.BaseDirectory + "saveVehiclesFile.txt"; //Path
             if (File.Exists(path))
-            {                     // reading only if exists
-                string readText = File.ReadAllText(path); //Reading the text from file
-                //Console.WriteLine(readText);
+            {    // reading only if exists
+                readText = File.ReadAllText(path); //Reading the text from file
                 vehicleData = new List<Vehicle>();
                 vehicleData = JsonConvert.DeserializeObject<List<Vehicle>>(readText);
             }
-            else { MessageBox.Show("Could not find saved file!"); }
+            else { MessageBox.Show("Could not find saves"); }
+            //Services 
+            path = System.AppDomain.CurrentDomain.BaseDirectory + "saveServicesFile.txt"; //Path
+            if (File.Exists(path))
+            {
+                readText = File.ReadAllText(path); //Reading the text from file
+                serviceData = new List<Service>();
+                serviceData = JsonConvert.DeserializeObject<List<Service>>(readText);
+            }
+            //TODO Fuel Purchase
+
+            //TODO Journies
+
+            //initialiseData
+            initialiseData();
+            //Change button
             LaunchVehiclesBtn.IsHitTestVisible = true; //now vehicle view is usable
             LaunchVehiclesBtn.Opacity = 1.0;
         }
 
         private void SaveDatabaseBtn_Click(object sender, RoutedEventArgs e)
         {
-            //Convert companies to JSON using JSON .NET package
-            string jsonVehicles = JsonConvert.SerializeObject(vehicleData);
-            String path = System.AppDomain.CurrentDomain.BaseDirectory + "saveFile.txt"; //Path
+            //VEHICLES Convert companies to JSON using JSON .NET package
+            String jsonVehicles = JsonConvert.SerializeObject(vehicleData);
+            String path = System.AppDomain.CurrentDomain.BaseDirectory + "saveVehiclesFile.txt"; //Path
             File.WriteAllText(path, jsonVehicles); //Write text to file
+
+            //BUILD SERVICE DATA 
+            ArrayList services; serviceData.Clear();
+            for (int i = 0; i < vehicleData.Count; i++)
+            {
+                services = vehicleData[i].getServices(); //Services for a vehicle!
+                for (int j = 0; j < services.Count; j++) //Get each service and add to big list
+                {
+                    serviceData.Add((Service)services[j]);
+                }
+            }
+
+            //SERVICES Convert companies to JSON using JSON .NET package
+            String jsonServices = JsonConvert.SerializeObject(serviceData);
+            path = System.AppDomain.CurrentDomain.BaseDirectory + "saveServicesFile.txt"; //Path
+            File.WriteAllText(path, jsonServices); //Write text to file
+
+
+
+
             MessageBox.Show("Database saved locally"); //Let the user know the file was saved...
         }
 
@@ -96,6 +133,26 @@ namespace CarRentalSystem
             }
         }
 
+        private void initialiseData()
+        {
+            ArrayList servicesCar; //service data for a vehicle 
+            int id; Vehicle car;
+            for (int v = 0; v < vehicleData.Count; v++) //Vehicles
+            { 
+                car = vehicleData[v]; //get the car and it's services
+                id = car.getVehicleID();
+                servicesCar = car.getServices();
+                servicesCar.Clear(); //reset
+                for (int i = 0; i < serviceData.Count; i++) //Go through service data and remake the services as shouldnt be any yet
+                {
+                    if (serviceData[i].getVehicleID() == id) //Add to vehicle services as Id the same!
+                    {
+                        servicesCar.Add(serviceData[i]);
+                    }
+                }
+                vehicleData[v].setServices(servicesCar); //save back to vehicle data
+            }
+        }
 
         private void beforeEffects()
         {

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarRentalSystem"
         mc:Ignorable="d"
-        Title="EditVehiclesWindow" Height="307" Width="431.69">
+        Title="EditVehiclesWindow" Height="307" Width="431.69" ResizeMode="NoResize">
     <Grid Background="BlanchedAlmond">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="243*"/>

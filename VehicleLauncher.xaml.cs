@@ -73,7 +73,7 @@ namespace CarRentalSystem
         private void AddVehicleBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();
-            AddVehiclesWindow addVehiclesWin = new AddVehiclesWindow();
+            AddVehiclesWindow addVehiclesWin = new AddVehiclesWindow(generateID());
             addVehiclesWin.ShowDialog();
             if (addVehiclesWin.getSaveState() && addVehiclesWin.getValidity()) //If a vehicle was saved!
             {
@@ -182,7 +182,22 @@ namespace CarRentalSystem
 
         private void VehicleHistoryBtn_Click(object sender, RoutedEventArgs e)
         {
+            IList iL = DisplayLvw.SelectedItems; //selected items from list view (vehicles)
+            if (iL.Count == 1) //Only proceed if theere is selection
+            {
+                beforeEffects();
 
+                HistoryWindow hw = new HistoryWindow((Vehicle) iL[0]); //Open the history window!
+                hw.ShowDialog();
+ 
+                int ind = vehicles.IndexOf((Vehicle)iL[0]); //position of vehicle
+                vehicles[ind] = hw.getVehicle(); //get the vehicle/car incase it has been changed
+
+                afterEffects();
+            } else
+            {
+                MessageBox.Show("Select a single vehicle to see the history");
+            }
         }
 
 
@@ -263,6 +278,23 @@ namespace CarRentalSystem
             child = child.ToLower(); //lower case conversion
             parent = parent.ToLower();
             return parent.Contains(child); //Return contains boolean!
+        }
+
+        private int generateID()
+        {
+            int maxID = 1; //to overwrite to generate a new vehicle ID
+            int vID; //vehicle id
+
+            for (int i = 0; i < vehicles.Count; i++)
+            {
+                vID = ((Vehicle) vehicles[i]).getVehicleID();
+                if (vID >= maxID)
+                {
+                    maxID = vID + 1;
+                }
+            }
+
+            return maxID;
         }
 
         public ArrayList getVehicleArrayList()

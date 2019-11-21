@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,8 @@ namespace CarRentalSystem
         //private float tankCapacity; //in L
 
        //Change to allow it to bind in the grid view
+
+        public int vehicleID { get; set; }
         public String manufacturer { get; set; }
         public String model { get; set; }
         public int makeYear { get; set; }
@@ -25,6 +28,7 @@ namespace CarRentalSystem
         public float tankCapacity { get; set; } //in L
 
         private FuelPurchase fuelPurchase; //Fuel purchase history of the car
+        private ArrayList services; //services on vehicle
 
         /**
          * Class constructor specifying name of make (manufacturer), model and year
@@ -36,8 +40,9 @@ namespace CarRentalSystem
          * @param registrationNumber
          * @param tankCapacity
          */
-        public Vehicle(String manufacturer, String model, int makeYear, float odometerReading, String registrationNumber, float tankCapacity)
+        public Vehicle(int vehicleID, String manufacturer, String model, int makeYear, float odometerReading, String registrationNumber, float tankCapacity)
         {
+            this.vehicleID = vehicleID;
             this.manufacturer = manufacturer;
             this.model = model;
             this.makeYear = makeYear;
@@ -45,9 +50,11 @@ namespace CarRentalSystem
             this.registrationNumber = registrationNumber;
             this.tankCapacity = tankCapacity;
             fuelPurchase = new FuelPurchase();
+            services = new ArrayList();
         }
 
         //Getter methods
+        public int getVehicleID() { return this.vehicleID; }
         public String getManufacturer() { return this.manufacturer; }
         public String getModel() { return this.model; }
         public int getMakeYear() { return this.makeYear; }
@@ -55,12 +62,23 @@ namespace CarRentalSystem
         public float getOdometerReading() { return this.odometerReading; }
         public float getTankCapacity() { return this.tankCapacity; }
         //Setter methods
+        public void setVehicleID(int vehicleID) { this.vehicleID = vehicleID; }
         public void setManufacturer(String manufacturer) { this.manufacturer = manufacturer; }
         public void setModel(String model) { this.model = model; }
         public void setMakeYear(int makeYear) { this.makeYear = makeYear; }
         public void setRegistrationNumber(String registrationNumber) { this.registrationNumber = registrationNumber; }
         public void setOdometerReading(float odometerReading) { this.odometerReading = odometerReading; }
         public void setTankCapacity(float tankCapacity) { this.tankCapacity = tankCapacity; }
+
+
+        public ArrayList getServices()
+        {
+            return this.services;
+        }
+        public void setServices(ArrayList services)
+        {
+            this.services = services;
+        }
 
         /**
          * Prints details for {@link Vehicle}

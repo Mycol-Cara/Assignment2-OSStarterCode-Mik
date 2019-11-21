@@ -24,11 +24,11 @@ namespace CarRentalSystem
         protected Boolean saveState; //was it saved on exit
         protected Boolean validVehicle; //vehicle is valid
   
-        public AddVehiclesWindow()
+        public AddVehiclesWindow(int vehicleID)
         {       
             InitializeComponent();
             this.Title = "    New Vehicle";
-            this.V = new Vehicle("Ford", "T812", 2014, 0,"AAA123",60); //Default vehicle!
+            this.V = new Vehicle(vehicleID, "Ford", "T812", 2014, 0,"AAA123",60); //Default vehicle!
             saveState = false;           //when window constructed has not been saved yet
             validVehicle = true;
         }

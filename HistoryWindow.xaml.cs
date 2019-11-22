@@ -25,13 +25,20 @@ namespace CarRentalSystem
         protected Vehicle car;
         protected ArrayList services;
         public ArrayList displayedServices { get; set; }
+
+        protected ArrayList journies;
+
+        public ArrayList displayedJournies { get; set; }
+
         public HistoryWindow(Vehicle car)
         {
             InitializeComponent();
             this.car = car;
             this.Title = "History of Vehicle ID: " + car.vehicleID;
-            //Link the journeys
 
+            //Link the journeys
+            this.journies = car.getJournies();
+            this.displayedJournies = car.getJournies();
             // services
             this.services = car.getServices();
             this.displayedServices = car.getServices();
@@ -80,10 +87,35 @@ namespace CarRentalSystem
             afterEffects();
         }
 
+
+
+        private void AddJourniesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            beforeEffects();
+            AddJourneyWindow addJourneyWin = new AddJourneyWindow(car.getVehicleID());
+            addJourneyWin.ShowDialog();
+            if (addJourneyWin.getSaveState() && addJourneyWin.getValidity())
+            {
+                Journey J = addJourneyWin.getJourney(); // Get the new journey
+                journies.Add(J);   //  Add to the list
+                Console.WriteLine(" Journey Added");
+            }
+            afterEffects();
+        }
+
+
+
+
+        private void EditJourniesBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void performRefresh()
         {
 
-            displayedServices = copyArrayList(services); //Initialise displayed vehicles (before filter)
+            displayedServices = copyArrayList(services); //Initialise displayed services (before filter)
+            displayedJournies = copyArrayList(journies);  
 
             //Manually reset binding and refresh -works! (note XAML binding only seemed to work on window creation!)
             ServicesDisplayLvw.SetBinding(ListView.ItemsSourceProperty,
@@ -93,6 +125,14 @@ namespace CarRentalSystem
                     NotifyOnTargetUpdated = true
                 });
             ServicesDisplayLvw.Items.Refresh();
+
+            JourniesDisplayLvw.SetBinding(ListView.ItemsSourceProperty,
+               new Binding
+               {
+                   Path = new PropertyPath("displayedJournies"),
+                   NotifyOnTargetUpdated = true
+               });
+            JourniesDisplayLvw.Items.Refresh();
 
         }
 
@@ -123,6 +163,6 @@ namespace CarRentalSystem
             return newAL;
         }
 
-    
+      
     }
 }

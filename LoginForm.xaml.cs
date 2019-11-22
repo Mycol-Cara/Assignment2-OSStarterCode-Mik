@@ -57,7 +57,7 @@ namespace CarRentalSystem
             if (Keyboard.IsKeyDown(Key.Enter))
             {
                 LoginBtn_Click(this, new RoutedEventArgs());
-               
+                //Console.WriteLine("Enter Pressed"); 
             }
         }
     }

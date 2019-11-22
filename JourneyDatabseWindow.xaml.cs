@@ -45,8 +45,8 @@ namespace CarRentalSystem
         */
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            AddJourneyWindow ajw = new AddJourneyWindow();
-            ajw.ShowDialog();
+            //AddJourneyWindow ajw = new AddJourneyWindow();
+            //ajw.ShowDialog();
         }
     }
 }

@@ -12,6 +12,12 @@ namespace CarRentalSystem
         private double litres = 0;
         private double cost = 0;
 
+
+        public int amount { get; set; }
+        //public int cost { get; set; }
+        public DateTime created { get; set; }
+        public DateTime updated { get; set; }
+        public int vehicleID { get; set; }
         public double getFuelEconomy()
         {
             return fuelEconomy;

@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿//using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,11 +24,11 @@ namespace CarRentalSystem
         public JourneyDatabseWindow()
         {
             InitializeComponent();
-            BindData();
+            //BindData();
         }
 
-        public void BindData()
-        {
+        //public void BindData()
+        /*{
             String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = testdata; password=Password1;";
             MySqlConnection con = new MySqlConnection(conStr);
             con.Open();
@@ -42,7 +42,7 @@ namespace CarRentalSystem
             con.Close();
 
         }
-
+        */
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             AddJourneyWindow ajw = new AddJourneyWindow();

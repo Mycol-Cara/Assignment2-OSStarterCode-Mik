@@ -15,7 +15,7 @@
 
         <Label x:Name="MessageTxt" Content="" HorizontalAlignment="Left" Height="26" Margin="24,78,0,0" VerticalAlignment="Top" Width="377"/>
 
-        <Button x:Name="LoginBtn" Click="LoginBtn_Click" Content="Login" HorizontalAlignment="Left" Margin="22,114,0,0" VerticalAlignment="Top" Width="100" Background="#FF86F176"/>
+        <Button x:Name="LoginBtn" Click="LoginBtn_Click" Content="Login" HorizontalAlignment="Left" Margin="22,114,0,0" VerticalAlignment="Top" Width="100" Background="#FF86F176" IsDefault="True" KeyDown="LoginBtn_KeyDown"/>
         <Button x:Name="CancelBtn" Click="CancelBtn_Click" Content="Cancel" HorizontalAlignment="Left" Margin="301,114,0,0" VerticalAlignment="Top" Width="100" Background="#FFE2625C"/>
 
 

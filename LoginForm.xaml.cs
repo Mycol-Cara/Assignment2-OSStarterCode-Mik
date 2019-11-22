@@ -20,10 +20,13 @@ namespace CarRentalSystem
     public partial class LoginForm : Window
     {
         private Boolean result;
+       
+
         public LoginForm()
         {
             InitializeComponent();
             result = false;
+
         }
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
@@ -38,6 +41,7 @@ namespace CarRentalSystem
             }
         }
 
+      
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -46,6 +50,15 @@ namespace CarRentalSystem
         public Boolean getResult()
         {
             return this.result;
+        }
+
+        private void LoginBtn_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.Enter))
+            {
+                LoginBtn_Click(this, new RoutedEventArgs());
+               
+            }
         }
     }
 }

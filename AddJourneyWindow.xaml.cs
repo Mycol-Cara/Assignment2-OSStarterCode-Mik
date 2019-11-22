@@ -19,14 +19,20 @@ namespace CarRentalSystem
     /// </summary>
     public partial class AddJourneyWindow : Window
     {
-        public AddJourneyWindow()
+        private Journey J; //The journey to be created
+        protected Boolean saveState; //was it saved on exit
+
+        public AddJourneyWindow(int vehicleID)
         {
             InitializeComponent();
+            //this.J = new Journey(0, 0, DateTime.Now, vehicleID);
         }
 
-        private void ConfirmBtn_Click(object sender, RoutedEventArgs e)
+        private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-           
+            saveState = true; //set vehicle to saved before exit!
+            //UpdateService(); //Update the vehicle
+            this.Close(); //CLOSE WINDOW!
         }
     }
 }

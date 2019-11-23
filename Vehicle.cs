@@ -50,7 +50,7 @@ namespace CarRentalSystem
             this.odometerReading = odometerReading;
             this.registrationNumber = registrationNumber;
             this.tankCapacity = tankCapacity;
-            fuelPurchase = new FuelPurchase();
+            //fuelPurchase = new FuelPurchase();
             services = new ArrayList();
             journies = new ArrayList();
         }
@@ -107,9 +107,9 @@ namespace CarRentalSystem
         }
 
         // adds fuel to the car
-        public void addFuel(double litres, double price)
-        {
-            fuelPurchase.purchaseFuel(litres, price);
-        }
+        //public void addFuel(double litres, double price)
+        //{
+        //    fuelPurchase.purchaseFuel(litres, price);
+        //}
     }
 }

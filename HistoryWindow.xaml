@@ -15,8 +15,8 @@
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding distanceTravelled}" Header="Distance Travelled" Width="150"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding journeyAt}" Header="Journey At" Width="200"></GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding created}" Header="Year" Width="100"></GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding updated}" Header="Odometer (Km)" Width="160"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding created}" Header="Created" Width="100"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding updated}" Header="Updated" Width="160"></GridViewColumn>
                            
                         </GridView>
                     </ListView.View>

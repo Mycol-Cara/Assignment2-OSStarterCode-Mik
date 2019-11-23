@@ -108,6 +108,24 @@ namespace CarRentalSystem
 
         private void EditJourniesBtn_Click(object sender, RoutedEventArgs e)
         {
+            beforeEffects();
+            IList iL = JourniesDisplayLvw.SelectedItems;  //select items (vehicles)
+            if (iL.Count == 1)
+            {
+                EditJourneyWindow editJourneyWin = new EditJourneyWindow((Journey) iL[0]);
+                editJourneyWin.ShowDialog();
+                // Check if saved or not
+                if (editJourneyWin.getSaveState() && editJourneyWin.getValidity())   //if a journey was saved
+                    {
+                        Journey J = editJourneyWin.getJourney();                        // Get the saved journey
+                        journies[journies.IndexOf(iL[0])] = J;                          // Overide the service at the editted location
+                        Console.WriteLine(" Journey Edited");
+                    } else
+                {
+                     MessageBox.Show(" Select a single journey to  edit");
+                } 
+            }
+            afterEffects();
 
         }
 

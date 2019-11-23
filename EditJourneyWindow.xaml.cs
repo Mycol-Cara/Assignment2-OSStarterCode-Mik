@@ -15,27 +15,34 @@ using System.Windows.Shapes;
 namespace CarRentalSystem
 {
     /// <summary>
-    /// Interaction logic for AddJourneyWindow.xaml
+    /// Interaction logic for EditJourneyWindow.xaml
     /// </summary>
-    public partial class AddJourneyWindow : Window
+    public partial class EditJourneyWindow : Window
     {
         private Journey J; //The journey to be created
         protected Boolean saveState; //was it saved on exit
         protected Boolean validJourney;  //input check
-
-        public AddJourneyWindow(int vehicleID)
+        public EditJourneyWindow(Journey J)
         {
             InitializeComponent();
-            this.J = new Journey(0, DateTime.Now, DateTime.Now, DateTime.Now, vehicleID); //Random journey
+            this.J = J;
             saveState = false;           //when window constructed has not been saved yet
-            validJourney = true;
+            validJourney = true;        //TODO code for this
+            displayJourney();
+        }
+        private void displayJourney()  // set the vehicle data into the text field
+        {
+            DistanceTravelledTxt.Text = J.getdistanceTravelled().ToString();
+            JourneyDayTxt.Text = J.getjourneyAt().Day.ToString();
+            JourneyMonthTxt.Text = J.getjourneyAt().Month.ToString();
+            JourneyYearTxt.Text = J.getjourneyAt().Year.ToString();
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            saveState = true; //set vehicle to saved before exit!
-            UpdateJourney(); //Update the vehicle
-            this.Close(); //CLOSE WINDOW!
+            saveState = true;
+            UpdateJourney();
+            this.Close();
         }
 
         private void UpdateJourney()
@@ -50,20 +57,21 @@ namespace CarRentalSystem
                 month = System.Convert.ToInt32(JourneyMonthTxt.Text);
                 year = System.Convert.ToInt32(JourneyYearTxt.Text);
                 jdate = new DateTime(year, month, day);
-            } catch
+            }
+            catch
             {
                 Console.WriteLine("Error reading numeric values!");
                 validJourney = false; //Due to likely poor data entry
                 return;
             }
-            
-            J = new Journey(dt, jdate, DateTime.Now, DateTime.Now, J.getVehicleID()); //New journey with all of the information!
+
+            J = new Journey(dt, jdate, J.getDatecreated(), DateTime.Now, J.getVehicleID()); //New journey with all of the information!
             validJourney = true;
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();   
+            this.Close();
         }
         public Journey getJourney()
         {
@@ -78,7 +86,5 @@ namespace CarRentalSystem
         {
             return validJourney;
         }
-
-
     }
 }

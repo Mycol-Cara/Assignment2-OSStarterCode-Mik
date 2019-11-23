@@ -25,13 +25,15 @@ namespace CarRentalSystem
     {
         public List<Vehicle> vehicleData;
         public List<Service> serviceData;
+        public List<Journey> journeyData;
 
         private Boolean adminMode;
         public LauncherWindow()
         {
             InitializeComponent();
-            vehicleData = new List<Vehicle>();
+            vehicleData = new List<Vehicle>(); //declare/initialise the variables
             serviceData = new List<Service>();
+            journeyData = new List<Journey>();
             
             LaunchVehiclesBtn.IsHitTestVisible = false; //can't use until database loaded
             LaunchVehiclesBtn.Opacity = 0.5;
@@ -44,7 +46,7 @@ namespace CarRentalSystem
         {
             beforeEffects();                // giving opacity to the main window
 
-            VehicleLauncher vl = new VehicleLauncher(copyToArrayList(vehicleData), adminMode);
+            VehicleLauncher vl = new VehicleLauncher(copyToArrayList(vehicleData), adminMode); //create new vehicles windows with existing vehicle data/list andd same admin mode
             vl.ShowDialog();
             vehicleData = new List<Vehicle>();
             vehicleData = vl.getVehicleList(); //update data
@@ -68,6 +70,7 @@ namespace CarRentalSystem
                 vehicleData = JsonConvert.DeserializeObject<List<Vehicle>>(readText);
             }
             else { MessageBox.Show("Could not find saves"); }
+            
             //Services 
             path = System.AppDomain.CurrentDomain.BaseDirectory + "saveServicesFile.txt"; //Path
             if (File.Exists(path))
@@ -76,12 +79,24 @@ namespace CarRentalSystem
                 serviceData = new List<Service>();
                 serviceData = JsonConvert.DeserializeObject<List<Service>>(readText);
             }
+
+            //Journies
+            path = System.AppDomain.CurrentDomain.BaseDirectory + "saveJourniesFile.txt";   //Path
+            if (File.Exists(path))
+            {
+                readText = File.ReadAllText(path);   //Reading text from the file
+                journeyData = new List<Journey>();
+                journeyData = JsonConvert.DeserializeObject<List<Journey>>(readText);
+            }
+
             //TODO Fuel Purchase
 
-            //TODO Journies
+
 
             //initialiseData
-            initialiseData();
+            initialiseDataServices(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid
+            initialiseDataJourney(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid
+
             //Change button
             LaunchVehiclesBtn.IsHitTestVisible = true; //now vehicle view is usable
             LaunchVehiclesBtn.Opacity = 1.0;
@@ -89,7 +104,7 @@ namespace CarRentalSystem
 
         private void SaveDatabaseBtn_Click(object sender, RoutedEventArgs e)
         {
-            //VEHICLES Convert companies to JSON using JSON .NET package
+            //VEHICLES Convert  to JSON using JSON .NET package
             String jsonVehicles = JsonConvert.SerializeObject(vehicleData);
             String path = System.AppDomain.CurrentDomain.BaseDirectory + "saveVehiclesFile.txt"; //Path
             File.WriteAllText(path, jsonVehicles); //Write text to file
@@ -105,12 +120,25 @@ namespace CarRentalSystem
                 }
             }
 
-            //SERVICES Convert companies to JSON using JSON .NET package
+            //SERVICES Convert to JSON using JSON .NET package
             String jsonServices = JsonConvert.SerializeObject(serviceData);
             path = System.AppDomain.CurrentDomain.BaseDirectory + "saveServicesFile.txt"; //Path
             File.WriteAllText(path, jsonServices); //Write text to file
 
-
+            // Build Journey Data
+            ArrayList journies; journeyData.Clear();
+            for ( int i = 0; i< vehicleData.Count; i++)
+            {
+                journies = vehicleData[i].getJournies(); // Journies for a vehicle
+                for (int j = 0; j < journies.Count; j++) //Get each journey and add to big list
+                {
+                    journeyData.Add((Journey)journies[j]);
+                }
+            }
+            // Journiesconvert to JSON save file
+            String jsonJourney = JsonConvert.SerializeObject(journeyData);
+            path = System.AppDomain.CurrentDomain.BaseDirectory + "saveJourniesFile.txt";
+            File.WriteAllText(path, jsonJourney);
 
 
             MessageBox.Show("Database saved locally"); //Let the user know the file was saved...
@@ -133,7 +161,7 @@ namespace CarRentalSystem
             }
         }
 
-        private void initialiseData()
+        private void initialiseDataServices()
         {
             ArrayList servicesCar; //service data for a vehicle 
             int id; Vehicle car;
@@ -154,6 +182,27 @@ namespace CarRentalSystem
             }
         }
 
+        private void initialiseDataJourney()
+        {
+            ArrayList journiesCar; //journey data for a vehicle 
+            int id; Vehicle car;
+            for (int v = 0; v < vehicleData.Count; v++) //Vehicles
+            {
+                car = vehicleData[v]; //get the car and it's journies
+                id = car.getVehicleID();
+                journiesCar = car.getJournies();
+                journiesCar.Clear(); //reset
+                for (int i = 0; i < journeyData.Count; i++) //Go through journey data and remake the journies as shouldnt be any yet
+                {
+                    if (journeyData[i].getVehicleID() == id) //Add to vehicle journies as Id the same!
+                    {
+                        journiesCar.Add(journeyData[i]);
+                    }
+                }
+                vehicleData[v].setJournies(journiesCar); //save back to vehicle data
+            }
+        }
+
         private void beforeEffects()
         {
             this.VisualOpacity = 0.5;
@@ -165,15 +214,7 @@ namespace CarRentalSystem
             this.VisualEffect = null;
           
         }
-        private ArrayList copyArrayList(ArrayList AL)
-        { //This can use to copy the public variable of companies to avoid just pointing to it
-            ArrayList newAL = new ArrayList();
-            for (int i = 0; i < AL.Count; i++) //Clone all values to the new list!
-            {
-                newAL.Add((Vehicle)AL[i]);
-            }
-            return newAL;
-        }
+
         private ArrayList copyToArrayList(List<Vehicle> L)
         { //This can use to copy the public variable of companies to avoid just pointing to it
             ArrayList newAL = new ArrayList();

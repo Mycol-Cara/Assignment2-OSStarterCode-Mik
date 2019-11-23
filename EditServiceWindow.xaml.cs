@@ -28,7 +28,7 @@ namespace CarRentalSystem
             InitializeComponent();
             this.S = S;
             saveState = false;           //when window constructed has not been saved yet
-            validService = true; //TODO code for this
+            validService = true;        //TODO code for this
             displayService();
         }
 

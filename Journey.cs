@@ -18,9 +18,9 @@ namespace CarRentalSystem
         public Journey(int distanceTravelled , DateTime journeyAt , DateTime created, DateTime  updated, int vehicleID)
         {
             this.distanceTravelled = distanceTravelled; //Added distance travelled to this record!
-            this.journeyAt = DateTime.Now;  // Added Journey Date 
-            this.created = DateTime.Now; //When it was put in the datebase
-            this.updated = DateTime.Now;
+            this.journeyAt = journeyAt;  // Added Journey Date 
+            this.created = created; //When it was put in the datebase
+            this.updated = updated;
             this.vehicleID = vehicleID;
         }
 
@@ -28,25 +28,25 @@ namespace CarRentalSystem
         {
             return this.distanceTravelled;
         }
-        public int setdistanceTravelled()
+        public void setdistanceTravelled(int distanceTravelled)
         {
-            return this.distanceTravelled;
+            this.distanceTravelled = distanceTravelled;
         }
         public DateTime getjourneyAt()
         {
             return this.journeyAt;
         }
-        public DateTime setjourneyAt()
+        public void setjourneyAt(DateTime jdate)
         {
-            return this.journeyAt;
+            this.journeyAt = jdate;
         }
         public DateTime getDatecreated()
         {
             return this.created;
         }
-        public DateTime setDatecreated()
+        public void setDatecreated(DateTime dateCreated)
         {
-            return this.created;
+           this.created = dateCreated;
         }
         public DateTime getDateupdated()
         {

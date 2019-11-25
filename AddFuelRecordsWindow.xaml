@@ -5,18 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarRentalSystem"
         mc:Ignorable="d"
-        Title="AddFuelRecordsWindow" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="ConfirmBtn" Content="Confirm" HorizontalAlignment="Left" Margin="579,345,0,0" VerticalAlignment="Top" Width="133" Height="37" Click="ConfirmBtn_Click"/>
-        <TextBox x:Name="IDtxt" HorizontalAlignment="Left" Height="33" Margin="177,83,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
-        <TextBox x:Name="vehicleIDtxt" HorizontalAlignment="Left" Height="33" Margin="177,146,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
-        <TextBox x:Name="Amounttxt" HorizontalAlignment="Left" Height="33" Margin="177,204,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
-        <TextBox x:Name="Costtxt" HorizontalAlignment="Left" Height="33" Margin="177,261,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
-        <Label x:Name="IDLbl" Content=" ID" HorizontalAlignment="Left" Margin="38,83,0,0" VerticalAlignment="Top" Width="81"/>
-        <Label x:Name="vehicleIDLbl" Content="VehicleID" HorizontalAlignment="Left" Margin="38,146,0,0" VerticalAlignment="Top" Width="81"/>
-        <Label x:Name="AmountlLbl" Content="Amount" HorizontalAlignment="Left" Margin="38,211,0,0" VerticalAlignment="Top" Width="112"/>
-        <Label x:Name="CostLbl" Content="Cost" HorizontalAlignment="Left" Margin="38,268,0,0" VerticalAlignment="Top" Width="81"/>
+        Title="AddFuelRecordsWindow" Height="240" Width="434.545">
+    <Grid Background="#FFD5ECE9">
 
+
+        <Label Content="Amount (L): " HorizontalAlignment="Left" Height="26" Margin="24,26,0,0" VerticalAlignment="Top" Width="105"/>
+        <TextBox x:Name="AmountTxt" HorizontalAlignment="Left" Height="24" Margin="129,26,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="278" Grid.ColumnSpan="2"/>
+        <Label Content="Cost ($): " HorizontalAlignment="Left" Height="26" Margin="24,78,0,0" VerticalAlignment="Top" Width="105"/>
+        <TextBox x:Name="CostTxt" HorizontalAlignment="Left" Height="24" Margin="129,80,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="278"/>
+
+
+
+
+        <Button x:Name="SaveBtn" Click="SaveBtn_Click" Content="Save" HorizontalAlignment="Left" Margin="22,141,0,0" VerticalAlignment="Top" Width="100" Background="#FF86F176" Height="22"/>
+        <Button x:Name="CancelBtn" Click="CancelBtn_Click" Content="Cancel" HorizontalAlignment="Left" Margin="307,141,0,0" VerticalAlignment="Top" Width="100" Background="#FFE2625C" Height="22" />
 
     </Grid>
 </Window>

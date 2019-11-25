@@ -23,12 +23,16 @@ namespace CarRentalSystem
     {
 
         protected Vehicle car;
+
         protected ArrayList services;
         public ArrayList displayedServices { get; set; }
 
         protected ArrayList journies;
 
         public ArrayList displayedJournies { get; set; }
+
+        protected ArrayList FPurchases { get; set; }
+        public ArrayList displayedFPurchases { get; set; }
 
         public HistoryWindow(Vehicle car)
         {
@@ -42,8 +46,10 @@ namespace CarRentalSystem
             // services
             this.services = car.getServices();
             this.displayedServices = car.getServices();
-
-            //Link the fuel purches
+            // Link Fuel Purchase
+            this.FPurchases = car.getFPurchases();
+            this.displayedFPurchases = car.getFPurchases();
+            
 
             this.DataContext = this;
         }
@@ -129,12 +135,49 @@ namespace CarRentalSystem
 
         }
 
+        private void AddFuelPurchasesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            beforeEffects();
+            AddFuelRecordsWindow addFuelWin = new AddFuelRecordsWindow(car.getVehicleID());
+            addFuelWin.ShowDialog();
+            if (addFuelWin.getSaveState() && addFuelWin.getValidity())
+            {
+                FuelPurchase F = addFuelWin.getFuelPurchase(); // Get the new Fuel
+                FPurchases.Add(F);   //  Add to the list
+                Console.WriteLine(" Fuel Purchase Added");
+            }
+            afterEffects();
+        }
+
+        private void EditFuelPurchasesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            beforeEffects();
+            IList iL = FuelPurchasesDisplayLvw.SelectedItems;  //select items (vehicles)
+            if (iL.Count == 1)
+            {
+                EditFuelRecordsWindow editFuelRecordsWin = new EditFuelRecordsWindow((FuelPurchase)iL[0]);
+                editFuelRecordsWin.ShowDialog();
+                // Check if saved or not
+                if (editFuelRecordsWin.getSaveState() && editFuelRecordsWin.getValidity())   //if a journey was saved
+                {
+                    FuelPurchase F = editFuelRecordsWin.getFuelPurchase();                        // Get the saved journey
+                    FPurchases[FPurchases.IndexOf(iL[0])] = F;                          // Overide the service at the editted location
+                    Console.WriteLine(" Fuel Edited");
+                }
+                else
+                {
+                    MessageBox.Show(" Select a single Fuel Record to edit");
+                }
+            }
+            afterEffects();
+        }
+
         private void performRefresh()
         {
 
             displayedServices = copyArrayList(services); //Initialise displayed services (before filter)
-            displayedJournies = copyArrayList(journies);  
-
+            displayedJournies = copyArrayList(journies);
+            displayedFPurchases = copyArrayList(FPurchases);
             //Manually reset binding and refresh -works! (note XAML binding only seemed to work on window creation!)
             ServicesDisplayLvw.SetBinding(ListView.ItemsSourceProperty,
                 new Binding
@@ -152,6 +195,13 @@ namespace CarRentalSystem
                });
             JourniesDisplayLvw.Items.Refresh();
 
+            FuelPurchasesDisplayLvw.SetBinding(ListView.ItemsSourceProperty,
+                new Binding
+                {
+                    Path = new PropertyPath("displayedFPurchases"),
+                    NotifyOnTargetUpdated = true
+                });
+            FuelPurchasesDisplayLvw.Items.Refresh();
         }
 
         private void beforeEffects()
@@ -163,7 +213,7 @@ namespace CarRentalSystem
         {
             this.VisualOpacity = 1;
             this.VisualEffect = null;
-            performRefresh(); //perform the filter on the displayed vehicles!
+            performRefresh(); //perform the filter on the displayed data!
         }
 
         public Vehicle getVehicle()

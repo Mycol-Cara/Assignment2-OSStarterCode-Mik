@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarRentalSystem"
         mc:Ignorable="d"
-        Title="Car Rental System" Height="200" Width="336.472" ResizeMode="NoResize" Background="LightGoldenrodYellow">
+        Title="Car Rental System" Height="289" Width="333.472" ResizeMode="NoResize" Background="LightGoldenrodYellow">
     <Grid>
-        <Button x:Name="LaunchVehiclesBtn" Click="LaunchVehiclesBtn_Click" Content="View Vehicles" Height="55" FontSize="14" HorizontalAlignment="Left" Margin="186,30,0,0" VerticalAlignment="Top" Width="110" Background="Beige"/>
-        <Button x:Name="LoadDatabaseBtn" Click="LoadDatabaseBtn_Click" Content="Connect to Database" Height="55" FontSize="14" HorizontalAlignment="Left" Margin="30,30,0,0" VerticalAlignment="Top" Width="146" Background="LightBlue"/>
-        <Button x:Name="SaveDatabaseBtn" Click="SaveDatabaseBtn_Click" Content="Update Database" Height="40" FontSize="14" HorizontalAlignment="Left" Margin="147,100,0,0" VerticalAlignment="Top" Width="149" Background="LightGreen"/>
-        <Button x:Name="AdminLoginBtn" Click="AdminLoginBtn_Click" Content="Admin Tools" Height="40" FontSize="14" HorizontalAlignment="Left" Margin="30,100,0,0" VerticalAlignment="Top" Width="107" Background="WhiteSmoke"/>
+        <Button x:Name="LaunchVehiclesBtn" Click="LaunchVehiclesBtn_Click" Content="View Vehicles" Height="59" FontSize="14" HorizontalAlignment="Left" Margin="30,90,0,0" VerticalAlignment="Top" Width="266" Background="Beige"/>
+        <Button x:Name="LoadTxtBtn" Click="LoadTxtBtn_Click" Content="Load Txt File" Height="55" FontSize="14" HorizontalAlignment="Left" Margin="188,30,0,0" VerticalAlignment="Top" Width="108" Background="LightBlue"/>
+        <Button x:Name="LoadSQLBtn"  Content="SQL Connect" Height="55" FontSize="14" HorizontalAlignment="Left" Margin="30,30,0,0" VerticalAlignment="Top" Width="153" Background="LightBlue"/>
+        <Button x:Name="SaveTxtBtn" Click="SaveTxtBtn_Click" Content="Save to Txt" Height="31" FontSize="14" HorizontalAlignment="Left" Margin="147,154,0,0" VerticalAlignment="Top" Width="149" Background="LightGreen"/>
+        <Button x:Name="SaveSQLBtn"  Content="Save to SQL" Height="43" FontSize="14" HorizontalAlignment="Left" Margin="147,190,0,0" VerticalAlignment="Top" Width="149" Background="LightGreen"/>
+        <Button x:Name="AdminLoginBtn" Click="AdminLoginBtn_Click" Content="Admin Tools" Height="79" FontSize="14" HorizontalAlignment="Left" Margin="30,154,0,0" VerticalAlignment="Top" Width="112" Background="WhiteSmoke"/>
     </Grid>
 </Window>

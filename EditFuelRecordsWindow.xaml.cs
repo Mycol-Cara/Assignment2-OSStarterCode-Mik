@@ -15,27 +15,36 @@ using System.Windows.Shapes;
 namespace CarRentalSystem
 {
     /// <summary>
-    /// Interaction logic for FuelRecordsWindow.xaml
+    /// Interaction logic for EditFuelRecordsWindow.xaml
     /// </summary>
-    public partial class AddFuelRecordsWindow : Window
+    public partial class EditFuelRecordsWindow : Window
     {
-        private FuelPurchase F; //The FuelPurchase to be created
+
+        private FuelPurchase F; //The Fuel Purchase to be created
         protected Boolean saveState; //was it saved on exit
-        protected Boolean validFuelPurchase;  //input check
-        public AddFuelRecordsWindow(int vehicleID)
+        protected Boolean validFuel;  //input check
+        public EditFuelRecordsWindow(FuelPurchase fuelPurchase)
         {
             InitializeComponent();
-            this.F = new FuelPurchase(0, 0, DateTime.Now, DateTime.Now, vehicleID); //Random fuelPurchase
+            this.F = fuelPurchase;
             saveState = false;           //when window constructed has not been saved yet
-            validFuelPurchase = true;
+            validFuel = true;        //TODO code for this
+            displayFuel();
         }
 
+        private void displayFuel()  // set the vehicle data into the text field
+        {
+            AmountTxt.Text = F.getAmount().ToString();
+            CostTxt.Text = F.getCost().ToString();
+           
+        }
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            saveState = true; //set vehicle to saved before exit!
-            UpdateFuel(); //Update the vehicle
-            this.Close(); //CLOSE WINDOW!
+            saveState = true;
+            UpdateFuel();
+            this.Close();
         }
+
 
         private void UpdateFuel()
         {
@@ -45,19 +54,19 @@ namespace CarRentalSystem
             try
             {
                 amount = System.Convert.ToInt32(AmountTxt.Text);
-                cost = System.Convert.ToInt32(CostTxt.Text);
-              
+                cost= System.Convert.ToInt32(CostTxt.Text);
             }
             catch
             {
                 Console.WriteLine("Error reading numeric values!");
-                validFuelPurchase = false; //Due to likely poor data entry
+                validFuel = false; //Due to likely poor data entry
                 return;
             }
 
-            F = new FuelPurchase(amount, cost ,DateTime.Now, DateTime.Now, F.getVehicleID()); //New Fuel with all of the information!
-            validFuelPurchase = true;
+            F = new FuelPurchase(amount, cost, F.getDatecreated(), DateTime.Now, F.getVehicleID()); //New fuelpurchase with all of the information!
+            validFuel = true;
         }
+
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -71,10 +80,10 @@ namespace CarRentalSystem
         {
             return saveState;
         }
+
         public Boolean getValidity()
         {
-            return validFuelPurchase;
+            return validFuel;
         }
-
     }
 }

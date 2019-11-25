@@ -26,6 +26,7 @@ namespace CarRentalSystem
         public List<Vehicle> vehicleData;
         public List<Service> serviceData;
         public List<Journey> journeyData;
+        public List<FuelPurchase> fuelData;
 
         private Boolean adminMode;
         public LauncherWindow()
@@ -34,7 +35,8 @@ namespace CarRentalSystem
             vehicleData = new List<Vehicle>(); //declare/initialise the variables
             serviceData = new List<Service>();
             journeyData = new List<Journey>();
-            
+            fuelData = new List<FuelPurchase>();
+
             LaunchVehiclesBtn.IsHitTestVisible = false; //can't use until database loaded
             LaunchVehiclesBtn.Opacity = 0.5;
             setAdminMode(false); //set usability for admin button (save database)
@@ -58,7 +60,7 @@ namespace CarRentalSystem
 
         }
 
-        private void LoadDatabaseBtn_Click(object sender, RoutedEventArgs e)
+        private void LoadTxtBtn_Click(object sender, RoutedEventArgs e)
         {
             //Vehicles
             string readText;
@@ -89,20 +91,26 @@ namespace CarRentalSystem
                 journeyData = JsonConvert.DeserializeObject<List<Journey>>(readText);
             }
 
-            //TODO Fuel Purchase
-
+            // Fuel Purchase
+            path = System.AppDomain.CurrentDomain.BaseDirectory + "saveFuelPurchaseFile.txt";   //Path
+            if (File.Exists(path))
+            {
+                readText = File.ReadAllText(path);   //Reading text from the file
+                fuelData = new List<FuelPurchase>();
+                fuelData = JsonConvert.DeserializeObject<List<FuelPurchase>>(readText);
+            }
 
 
             //initialiseData
             initialiseDataServices(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid
             initialiseDataJourney(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid
-
+            initialiseDataFuelPurchase();  //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid
             //Change button
             LaunchVehiclesBtn.IsHitTestVisible = true; //now vehicle view is usable
             LaunchVehiclesBtn.Opacity = 1.0;
         }
 
-        private void SaveDatabaseBtn_Click(object sender, RoutedEventArgs e)
+        private void SaveTxtBtn_Click(object sender, RoutedEventArgs e)
         {
             //VEHICLES Convert  to JSON using JSON .NET package
             String jsonVehicles = JsonConvert.SerializeObject(vehicleData);
@@ -140,6 +148,21 @@ namespace CarRentalSystem
             path = System.AppDomain.CurrentDomain.BaseDirectory + "saveJourniesFile.txt";
             File.WriteAllText(path, jsonJourney);
 
+
+            // Build Fuel purchases Data
+            ArrayList fpurchases; fuelData.Clear();
+            for (int i = 0; i < vehicleData.Count; i++)
+            {
+                fpurchases = vehicleData[i].getFPurchases(); // Fuel for a vehicle
+                for (int j = 0; j < fpurchases.Count; j++) //Get each journey and add to big list
+                {
+                    fuelData.Add((FuelPurchase)fpurchases[j]);
+                }
+            }
+            //Fuel Purchase Convert to JSON using JSON .NET package
+            String jsonFuel = JsonConvert.SerializeObject(fuelData);
+            path = System.AppDomain.CurrentDomain.BaseDirectory + "saveFuelPurchaseFile.txt"; //Path
+            File.WriteAllText(path, jsonFuel); //Write text to file
 
             MessageBox.Show("Database saved locally"); //Let the user know the file was saved...
         }
@@ -203,6 +226,27 @@ namespace CarRentalSystem
             }
         }
 
+        private void initialiseDataFuelPurchase()
+        {
+            ArrayList fpurchasesCar; //fuel purchase data for a vehicle 
+            int id; Vehicle car;
+            for (int v = 0; v < vehicleData.Count; v++) //Vehicles
+            {
+                car = vehicleData[v]; //get the car and it's purchase
+                id = car.getVehicleID();
+                fpurchasesCar = car.getFPurchases();
+                fpurchasesCar.Clear(); //reset
+                for (int i = 0; i < fuelData.Count; i++) //Go through fuel data and remake the fuelpurchases as shouldnt be any yet
+                {
+                    if (fuelData[i].getVehicleID() == id) //Add to vehicle fuel purchases as Id the same!
+                    {
+                        fpurchasesCar.Add(fuelData[i]);
+                    }
+                }
+                vehicleData[v].setFPurchases(fpurchasesCar); //save back to vehicle data
+            }
+        }
+
         private void beforeEffects()
         {
             this.VisualOpacity = 0.5;
@@ -228,11 +272,11 @@ namespace CarRentalSystem
         private void setAdminMode(Boolean mode)
         {
             adminMode = mode; //set admin mode
-            SaveDatabaseBtn.IsHitTestVisible = mode; //set admin button activity
+            SaveTxtBtn.IsHitTestVisible = mode; //set admin button activity
 
             double opac = 1.0;
             if (!mode) { opac = 0.5; } //admin button opacities
-            SaveDatabaseBtn.Opacity = opac;
+            SaveTxtBtn.Opacity = opac;
 
         }
     }

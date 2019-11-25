@@ -71,6 +71,9 @@
     <Compile Include="DeleteVehiclesWindow.xaml.cs">
       <DependentUpon>DeleteVehiclesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditFuelRecordsWindow.xaml.cs">
+      <DependentUpon>EditFuelRecordsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditJourneyWindow.xaml.cs">
       <DependentUpon>EditJourneyWindow.xaml</DependentUpon>
     </Compile>
@@ -81,9 +84,6 @@
       <DependentUpon>EditVehiclesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="FuelPurchase.cs" />
-    <Compile Include="FuelPurchaseDatabaseWindow.xaml.cs">
-      <DependentUpon>FuelPurchaseDatabaseWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="AddFuelRecordsWindow.xaml.cs">
       <DependentUpon>AddFuelRecordsWindow.xaml</DependentUpon>
     </Compile>
@@ -124,6 +124,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="EditFuelRecordsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EditJourneyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -133,10 +137,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditVehiclesWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FuelPurchaseDatabaseWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

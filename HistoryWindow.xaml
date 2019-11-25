@@ -13,7 +13,7 @@
                 <ListView x:Name="JourniesDisplayLvw" ItemsSource="{Binding displayedJournies}" HorizontalAlignment="Left" Height="1000" Margin="0,0,0,0" VerticalAlignment="Top" Width="1500" Background="PeachPuff">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding distanceTravelled}" Header="Distance Travelled" Width="150"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding distanceTravelled}" Header="Distance Travelled (Km)" Width="150"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding journeyAt}" Header="Journey At" Width="200"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding created}" Header="Created" Width="100"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding updated}" Header="Updated" Width="160"></GridViewColumn>
@@ -42,15 +42,13 @@
 
         <Border Margin="26,487,84,23">
             <ScrollViewer Margin="0,0,0,0" HorizontalScrollBarVisibility="Visible">
-                <ListView x:Name="FuelPurchasesDisplayLvw" ItemsSource="{Binding displayedFuelPurchases}" HorizontalAlignment="Left" Height="1000" Margin="0,0,0,0" VerticalAlignment="Top" Width="1500" Background="PeachPuff">
+                <ListView x:Name="FuelPurchasesDisplayLvw" ItemsSource="{Binding displayedFPurchases}" HorizontalAlignment="Left" Height="1000" Margin="0,0,0,0" VerticalAlignment="Top" Width="1500" Background="PeachPuff">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding manufacturer}" Header="Manufacturer" Width="125"></GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding model}" Header="Model" Width="200"></GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding makeYear}" Header="Year" Width="100"></GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding odometerReading}" Header="Odometer (Km)" Width="150"></GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding registrationNumber}" Header="Rego Number" Width="150"></GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding tankCapacity}" Header="Tank Capacity (L)" Width="500"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding amount}" Header="Amount (L)" Width="125"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding cost}" Header="Cost ($)" Width="200"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding created}" Header="Created" Width="150"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding updated}" Header="Updated" Width="150"></GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -66,8 +64,8 @@
         <Button x:Name="EditServicesBtn" Click="EditServicesBtn_Click" Content="✎" HorizontalAlignment="Left" Margin="716,332,0,0" VerticalAlignment="Top" Width="50" Height="40" FontSize="18" Background="#FFFF8E8E"/>
 
         <Label Content="Vehicle Fuel Purchases"  FontSize="16" Height="40"  VerticalAlignment="Top" Margin="276,448,0,0"></Label>
-        <Button x:Name="AddFuelPurchasesBtn"  Content="+" HorizontalAlignment="Left" Margin="716,487,0,0" VerticalAlignment="Top" Width="50" Height="40" FontSize="18" Background="LightGreen"/>
-        <Button x:Name="RemoveFuelPurchasesBtn"   Content="✎" HorizontalAlignment="Left" Margin="716,537,0,0" VerticalAlignment="Top" Width="50" Height="40" FontSize="18" Background="#FFFF8E8E"/>
+        <Button x:Name="AddFuelPurchasesBtn" Click="AddFuelPurchasesBtn_Click"  Content="+" HorizontalAlignment="Left" Margin="716,487,0,0" VerticalAlignment="Top" Width="50" Height="40" FontSize="18" Background="LightGreen"/>
+        <Button x:Name="EditFuelPurchasesBtn" Click="EditFuelPurchasesBtn_Click" Content="✎" HorizontalAlignment="Left" Margin="716,537,0,0" VerticalAlignment="Top" Width="50" Height="40" FontSize="18" Background="#FFFF8E8E"/>
 
     </Grid>
 </Window>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarRentalSystem
 {
-    class FuelPurchase
+   public class FuelPurchase
     {
         //private double fuelEconomy;
         //private double litres = 0;
@@ -66,7 +66,7 @@ namespace CarRentalSystem
             return this.vehicleID;
         }
 
-
       
+
     }
 }

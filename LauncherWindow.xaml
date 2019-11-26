@@ -11,7 +11,7 @@
         <Button x:Name="LoadTxtBtn" Click="LoadTxtBtn_Click" Content="Load Txt File" Height="55" FontSize="14" HorizontalAlignment="Left" Margin="188,30,0,0" VerticalAlignment="Top" Width="108" Background="LightBlue"/>
         <Button x:Name="LoadSQLBtn"  Content="SQL Connect" Height="55" FontSize="14" HorizontalAlignment="Left" Margin="30,30,0,0" VerticalAlignment="Top" Width="153" Background="LightBlue"/>
         <Button x:Name="SaveTxtBtn" Click="SaveTxtBtn_Click" Content="Save to Txt" Height="31" FontSize="14" HorizontalAlignment="Left" Margin="147,154,0,0" VerticalAlignment="Top" Width="149" Background="LightGreen"/>
-        <Button x:Name="SaveSQLBtn"  Content="Save to SQL" Height="43" FontSize="14" HorizontalAlignment="Left" Margin="147,190,0,0" VerticalAlignment="Top" Width="149" Background="LightGreen"/>
+        <Button x:Name="SaveSQLBtn" Click="SaveSQLBtn_Click"  Content="Save to SQL" Height="43" FontSize="14" HorizontalAlignment="Left" Margin="147,190,0,0" VerticalAlignment="Top" Width="149" Background="LightGreen"/>
         <Button x:Name="AdminLoginBtn" Click="AdminLoginBtn_Click" Content="Admin Tools" Height="79" FontSize="14" HorizontalAlignment="Left" Margin="30,154,0,0" VerticalAlignment="Top" Width="112" Background="WhiteSmoke"/>
     </Grid>
 </Window>

@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 using Newtonsoft.Json;
+using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace CarRentalSystem
 {
@@ -60,6 +62,103 @@ namespace CarRentalSystem
 
         }
 
+        private void SaveSQLBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //Connection string
+            String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
+            String p1, p2, p3, p4, p5, p6, p7;
+            try 
+            {
+                 //Create the connection
+                using (MySqlConnection con = new MySqlConnection(conStr))
+                {
+                    con.Open(); //Open
+
+                    //Vehicles
+                    //Clear table to save over
+                    MySqlCommand cmd = new MySqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandText = "TRUNCATE TABLE `vehicles`";
+                    cmd.ExecuteNonQuery();
+
+                    //Save data for each vehicle
+                    foreach (Vehicle v in vehicleData)
+                    {
+                        p1 = v.getVehicleID().ToString(); p2 = v.getModel(); p3 = v.getManufacturer();  p4 = v.getMakeYear().ToString(); p5 = v.getOdometerReading().ToString();  p6 = v.getRegistrationNumber(); p7 = v.getTankCapacity().ToString();
+                        cmd = new MySqlCommand();
+                        cmd.Connection = con;
+                        cmd.CommandText = "INSERT INTO `vehicles`(`vehicleid`,`model`,`manufacturer`,`makeyear`,`odometer`,`registration`,`tankcapacity`) VALUES(" + p1 + ", " + p2 + ", " + p3 + ", " + p4 + ", " + p5 + ", " + p6 + ", " + p7 + ")";
+                        cmd.ExecuteNonQuery();
+                        cmd.Dispose();
+                    }
+
+
+                    //Services
+                    buildServiceData(); //Compile service data from vehicles into one list serviceData
+                    cmd = new MySqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandText = "TRUNCATE TABLE `services`";
+                    cmd.ExecuteNonQuery();
+
+                    //Save data for each service
+                    foreach (Service s in serviceData)
+                    {
+                        p1 = s.getVehicleID().ToString(); p2 = s.getLastServiceOdometerKm().ToString(); p3 = s.getServiceCount().ToString(); p4 = s.getLastServiceDate().ToString("yyyy-MM-dd H:mm:ss"); p5 = s.getDateCreated().ToString("yyyy-MM-dd H:mm:ss");  p6 = s.getDateUpdated().ToString("yyyy-MM-dd H:mm:ss");
+                        cmd = new MySqlCommand();
+                        cmd.Connection = con;
+                        cmd.CommandText = "INSERT INTO `services`(`vehicleid`,`odometer`,`serviceCount`,`serviceDate`, `created`, `updated`) VALUES(" + p1 + ", " + p2 + ", " + p3 + ", '" + p4 + "', '" + p5 + "', '" + p6 + "')";
+                        cmd.ExecuteNonQuery();
+                        cmd.Dispose();
+                    }
+
+
+                    //Journies
+                    buildJourneyData(); //Compiling journey data from vehicle into one list journeyData
+                    cmd = new MySqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandText = "TRUNCATE TABLE `journies`";
+                    cmd.ExecuteNonQuery();
+
+                    //Save data for each journey
+                    foreach (Journey j in journeyData)
+                    {
+                        p1 = j.getVehicleID().ToString(); p2 =j.getdistanceTravelled().ToString();  p3 =j.getjourneyAt().ToString("yyyy-MM-dd H:mm:ss"); p4 = j.getDatecreated().ToString("yyyy-MM-dd H:mm:ss"); p5 =j.getDateupdated().ToString("yyyy-MM-dd H:mm:ss");
+                        cmd = new MySqlCommand();
+                        cmd.Connection = con;
+                        cmd.CommandText = "INSERT INTO `journies`(`vehicleid`,`distanceTravelled`,`journeyAt`, `created`, `updated`) VALUES(" + p1 + ", " + p2 + ", '" + p3 + "', '" + p4 + "', '" + p5 + "')";
+                        cmd.ExecuteNonQuery();
+                        cmd.Dispose();
+                    }
+
+                    //Fuel
+                    buildFuelPurchaseData(); //Compiling fuel data from vehicle into one list fuelData
+                    cmd = new MySqlCommand();
+                    cmd.Connection = con;
+                    cmd.CommandText = "TRUNCATE TABLE `fuelpurchases`";
+                    cmd.ExecuteNonQuery();
+
+                    //Save data for each fuelpurchase
+                    foreach (FuelPurchase fp in fuelData)
+                    {
+                        p1 = fp.getVehicleID().ToString(); p2 = fp.getAmount().ToString();  p3 = fp.getCost().ToString(); p4 = fp.getDatecreated().ToString("yyyy-MM-dd H:mm:ss"); p5 = fp.getDateupdated().ToString("yyyy-MM-dd H:mm:ss");
+                        cmd = new MySqlCommand();
+                        cmd.Connection = con;
+                        cmd.CommandText = "INSERT INTO `fuelpurchases`(`vehicleid`,`amount`,`cost`, `created`, `updated`) VALUES(" + p1 + ", " + p2 + ", " + p3 + ",'" + p4 + "', '" + p5 + "')";
+                        cmd.ExecuteNonQuery();
+                        cmd.Dispose();
+                    }
+
+
+
+                    con.Close(); //Close
+                }
+
+
+            }
+            catch (MySqlException mse) { Console.WriteLine(mse.ToString()); Console.WriteLine("Error SQL");  }
+
+        }
+
         private void LoadTxtBtn_Click(object sender, RoutedEventArgs e)
         {
             //Vehicles
@@ -102,9 +201,9 @@ namespace CarRentalSystem
 
 
             //initialiseData
-            initialiseDataServices(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid
-            initialiseDataJourney(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid
-            initialiseDataFuelPurchase();  //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid
+            initialiseDataServices(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from the loaded serviceData
+            initialiseDataJourney(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from loaded journeyData
+            initialiseDataFuelPurchase();  //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from loaded fuelData
             //Change button
             LaunchVehiclesBtn.IsHitTestVisible = true; //now vehicle view is usable
             LaunchVehiclesBtn.Opacity = 1.0;
@@ -118,15 +217,7 @@ namespace CarRentalSystem
             File.WriteAllText(path, jsonVehicles); //Write text to file
 
             //BUILD SERVICE DATA 
-            ArrayList services; serviceData.Clear();
-            for (int i = 0; i < vehicleData.Count; i++)
-            {
-                services = vehicleData[i].getServices(); //Services for a vehicle!
-                for (int j = 0; j < services.Count; j++) //Get each service and add to big list
-                {
-                    serviceData.Add((Service)services[j]);
-                }
-            }
+            buildServiceData();
 
             //SERVICES Convert to JSON using JSON .NET package
             String jsonServices = JsonConvert.SerializeObject(serviceData);
@@ -134,15 +225,8 @@ namespace CarRentalSystem
             File.WriteAllText(path, jsonServices); //Write text to file
 
             // Build Journey Data
-            ArrayList journies; journeyData.Clear();
-            for ( int i = 0; i< vehicleData.Count; i++)
-            {
-                journies = vehicleData[i].getJournies(); // Journies for a vehicle
-                for (int j = 0; j < journies.Count; j++) //Get each journey and add to big list
-                {
-                    journeyData.Add((Journey)journies[j]);
-                }
-            }
+            buildJourneyData();
+           
             // Journiesconvert to JSON save file
             String jsonJourney = JsonConvert.SerializeObject(journeyData);
             path = System.AppDomain.CurrentDomain.BaseDirectory + "saveJourniesFile.txt";
@@ -150,15 +234,8 @@ namespace CarRentalSystem
 
 
             // Build Fuel purchases Data
-            ArrayList fpurchases; fuelData.Clear();
-            for (int i = 0; i < vehicleData.Count; i++)
-            {
-                fpurchases = vehicleData[i].getFPurchases(); // Fuel for a vehicle
-                for (int j = 0; j < fpurchases.Count; j++) //Get each journey and add to big list
-                {
-                    fuelData.Add((FuelPurchase)fpurchases[j]);
-                }
-            }
+            buildFuelPurchaseData();
+           
             //Fuel Purchase Convert to JSON using JSON .NET package
             String jsonFuel = JsonConvert.SerializeObject(fuelData);
             path = System.AppDomain.CurrentDomain.BaseDirectory + "saveFuelPurchaseFile.txt"; //Path
@@ -184,66 +261,90 @@ namespace CarRentalSystem
             }
         }
 
+        private void buildServiceData()
+        { //Puts all the services of each vehicle in serviceData
+            ArrayList services; serviceData.Clear();
+            foreach (Vehicle v in vehicleData)
+            {
+                services = v.getServices(); //Services for a vehicle!
+                foreach (Service s in services) //Get each service and add to big list
+                {
+                    serviceData.Add(s);
+                }
+            }
+        }
+        private void buildJourneyData()
+        { //Put all the journies of all vehicles in journeyData
+            ArrayList journies; journeyData.Clear();
+            foreach (Vehicle v in vehicleData)
+            {
+                journies = v.getJournies(); // Journies for a vehicle
+                foreach (Journey j in journies) //Get each journey and add to big list
+                {
+                    journeyData.Add(j);
+                }
+            }
+        }
+        private void buildFuelPurchaseData()
+        { //Put all the fuel purchases of all the vehicles in fuelData
+            ArrayList fpurchases; fuelData.Clear();
+            foreach (Vehicle v in vehicleData)
+            {
+                fpurchases = v.getFPurchases(); // Fuel for a vehicle
+                foreach (FuelPurchase f in fpurchases) //Get each fuel purchases and add to big list
+                {
+                    fuelData.Add(f);
+                }
+            }
+        }
+
         private void initialiseDataServices()
-        {
-            ArrayList servicesCar; //service data for a vehicle 
-            int id; Vehicle car;
-            for (int v = 0; v < vehicleData.Count; v++) //Vehicles
+        { //Go through serviceData and match services to the vehicles, add them to vehicleData
+            ArrayList services; //intialise service data for a vehicle 
+            foreach (Vehicle v in vehicleData) //Vehicles
             { 
-                car = vehicleData[v]; //get the car and it's services
-                id = car.getVehicleID();
-                servicesCar = car.getServices();
-                servicesCar.Clear(); //reset
-                for (int i = 0; i < serviceData.Count; i++) //Go through service data and remake the services as shouldnt be any yet
+                services = new ArrayList(); //new empty list
+                foreach (Service s in serviceData) //Go through service data and remake the services as shouldnt be any yet
                 {
-                    if (serviceData[i].getVehicleID() == id) //Add to vehicle services as Id the same!
+                    if (s.getVehicleID() == v.getVehicleID()) //Add to vehicle services as Id the same!
                     {
-                        servicesCar.Add(serviceData[i]);
+                        services.Add(s);
                     }
                 }
-                vehicleData[v].setServices(servicesCar); //save back to vehicle data
+                v.setServices(services); //save back to vehicle data
             }
         }
-
         private void initialiseDataJourney()
-        {
-            ArrayList journiesCar; //journey data for a vehicle 
-            int id; Vehicle car;
-            for (int v = 0; v < vehicleData.Count; v++) //Vehicles
+        { //Go through the journeyData and match journies to the vehicles, add them to vehicleData
+            ArrayList journies; //journey data for a vehicle 
+            foreach (Vehicle v in vehicleData) //Vehicles
             {
-                car = vehicleData[v]; //get the car and it's journies
-                id = car.getVehicleID();
-                journiesCar = car.getJournies();
-                journiesCar.Clear(); //reset
-                for (int i = 0; i < journeyData.Count; i++) //Go through journey data and remake the journies as shouldnt be any yet
+                journies = new ArrayList(); //empty
+                foreach (Journey j in journeyData) //Go through journey data and remake the journies as shouldnt be any yet
                 {
-                    if (journeyData[i].getVehicleID() == id) //Add to vehicle journies as Id the same!
+                    if (j.getVehicleID() == v.getVehicleID()) //Add to vehicle journies as Id the same!
                     {
-                        journiesCar.Add(journeyData[i]);
+                        journies.Add(j);
                     }
                 }
-                vehicleData[v].setJournies(journiesCar); //save back to vehicle data
+                v.setJournies(journies); //save back to vehicle data
             }
         }
-
         private void initialiseDataFuelPurchase()
-        {
-            ArrayList fpurchasesCar; //fuel purchase data for a vehicle 
-            int id; Vehicle car;
-            for (int v = 0; v < vehicleData.Count; v++) //Vehicles
+        {//going through the fuelData and match fpurchases to the vehicles and then adding them to the vehicleData
+            ArrayList fpurchases; //fuel purchase data for a vehicle 
+            foreach (Vehicle v in vehicleData) //Vehicles
             {
-                car = vehicleData[v]; //get the car and it's purchase
-                id = car.getVehicleID();
-                fpurchasesCar = car.getFPurchases();
-                fpurchasesCar.Clear(); //reset
-                for (int i = 0; i < fuelData.Count; i++) //Go through fuel data and remake the fuelpurchases as shouldnt be any yet
+                fpurchases = new ArrayList();  // empty
+                
+                foreach (FuelPurchase fp in fuelData) //Go through fuel data and remake the fuelpurchases as shouldnt be any yet
                 {
-                    if (fuelData[i].getVehicleID() == id) //Add to vehicle fuel purchases as Id the same!
+                    if (fp.getVehicleID() == v.getVehicleID() ) //Add to vehicle fuel purchases as Id the same!
                     {
-                        fpurchasesCar.Add(fuelData[i]);
+                        fpurchases.Add(fp);
                     }
                 }
-                vehicleData[v].setFPurchases(fpurchasesCar); //save back to vehicle data
+                v.setFPurchases(fpurchases); //save back to vehicle data
             }
         }
 
@@ -279,5 +380,7 @@ namespace CarRentalSystem
             SaveTxtBtn.Opacity = opac;
 
         }
+
+       
     }
 }

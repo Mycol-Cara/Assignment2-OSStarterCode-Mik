@@ -50,7 +50,7 @@ namespace CarRentalSystem
         {
             beforeEffects();                // giving opacity to the main window
 
-            VehicleLauncher vl = new VehicleLauncher(copyToArrayList(vehicleData), adminMode); //create new vehicles windows with existing vehicle data/list andd same admin mode
+            VehicleLauncher vl = new VehicleLauncher(convertListToArrayList(vehicleData), adminMode); //create new vehicles windows with existing vehicle data/list andd same admin mode
             vl.ShowDialog();
             vehicleData = new List<Vehicle>();
             vehicleData = vl.getVehicleList(); //update data
@@ -60,6 +60,95 @@ namespace CarRentalSystem
 
             afterEffects();
 
+        }
+
+        private void LoadSQLBtn_Click(object sender, RoutedEventArgs e)
+        {
+            String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
+            String p1, p2, p3, p4, p5, p6, p7;
+            DataTable table;
+            MySqlDataAdapter adapter;
+            MySqlCommand cmd;
+
+            try
+            {
+                //Create the connection
+                using (MySqlConnection con = new MySqlConnection(conStr))
+                {
+                    con.Open(); //Open
+
+                    //Vehicle data
+                    vehicleData = new List<Vehicle>(); //fresco
+                    table = new DataTable(); //new table
+                    cmd = new MySqlCommand("SELECT * FROM `vehicles`", con); //get table command
+                    adapter = new MySqlDataAdapter(cmd);
+                    adapter.Fill(table); //fill table
+                    Vehicle v;
+                    foreach (DataRow row in table.Rows) //go through table rows
+                    {
+                        Object[] arr = row.ItemArray; //get row as objects
+                        v = new Vehicle((int) arr[1], arr[3].ToString(), arr[2].ToString(), (int) arr[4], (int) arr[5], arr[6].ToString(), (int) arr[7]); //new vehicle
+                        vehicleData.Add(v);
+                    }
+
+                    //Service Data
+                    serviceData = new List<Service>();  //new list
+                    table = new DataTable();  // new table
+                    cmd = new MySqlCommand("SELECT * FROM `services`", con);  // get tabl;e command
+                    adapter = new MySqlDataAdapter(cmd);
+                    adapter.Fill(table);  //fill the table
+                    Service s;
+                    foreach(DataRow row in table.Rows)   //going through table rows
+                    {
+                        Object[] arr = row.ItemArray;  // get row as obects
+                        s = new Service((int)arr[1], (int)arr[2], (int) arr[3], (DateTime)arr[4], (DateTime) arr[5], (DateTime)arr[6]);
+                        serviceData.Add(s);
+                    }
+
+                    //Journey Data
+                    journeyData = new List<Journey>();
+                    table = new DataTable();
+                    cmd = new MySqlCommand("SELECT * FROM `journies`", con);
+                    adapter = new MySqlDataAdapter(cmd);
+                    adapter.Fill(table);  //fill the table
+                    Journey j;
+                    foreach(DataRow row in table.Rows)
+                    {
+                        Object[] arr = row.ItemArray;
+                        j = new Journey((int)arr[2], (DateTime)arr[3], (DateTime)arr[4], (DateTime)arr[5], (int)arr[1]);
+                        journeyData.Add(j);
+                    }
+
+                    //Fuel Data
+
+                    fuelData = new List<FuelPurchase>();
+                    table = new DataTable();
+                    cmd = new MySqlCommand("SELECT * FROM `fuelpurchases`", con);
+                    adapter = new MySqlDataAdapter(cmd);
+                    adapter.Fill(table);  //fill the table
+                    FuelPurchase fp;
+                    foreach (DataRow row in table.Rows)
+                    {
+                        Object[] arr = row.ItemArray;
+                        fp = new FuelPurchase((int)arr[2], (int)arr[3], (DateTime)arr[4], (DateTime)arr[5], (int)arr[1]);
+                        fuelData.Add(fp);
+                    }
+
+
+
+                    con.Close(); //Close
+                }
+
+                //initialiseData
+                initialiseDataServices(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from the loaded serviceData
+                initialiseDataJourney(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from loaded journeyData
+                initialiseDataFuelPurchase();  //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from loaded fuelData
+                                               //Change button
+                LaunchVehiclesBtn.IsHitTestVisible = true; //now vehicle view is usable
+                LaunchVehiclesBtn.Opacity = 1.0;
+
+            }
+            catch (Exception mse) { Console.WriteLine(mse.ToString()); Console.WriteLine("Error SQL"); }
         }
 
         private void SaveSQLBtn_Click(object sender, RoutedEventArgs e)
@@ -84,7 +173,7 @@ namespace CarRentalSystem
                     //Save data for each vehicle
                     foreach (Vehicle v in vehicleData)
                     {
-                        p1 = v.getVehicleID().ToString(); p2 = v.getModel(); p3 = v.getManufacturer();  p4 = v.getMakeYear().ToString(); p5 = v.getOdometerReading().ToString();  p6 = v.getRegistrationNumber(); p7 = v.getTankCapacity().ToString();
+                        p1 = v.getVehicleID().ToString(); p2 = v.getModel(); p3 = v.getManufacturer();  p4 = v.getMakeYear().ToString(); p5 = v.getOdometerReading().ToString();  p6 = v.getRegistrationNumber().ToString(); p7 = v.getTankCapacity().ToString();
                         cmd = new MySqlCommand();
                         cmd.Connection = con;
                         cmd.CommandText = "INSERT INTO `vehicles`(`vehicleid`,`model`,`manufacturer`,`makeyear`,`odometer`,`registration`,`tankcapacity`) VALUES(" + p1 + ", " + p2 + ", " + p3 + ", " + p4 + ", " + p5 + ", " + p6 + ", " + p7 + ")";
@@ -246,18 +335,18 @@ namespace CarRentalSystem
 
         private void AdminLoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!adminMode) //current inactive
+            if (adminMode == false) //current inactive, not an admin
             {
                 LoginForm form = new LoginForm();
                 form.ShowDialog();
                 if (form.getResult()) //Password worked
                 {
-                    setAdminMode(!adminMode); //turn on if user and password correct
+                    setAdminMode(true); //turn on if user and password correct
                 }
             }
             else //currently active
             {
-                setAdminMode(!adminMode); //turn off, no need for password
+                setAdminMode(false); //turn off, no need for password
             }
         }
 
@@ -360,14 +449,14 @@ namespace CarRentalSystem
           
         }
 
-        private ArrayList copyToArrayList(List<Vehicle> L)
+        private ArrayList convertListToArrayList(List<Vehicle> L)
         { //This can use to copy the public variable of companies to avoid just pointing to it
             ArrayList newAL = new ArrayList();
             for (int i = 0; i < L.Count; i++) //Clone all values to the new list!
             {
                 newAL.Add((Vehicle) L[i]);
             }
-            return newAL;
+            return newAL; 
         }
 
         private void setAdminMode(Boolean mode)
@@ -381,6 +470,6 @@ namespace CarRentalSystem
 
         }
 
-       
+  
     }
 }

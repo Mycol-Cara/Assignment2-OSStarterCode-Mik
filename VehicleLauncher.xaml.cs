@@ -23,7 +23,7 @@ namespace CarRentalSystem
     /// </summary>
     public partial class VehicleLauncher : Window
     {
-        protected ArrayList vehicles;
+        protected ArrayList vehicles; //all vehicleData
         public ArrayList displayedVehicles { get; set; }
         private Boolean adminMode;
         public VehicleLauncher(ArrayList existingVehicles, Boolean adminMode)

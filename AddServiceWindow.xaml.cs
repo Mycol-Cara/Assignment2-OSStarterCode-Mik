@@ -26,7 +26,7 @@ namespace CarRentalSystem
         public AddServiceWindow(int vehicleID)
         {
             InitializeComponent();
-            this.S = new Service(0, 0, DateTime.Now,vehicleID); //random new service 
+            this.S = new Service(vehicleID,0, 0, DateTime.Now, DateTime.Now, DateTime.Now); //random new service 
             saveState = false;           //when window constructed has not been saved yet
             validService = true; //TODO code for this
         }
@@ -63,7 +63,7 @@ namespace CarRentalSystem
             //TODO additional check to ensure is valid! 
 
             //Make a new service
-            S = new Service(odom, sNum, sdate,S.getVehicleID());
+            S = new Service(S.getVehicleID(), odom, sNum, sdate, DateTime.Now, DateTime.Now);
 
             validService = true;
         }

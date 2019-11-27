@@ -27,17 +27,15 @@ namespace CarRentalSystem
          * @param serviceDate
          * @vehicleID
          */
-
-        public Service(int distance, int serviceNumber, DateTime serviceDate, int vehicleID)
+        public Service(int vehicleID, int distance, int serviceNumber, DateTime serviceDate, DateTime created, DateTime updated)
         {
             this.lastServiceOdometerKm = distance;
             this.serviceCount = serviceNumber;
             this.lastServiceDate = serviceDate; //Added last service date to this record!
-            this.created = DateTime.Now; //When it was put in the datebase
-            this.updated = DateTime.Now;
+            this.created = created; //When it was put in the datebase
+            this.updated = updated;
             this.vehicleID = vehicleID;
         }
-
 
         // return how many services the car has had
         public int getServiceCount()

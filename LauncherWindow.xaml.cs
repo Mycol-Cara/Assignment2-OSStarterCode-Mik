@@ -64,6 +64,7 @@ namespace CarRentalSystem
 
         private void LoadSQLBtn_Click(object sender, RoutedEventArgs e)
         {
+
             String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
             String p1, p2, p3, p4, p5, p6, p7;
             DataTable table;
@@ -154,8 +155,25 @@ namespace CarRentalSystem
         private void SaveSQLBtn_Click(object sender, RoutedEventArgs e)
         {
             //Connection string
+            if (adminMode == false) //current inactive, not an admin
+            {
+                LoginForm form = new LoginForm();
+                form.ShowDialog();
+                if (form.getResult()) //Password worked
+                {
+                    setAdminMode(true); //turn on if user and password correct
+                }
+            }
+            else //currently active
+            {
+                setAdminMode(false); //turn off, no need for password
+            }
+
             String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
             String p1, p2, p3, p4, p5, p6, p7;
+            //this.adminMode = vl.getAdminMode(); //get the admin mode, incase has disabled...
+            
+
             try 
             {
                  //Create the connection

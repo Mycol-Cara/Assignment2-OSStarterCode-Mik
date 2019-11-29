@@ -22,31 +22,24 @@ namespace CarRentalSystem
     {
         private Details D; //The service to be created
         
-
-
         public DetailsWindow (Details D) 
         {
             InitializeComponent();
+            this.D = D;
             displayDetails();
             
         }
         private void displayDetails() //set the details data into the text fields!
         {
-            modeltxt.Text = D.getModel();
-            manufacturertxt.Text = D.getManufacturer();
-            servicetxt.Text = D.getServiceNum().ToString();
-            distancetxt.Text = D.getTotDistance().ToString();
-            tipstxt.Text = D.getTips();
+            modelTxt.Text = D.getModel();
+            manufacturerTxt.Text = D.getManufacturer();
+            serviceTxt.Text = D.getServiceNum().ToString();
+            distanceTxt.Text = D.getTotDistance().ToString();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        public Details getDetails()
-        {
-            return this.D;
         }
 
     }

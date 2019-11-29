@@ -8,20 +8,17 @@ namespace CarRentalSystem
 {
     public class Details
     {
-        public String modelVehicle { get; set; }
-        public String manufacturer { get; set; }
-        public int serviceNumber { get; set; }
-        public int distanceTravelled { get; set; }
-        public String tipsToTraveller { get; set; }
+        protected String modelVehicle;
+        protected String manufacturer;
+        protected int serviceNumber;
+        protected int distanceTravelled;
 
-
-        public Details (String model, String manufacturer, int serviceNum, int distance, String tips)
+        public Details (String model, String manufacturer, int serviceNumber, int distance)
         {
             this.modelVehicle = model;
             this.manufacturer = manufacturer;
-            this.serviceNumber = serviceNum;
+            this.serviceNumber = serviceNumber;
             this.distanceTravelled = distance;
-            this.tipsToTraveller = tips;
         }
 
         public String getModel()
@@ -56,13 +53,6 @@ namespace CarRentalSystem
         {
             this.distanceTravelled = distanceTravelled;
         }
-        public String getTips()
-        {
-            return this.tipsToTraveller;
-        }
-        public void setTips(String tipsToTraveller)
-        {
-            this.tipsToTraveller = tipsToTraveller;
-        }
+
     }
 }

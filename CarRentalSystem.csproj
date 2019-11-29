@@ -68,6 +68,7 @@
     <Compile Include="AddVehiclesWindow.xaml.cs">
       <DependentUpon>AddVehiclesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UpdateSQL.cs" />
     <Compile Include="DeleteVehiclesWindow.xaml.cs">
       <DependentUpon>DeleteVehiclesWindow.xaml</DependentUpon>
     </Compile>

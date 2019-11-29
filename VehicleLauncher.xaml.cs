@@ -79,6 +79,7 @@ namespace CarRentalSystem
             {
                 Vehicle v = addVehiclesWin.getVehicle(); //Get the saved vehicle
                 vehicles.Add(v); //Add the vehicle to the list of vehicles
+                // update SQL
                 Console.WriteLine("Vehicle Added");
             }
             afterEffects();
@@ -141,10 +142,21 @@ namespace CarRentalSystem
             }
         }
 
-        //TODO New Buttons!
         private void ViewDetailsBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            IList iL = DisplayLvw.SelectedItems; //selected items from list view (vehicles)
+            if (iL.Count == 1) //Only proceed if theere is a  single selection
+            {
+                beforeEffects();
+                Vehicle v = (Vehicle) iL[0];
+                Details D = new Details( v.getModel()+" "+v.getMakeYear(), v.getManufacturer(), v.getServices().Count, (int)v.getOdometerReading());
+                DetailsWindow detailsWin = new DetailsWindow(D);
+                detailsWin.ShowDialog();
+                afterEffects();
+            } else
+            {
+                MessageBox.Show("Select a single vehicle to see the details");
+            }
         }
 
         private void RentBtn_Click(object sender, RoutedEventArgs e)

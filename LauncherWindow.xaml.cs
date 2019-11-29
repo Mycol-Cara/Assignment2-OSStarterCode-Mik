@@ -65,205 +65,30 @@ namespace CarRentalSystem
         private void LoadSQLBtn_Click(object sender, RoutedEventArgs e)
         {
 
-            String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
-            String p1, p2, p3, p4, p5, p6, p7;
-            DataTable table;
-            MySqlDataAdapter adapter;
-            MySqlCommand cmd;
-
-            try
+            Object[] data = UpdateSQL.LoadAll();
+            if (data != null)
             {
-                //Create the connection
-                using (MySqlConnection con = new MySqlConnection(conStr))
-                {
-                    con.Open(); //Open
-
-                    //Vehicle data
-                    vehicleData = new List<Vehicle>(); //fresco
-                    table = new DataTable(); //new table
-                    cmd = new MySqlCommand("SELECT * FROM `vehicles`", con); //get table command
-                    adapter = new MySqlDataAdapter(cmd);
-                    adapter.Fill(table); //fill table
-                    Vehicle v;
-                    foreach (DataRow row in table.Rows) //go through table rows
-                    {
-                        Object[] arr = row.ItemArray; //get row as objects
-                        v = new Vehicle((int) arr[1], arr[3].ToString(), arr[2].ToString(), (int) arr[4], (int) arr[5], arr[6].ToString(), (int) arr[7]); //new vehicle
-                        vehicleData.Add(v);
-                    }
-
-                    //Service Data
-                    serviceData = new List<Service>();  //new list
-                    table = new DataTable();  // new table
-                    cmd = new MySqlCommand("SELECT * FROM `services`", con);  // get tabl;e command
-                    adapter = new MySqlDataAdapter(cmd);
-                    adapter.Fill(table);  //fill the table
-                    Service s;
-                    foreach(DataRow row in table.Rows)   //going through table rows
-                    {
-                        Object[] arr = row.ItemArray;  // get row as obects
-                        s = new Service((int)arr[1], (int)arr[2], (int) arr[3], (DateTime)arr[4], (DateTime) arr[5], (DateTime)arr[6]);
-                        serviceData.Add(s);
-                    }
-
-                    //Journey Data
-                    journeyData = new List<Journey>();
-                    table = new DataTable();
-                    cmd = new MySqlCommand("SELECT * FROM `journies`", con);
-                    adapter = new MySqlDataAdapter(cmd);
-                    adapter.Fill(table);  //fill the table
-                    Journey j;
-                    foreach(DataRow row in table.Rows)
-                    {
-                        Object[] arr = row.ItemArray;
-                        j = new Journey((int)arr[2], (DateTime)arr[3], (DateTime)arr[4], (DateTime)arr[5], (int)arr[1]);
-                        journeyData.Add(j);
-                    }
-
-                    //Fuel Data
-
-                    fuelData = new List<FuelPurchase>();
-                    table = new DataTable();
-                    cmd = new MySqlCommand("SELECT * FROM `fuelpurchases`", con);
-                    adapter = new MySqlDataAdapter(cmd);
-                    adapter.Fill(table);  //fill the table
-                    FuelPurchase fp;
-                    foreach (DataRow row in table.Rows)
-                    {
-                        Object[] arr = row.ItemArray;
-                        fp = new FuelPurchase((int)arr[2], (int)arr[3], (DateTime)arr[4], (DateTime)arr[5], (int)arr[1]);
-                        fuelData.Add(fp);
-                    }
-
-
-
-                    con.Close(); //Close
-                }
-
+                vehicleData = (List<Vehicle>) data[0]; //put list from object in here
+                serviceData = (List<Service>) data[1];
+                journeyData = (List<Journey>) data[2];
+                fuelData = (List<FuelPurchase>)data[3];
                 //initialiseData
                 initialiseDataServices(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from the loaded serviceData
                 initialiseDataJourney(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from loaded journeyData
                 initialiseDataFuelPurchase();  //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from loaded fuelData
-                                               //Change button
+                //Change button
                 LaunchVehiclesBtn.IsHitTestVisible = true; //now vehicle view is usable
                 LaunchVehiclesBtn.Opacity = 1.0;
-
             }
-            catch (Exception mse) { Console.WriteLine(mse.ToString()); Console.WriteLine("Error SQL"); }
+  
         }
 
         private void SaveSQLBtn_Click(object sender, RoutedEventArgs e)
         {
-            //Connection string
-            if (adminMode == false) //current inactive, not an admin
-            {
-                LoginForm form = new LoginForm();
-                form.ShowDialog();
-                if (form.getResult()) //Password worked
-                {
-                    setAdminMode(true); //turn on if user and password correct
-                }
-            }
-            else //currently active
-            {
-                setAdminMode(false); //turn off, no need for password
-            }
-
-            String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
-            String p1, p2, p3, p4, p5, p6, p7;
-            //this.adminMode = vl.getAdminMode(); //get the admin mode, incase has disabled...
-            
-
-            try 
-            {
-                 //Create the connection
-                using (MySqlConnection con = new MySqlConnection(conStr))
-                {
-                    con.Open(); //Open
-
-                    //Vehicles
-                    //Clear table to save over
-                    MySqlCommand cmd = new MySqlCommand();
-                    cmd.Connection = con;
-                    cmd.CommandText = "TRUNCATE TABLE `vehicles`";
-                    cmd.ExecuteNonQuery();
-
-                    //Save data for each vehicle
-                    foreach (Vehicle v in vehicleData)
-                    {
-                        p1 = v.getVehicleID().ToString(); p2 = v.getModel(); p3 = v.getManufacturer();  p4 = v.getMakeYear().ToString(); p5 = v.getOdometerReading().ToString();  p6 = v.getRegistrationNumber().ToString(); p7 = v.getTankCapacity().ToString();
-                        cmd = new MySqlCommand();
-                        cmd.Connection = con;
-                        cmd.CommandText = "INSERT INTO `vehicles`(`vehicleid`,`model`,`manufacturer`,`makeyear`,`odometer`,`registration`,`tankcapacity`) VALUES(" + p1 + ", " + p2 + ", " + p3 + ", " + p4 + ", " + p5 + ", " + p6 + ", " + p7 + ")";
-                        cmd.ExecuteNonQuery();
-                        cmd.Dispose();
-                    }
-
-
-                    //Services
-                    buildServiceData(); //Compile service data from vehicles into one list serviceData
-                    cmd = new MySqlCommand();
-                    cmd.Connection = con;
-                    cmd.CommandText = "TRUNCATE TABLE `services`";
-                    cmd.ExecuteNonQuery();
-
-                    //Save data for each service
-                    foreach (Service s in serviceData)
-                    {
-                        p1 = s.getVehicleID().ToString(); p2 = s.getLastServiceOdometerKm().ToString(); p3 = s.getServiceCount().ToString(); p4 = s.getLastServiceDate().ToString("yyyy-MM-dd H:mm:ss"); p5 = s.getDateCreated().ToString("yyyy-MM-dd H:mm:ss");  p6 = s.getDateUpdated().ToString("yyyy-MM-dd H:mm:ss");
-                        cmd = new MySqlCommand();
-                        cmd.Connection = con;
-                        cmd.CommandText = "INSERT INTO `services`(`vehicleid`,`odometer`,`serviceCount`,`serviceDate`, `created`, `updated`) VALUES(" + p1 + ", " + p2 + ", " + p3 + ", '" + p4 + "', '" + p5 + "', '" + p6 + "')";
-                        cmd.ExecuteNonQuery();
-                        cmd.Dispose();
-                    }
-
-
-                    //Journies
-                    buildJourneyData(); //Compiling journey data from vehicle into one list journeyData
-                    cmd = new MySqlCommand();
-                    cmd.Connection = con;
-                    cmd.CommandText = "TRUNCATE TABLE `journies`";
-                    cmd.ExecuteNonQuery();
-
-                    //Save data for each journey
-                    foreach (Journey j in journeyData)
-                    {
-                        p1 = j.getVehicleID().ToString(); p2 =j.getdistanceTravelled().ToString();  p3 =j.getjourneyAt().ToString("yyyy-MM-dd H:mm:ss"); p4 = j.getDatecreated().ToString("yyyy-MM-dd H:mm:ss"); p5 =j.getDateupdated().ToString("yyyy-MM-dd H:mm:ss");
-                        cmd = new MySqlCommand();
-                        cmd.Connection = con;
-                        cmd.CommandText = "INSERT INTO `journies`(`vehicleid`,`distanceTravelled`,`journeyAt`, `created`, `updated`) VALUES(" + p1 + ", " + p2 + ", '" + p3 + "', '" + p4 + "', '" + p5 + "')";
-                        cmd.ExecuteNonQuery();
-                        cmd.Dispose();
-                    }
-
-                    //Fuel
-                    buildFuelPurchaseData(); //Compiling fuel data from vehicle into one list fuelData
-                    cmd = new MySqlCommand();
-                    cmd.Connection = con;
-                    cmd.CommandText = "TRUNCATE TABLE `fuelpurchases`";
-                    cmd.ExecuteNonQuery();
-
-                    //Save data for each fuelpurchase
-                    foreach (FuelPurchase fp in fuelData)
-                    {
-                        p1 = fp.getVehicleID().ToString(); p2 = fp.getAmount().ToString();  p3 = fp.getCost().ToString(); p4 = fp.getDatecreated().ToString("yyyy-MM-dd H:mm:ss"); p5 = fp.getDateupdated().ToString("yyyy-MM-dd H:mm:ss");
-                        cmd = new MySqlCommand();
-                        cmd.Connection = con;
-                        cmd.CommandText = "INSERT INTO `fuelpurchases`(`vehicleid`,`amount`,`cost`, `created`, `updated`) VALUES(" + p1 + ", " + p2 + ", " + p3 + ",'" + p4 + "', '" + p5 + "')";
-                        cmd.ExecuteNonQuery();
-                        cmd.Dispose();
-                    }
-
-
-
-                    con.Close(); //Close
-                }
-
-
-            }
-            catch (MySqlException mse) { Console.WriteLine(mse.ToString()); Console.WriteLine("Error SQL");  }
-
+            buildServiceData(); //Compile service data from vehicles into one list serviceData
+            buildJourneyData(); //Compiling journey data from vehicle into one list journeyData
+            buildFuelPurchaseData(); //Compiling fuel data from vehicle into one list fuelData
+            UpdateSQL.ReplaceAll(vehicleData, serviceData, journeyData, fuelData);
         }
 
         private void LoadTxtBtn_Click(object sender, RoutedEventArgs e)
@@ -481,10 +306,11 @@ namespace CarRentalSystem
         {
             adminMode = mode; //set admin mode
             SaveTxtBtn.IsHitTestVisible = mode; //set admin button activity
-
+            SaveSQLBtn.IsHitTestVisible = mode;
             double opac = 1.0;
             if (!mode) { opac = 0.5; } //admin button opacities
             SaveTxtBtn.Opacity = opac;
+            SaveSQLBtn.Opacity = opac;
 
         }
 

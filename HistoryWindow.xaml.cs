@@ -21,59 +21,60 @@ namespace CarRentalSystem
     /// </summary>
     public partial class HistoryWindow : Window
     {
+        protected int vehicleID;
 
-        protected Vehicle car;
-
-        protected ArrayList services;
+        protected List<Service> services;
+        protected List<Service> allServices;
         public ArrayList displayedServices { get; set; }
 
-        protected ArrayList journies;
-
+        protected List<Journey> journies;
+        protected List<Journey> allJournies;
         public ArrayList displayedJournies { get; set; }
 
-        protected ArrayList FPurchases { get; set; }
+        protected List<FuelPurchase> FPurchases;
+        protected List<FuelPurchase> allFuelPurchases;
         public ArrayList displayedFPurchases { get; set; }
 
-        public HistoryWindow(Vehicle car)
+        public HistoryWindow(int vehicleID, List<Service> allServices, List<Journey> allJournies, List<FuelPurchase> allFuelPurchases)
         {
             InitializeComponent();
-            this.car = car;
-            this.Title = "History of Vehicle ID: " + car.vehicleID;
+            this.vehicleID = vehicleID;
+            this.Title = "History of Vehicle ID: " + vehicleID;
 
-            //Link the journeys
-            this.journies = car.getJournies();
-            this.displayedJournies = car.getJournies();
-            // services
-            this.services = car.getServices();
-            this.displayedServices = car.getServices();
-            // Link Fuel Purchase
-            this.FPurchases = car.getFPurchases();
-            this.displayedFPurchases = car.getFPurchases();
-            
+            // the journeys of the car
+            this.allJournies = allJournies;
+            this.journies = Journey.FindJournies(allJournies, vehicleID);
+            // services of the car
+            this.allServices = allServices;
+            this.services = Service.FindServices(allServices, vehicleID);
+            //Fuel Purchase of the car
+            this.allFuelPurchases = allFuelPurchases;
+            this.FPurchases = FuelPurchase.FindFuelPurchases(allFuelPurchases, vehicleID);
 
-            this.DataContext = this;
+            this.DataContext = this; performRefresh(); //Binding
         }
         
 
+        //SERVICES ADD EDIT DELETE (TODO)
         private void AddServicesBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();
-            AddServiceWindow addServiceWin = new AddServiceWindow(car.getVehicleID());
+            AddServiceWindow addServiceWin = new AddServiceWindow(vehicleID);
             addServiceWin.ShowDialog();
             if (addServiceWin.getSaveState() && addServiceWin.getValidity()) //If a vehicle was saved!
             {
                 Service s = addServiceWin.getService(); //Get the new service
-                services.Add(s); //Add to the list
+                services.Add(s); //Add to the list of services for the car
+                allServices.Add(s); //Add to the list of all services
                 Console.WriteLine("Service Added");
             }
             afterEffects();
         }
-
         private void EditServicesBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();
             //Get indicies to edit
-            IList iL = ServicesDisplayLvw.SelectedItems; //selected items (vehicles)
+            IList iL = ServicesDisplayLvw.SelectedItems; //selected items (services)
             if (iL.Count == 1)
             {
                 EditServiceWindow editServiceWin = new EditServiceWindow((Service) iL[0]); //Send service to be edited
@@ -82,7 +83,8 @@ namespace CarRentalSystem
                 if (editServiceWin.getSaveState() && editServiceWin.getValidity()) //If a serice was saved!
                 {
                     Service S = editServiceWin.getService(); //Get the saved service
-                    services[services.IndexOf(iL[0])] = S; //Overide the service at the editted location!
+                    services[services.IndexOf((Service) iL[0])] = S; //Overide the service at the editted location!
+                    allServices[allServices.IndexOf((Service) iL[0])] = S; //Overide the service in all services!
                     Console.WriteLine("Service Edited");
                 }
             } else
@@ -93,29 +95,25 @@ namespace CarRentalSystem
             afterEffects();
         }
 
-
-
+        //JOURNEYS ADD EDIT DELETE (TODO)
         private void AddJourniesBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();
-            AddJourneyWindow addJourneyWin = new AddJourneyWindow(car.getVehicleID());
+            AddJourneyWindow addJourneyWin = new AddJourneyWindow(vehicleID);
             addJourneyWin.ShowDialog();
             if (addJourneyWin.getSaveState() && addJourneyWin.getValidity())
             {
                 Journey J = addJourneyWin.getJourney(); // Get the new journey
                 journies.Add(J);   //  Add to the list
+                allJournies.Add(J); //Add to the list of all journeys
                 Console.WriteLine(" Journey Added");
             }
             afterEffects();
         }
-
-
-
-
         private void EditJourniesBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();
-            IList iL = JourniesDisplayLvw.SelectedItems;  //select items (vehicles)
+            IList iL = JourniesDisplayLvw.SelectedItems;  //select items (journies)
             if (iL.Count == 1)
             {
                 EditJourneyWindow editJourneyWin = new EditJourneyWindow((Journey) iL[0]);
@@ -124,7 +122,8 @@ namespace CarRentalSystem
                 if (editJourneyWin.getSaveState() && editJourneyWin.getValidity())   //if a journey was saved
                     {
                         Journey J = editJourneyWin.getJourney();                        // Get the saved journey
-                        journies[journies.IndexOf(iL[0])] = J;                          // Overide the service at the editted location
+                        journies[journies.IndexOf((Journey) iL[0])] = J;              // Overide the service at the editted location
+                        allJournies[allJournies.IndexOf((Journey)iL[0])] = J; //Overide the service in all journies!
                         Console.WriteLine(" Journey Edited");
                     } else
                 {
@@ -135,33 +134,35 @@ namespace CarRentalSystem
 
         }
 
+        //FUEL PURCHASES ADD EDIT DELETE (TODO)
         private void AddFuelPurchasesBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();
-            AddFuelRecordsWindow addFuelWin = new AddFuelRecordsWindow(car.getVehicleID());
+            AddFuelRecordsWindow addFuelWin = new AddFuelRecordsWindow(vehicleID);
             addFuelWin.ShowDialog();
             if (addFuelWin.getSaveState() && addFuelWin.getValidity())
             {
                 FuelPurchase F = addFuelWin.getFuelPurchase(); // Get the new Fuel
                 FPurchases.Add(F);   //  Add to the list
+                allFuelPurchases.Add(F); //Add to the list of all fuel purchases
                 Console.WriteLine(" Fuel Purchase Added");
             }
             afterEffects();
         }
-
         private void EditFuelPurchasesBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();
-            IList iL = FuelPurchasesDisplayLvw.SelectedItems;  //select items (vehicles)
+            IList iL = FuelPurchasesDisplayLvw.SelectedItems;  //select items (fuel purchases)
             if (iL.Count == 1)
             {
                 EditFuelRecordsWindow editFuelRecordsWin = new EditFuelRecordsWindow((FuelPurchase)iL[0]);
                 editFuelRecordsWin.ShowDialog();
                 // Check if saved or not
-                if (editFuelRecordsWin.getSaveState() && editFuelRecordsWin.getValidity())   //if a journey was saved
+                if (editFuelRecordsWin.getSaveState() && editFuelRecordsWin.getValidity())   //if a purchase was saved
                 {
-                    FuelPurchase F = editFuelRecordsWin.getFuelPurchase();                        // Get the saved journey
-                    FPurchases[FPurchases.IndexOf(iL[0])] = F;                          // Overide the service at the editted location
+                    FuelPurchase F = editFuelRecordsWin.getFuelPurchase();                        // Get the saved purchase
+                    FPurchases[FPurchases.IndexOf((FuelPurchase) iL[0])] = F;                          // Overide the fuel purchase at the editted location
+                    allFuelPurchases[allFuelPurchases.IndexOf((FuelPurchase)iL[0])] = F; //Overide the service in all fuel purchases!
                     Console.WriteLine(" Fuel Edited");
                 }
                 else
@@ -172,12 +173,30 @@ namespace CarRentalSystem
             afterEffects();
         }
 
+
+        //GETTERS
+        public List<Service> getAllServices()
+        {
+            return this.allServices;
+        }
+        public List<Journey> getAllJournies()
+        {
+            return this.allJournies; 
+        }
+        public List<FuelPurchase> getAllFuelPurchases()
+        {
+            return this.allFuelPurchases; 
+        }
+
+
+        //HELPERS
         private void performRefresh()
         {
 
-            displayedServices = copyArrayList(services); //Initialise displayed services (before filter)
-            displayedJournies = copyArrayList(journies);
-            displayedFPurchases = copyArrayList(FPurchases);
+            displayedServices = copyToArrayList(services); //Initialise displayed data 
+            displayedJournies = copyToArrayList(journies);
+            displayedFPurchases = copyToArrayList(FPurchases);
+
             //Manually reset binding and refresh -works! (note XAML binding only seemed to work on window creation!)
             ServicesDisplayLvw.SetBinding(ListView.ItemsSourceProperty,
                 new Binding
@@ -216,21 +235,32 @@ namespace CarRentalSystem
             performRefresh(); //perform the filter on the displayed data!
         }
 
-        public Vehicle getVehicle()
-        {
-            return this.car;
-        }
-
-        private ArrayList copyArrayList(ArrayList AL)
+        private ArrayList copyToArrayList(List<Service> L)
         {
             ArrayList newAL = new ArrayList();
-            for (int i = 0; i < AL.Count; i++) //Clone all values to the new list!
+            for (int i = 0; i < L.Count; i++) //Clone all values to the new list!
             {
-                newAL.Add(AL[i]);
+                newAL.Add(L[i]);
             }
             return newAL;
         }
-
-      
+        private ArrayList copyToArrayList(List<Journey> L)
+        {
+            ArrayList newAL = new ArrayList();
+            for (int i = 0; i < L.Count; i++) //Clone all values to the new list!
+            {
+                newAL.Add(L[i]);
+            }
+            return newAL;
+        }
+        private ArrayList copyToArrayList(List<FuelPurchase> L)
+        {
+            ArrayList newAL = new ArrayList();
+            for (int i = 0; i < L.Count; i++) //Clone all values to the new list!
+            {
+                newAL.Add(L[i]);
+            }
+            return newAL;
+        }
     }
 }

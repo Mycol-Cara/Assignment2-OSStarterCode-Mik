@@ -69,7 +69,8 @@ namespace CarRentalSystem
                     foreach (DataRow row in table.Rows)
                     {
                         Object[] arr = row.ItemArray;
-                        j = new Journey((int)arr[2], (DateTime)arr[3], (DateTime)arr[4], (DateTime)arr[5], (int)arr[1]);
+                        Boolean paid = (((int)arr[6]) == 1); //convert to boolean
+                        j = new Journey((int)arr[2], (DateTime)arr[3], (DateTime)arr[4], (DateTime)arr[5], (int)arr[1],paid);
                         journeyData.Add(j);
                     }
 
@@ -83,7 +84,7 @@ namespace CarRentalSystem
                     foreach (DataRow row in table.Rows)
                     {
                         Object[] arr = row.ItemArray;
-                        fp = new FuelPurchase((int)arr[2], (int)arr[3], (DateTime)arr[4], (DateTime)arr[5], (int)arr[1]);
+                        fp = new FuelPurchase((int)arr[2], (double)arr[3], (DateTime)arr[4], (DateTime)arr[5], (int)arr[1]);
                         fuelData.Add(fp);
                     }
 
@@ -156,10 +157,11 @@ namespace CarRentalSystem
                     //Save data for each journey
                     foreach (Journey j in journeyData)
                     {
-                        p1 = j.getVehicleID().ToString(); p2 = j.getdistanceTravelled().ToString(); p3 = j.getjourneyAt().ToString("yyyy-MM-dd H:mm:ss"); p4 = j.getDatecreated().ToString("yyyy-MM-dd H:mm:ss"); p5 = j.getDateupdated().ToString("yyyy-MM-dd H:mm:ss");
+                        p1 = j.getVehicleID().ToString(); p2 = j.getdistanceTravelled().ToString(); p3 = j.getjourneyAt().ToString("yyyy-MM-dd H:mm:ss"); p4 = j.getDatecreated().ToString("yyyy-MM-dd H:mm:ss"); p5 = j.getDateupdated().ToString("yyyy-MM-dd H:mm:ss"); 
+                        if (j.isPaid()) { p6 = "1"; } else { p6 = "0"; }
                         cmd = new MySqlCommand();
                         cmd.Connection = con;
-                        cmd.CommandText = "INSERT INTO `journies`(`vehicleid`,`distanceTravelled`,`journeyAt`, `created`, `updated`) VALUES(" + p1 + ", " + p2 + ", '" + p3 + "', '" + p4 + "', '" + p5 + "')";
+                        cmd.CommandText = "INSERT INTO `journies`(`vehicleid`,`distanceTravelled`,`journeyAt`, `created`, `updated`,`paid`) VALUES(" + p1 + ", " + p2 + ", '" + p3 + "', '" + p4 + "', '" + p5 + "','" + p6 +"')";
                         cmd.ExecuteNonQuery();
                         cmd.Dispose();
                     }
@@ -173,10 +175,10 @@ namespace CarRentalSystem
                     //Save data for each fuelpurchase
                     foreach (FuelPurchase fp in fuelData)
                     {
-                        p1 = fp.getVehicleID().ToString(); p2 = fp.getAmount().ToString(); p3 = fp.getCost().ToString(); p4 = fp.getDatecreated().ToString("yyyy-MM-dd H:mm:ss"); p5 = fp.getDateupdated().ToString("yyyy-MM-dd H:mm:ss");
+                        p1 = fp.getVehicleID().ToString(); p2 = fp.getAmount().ToString(); p3 = fp.getPrice().ToString(); p4 = fp.getDatecreated().ToString("yyyy-MM-dd H:mm:ss"); p5 = fp.getDateupdated().ToString("yyyy-MM-dd H:mm:ss");
                         cmd = new MySqlCommand();
                         cmd.Connection = con;
-                        cmd.CommandText = "INSERT INTO `fuelpurchases`(`vehicleid`,`amount`,`cost`, `created`, `updated`) VALUES(" + p1 + ", " + p2 + ", " + p3 + ",'" + p4 + "', '" + p5 + "')";
+                        cmd.CommandText = "INSERT INTO `fuelpurchases`(`vehicleid`,`amount`,`price`, `created`, `updated`) VALUES(" + p1 + ", " + p2 + ", " + p3 + ",'" + p4 + "', '" + p5 + "')";
                         cmd.ExecuteNonQuery();
                         cmd.Dispose();
                     }

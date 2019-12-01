@@ -23,17 +23,25 @@ namespace CarRentalSystem
     /// </summary>
     public partial class VehicleLauncher : Window
     {
-        protected ArrayList vehicles; //all vehicleData
-        public ArrayList displayedVehicles { get; set; }
+        protected ArrayList vehicles; //all vehicle data, displayed
+        protected List<Service> allServices; //Not displayed/modified here, displayed in history window
+        protected List<Journey> allJournies; //Not displayed/modified here, displayed in history window
+        protected List<FuelPurchase> allFuelPurchases; //Not displayed/modified here, displayed in history window
+        public ArrayList displayedVehicles { get; set; } //linked to the display allowing filter by this vehicle data
         private Boolean adminMode;
-        public VehicleLauncher(ArrayList existingVehicles, Boolean adminMode)
+        public VehicleLauncher(ArrayList existingVehicles, List<Service> existingServices, List<Journey> existingJournies, List<FuelPurchase> existingFuelPurchases, Boolean adminMode)
         {
             InitializeComponent();
-            this.Title = "    Vehicle Launcher";
+            this.Title = "Vehicle Launcher";
 
             //Get the (a copy of) vehicle list 
             vehicles = existingVehicles;
             displayedVehicles = existingVehicles;
+
+            //other data (not displayed)
+            allServices = existingServices;
+            allJournies = existingJournies;
+            allFuelPurchases = existingFuelPurchases;
 
             //Data context for displayed list of companies
             this.DataContext = this;
@@ -43,33 +51,7 @@ namespace CarRentalSystem
             setAdminMode(adminMode);
         }
 
-        private void setAdminMode(Boolean mode)
-        {
-            adminMode = mode; //set admin mode
-            AddVehicleBtn.IsHitTestVisible = mode; //set admin button activity
-            VehicleHistoryBtn.IsHitTestVisible = mode;
-            EditVehicleBtn.IsHitTestVisible = mode;
-            DeleteVehicleBtn.IsHitTestVisible = mode;
-            double opac = 1.0;
-            if (!mode) { opac = 0.5; } //admin button opacities
-            EditVehicleBtn.Opacity = opac;
-            AddVehicleBtn.Opacity = opac;
-            VehicleHistoryBtn.Opacity = opac;
-            DeleteVehicleBtn.Opacity = opac;
-        }
-        public Boolean getAdminMode() { return this.adminMode; }
 
-        private void beforeEffects()
-        {
-            this.VisualOpacity = 0.5;
-            this.VisualEffect = new BlurEffect();
-        }
-        private void afterEffects()
-        {
-            this.VisualOpacity = 1;
-            this.VisualEffect = null;
-            performFilterAndRefresh(SearchTxt.Text); //perform the filter on the displayed vehicles!
-        }
         private void AddVehicleBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();
@@ -149,7 +131,9 @@ namespace CarRentalSystem
             {
                 beforeEffects();
                 Vehicle v = (Vehicle) iL[0];
-                Details D = new Details( v.getModel()+" "+v.getMakeYear(), v.getManufacturer(), v.getServices().Count, (int)v.getOdometerReading());
+                //Compute details
+                Details D = Details.computeDetails(v, allServices, allJournies);
+                //Open window
                 DetailsWindow detailsWin = new DetailsWindow(D);
                 detailsWin.ShowDialog();
                 afterEffects();
@@ -162,14 +146,15 @@ namespace CarRentalSystem
         private void RentBtn_Click(object sender, RoutedEventArgs e)
         {
             IList iL = DisplayLvw.SelectedItems; //selected items from list view (vehicles)
-            if (iL.Count > 0) //Only proceed if theere is selection
+            if (iL.Count == 1) //Only proceed if theere is selection
             {
-                RentalWindow rentalWin = new RentalWindow(iL.Count);
+                RentalWindow rentalWin = new RentalWindow(((Vehicle)iL[0]).vehicleID, allJournies);
                 rentalWin.ShowDialog();
-                //TODO advanced customer detail and contact with customer!
+                //TODO advanced customer detail and contact with customer
+                allJournies = rentalWin.getAllJournies(); //Update journey data, assuming details lead to successful payments
             } else
             {
-                MessageBox.Show("Please select a vehicle to rent!");
+                MessageBox.Show("Please select a single vehicle to pay rent!");
             }
             
         }
@@ -199,11 +184,13 @@ namespace CarRentalSystem
             {
                 beforeEffects();
 
-                HistoryWindow hw = new HistoryWindow((Vehicle) iL[0]); //Open the history window!
+                HistoryWindow hw = new HistoryWindow(((Vehicle) iL[0]).vehicleID, allServices, allJournies, allFuelPurchases); //Open the history window! It takes the selected vehicle and then all of the other data!
                 hw.ShowDialog();
- 
-                int ind = vehicles.IndexOf((Vehicle)iL[0]); //position of vehicle
-                vehicles[ind] = hw.getVehicle(); //get the vehicle/car incase it has been changed
+
+                //Get data back that may have changed
+                allServices = hw.getAllServices();
+                allJournies = hw.getAllJournies();
+                allFuelPurchases = hw.getAllFuelPurchases();
 
                 afterEffects();
             } else
@@ -226,12 +213,36 @@ namespace CarRentalSystem
         }
         
         
+
+        //Getters
+        public List<Vehicle> getVehicleList()
+        {
+            return arrayListToList(vehicles);
+        }
+        public List<Service> getServiceList()
+        {
+            return this.allServices;
+        }
+        public List<Journey> getJourneyList()
+        {
+            return this.allJournies;
+        }
+        public List<FuelPurchase> getFuelPurchaseList()
+        {
+            return this.allFuelPurchases;
+        }
+
+
+        //Helpers
+
+
+
         private void performFilterAndRefresh(String keyWord)
         {
-            
+
             displayedVehicles = copyArrayList(vehicles); //Initialise displayed vehicles (before filter)
-            
-            
+
+
             if (keyWord.Length > 0) //Only if there is a keyword try to filter!
             {
                 Vehicle V; //Company var
@@ -242,7 +253,7 @@ namespace CarRentalSystem
                     if (match(keyWord, V.getManufacturer())) //evaluate if there is a match with keyword
                     {
                         i++; //iterate past the match, do nothing
-                    } 
+                    }
                     else if (match(keyWord, V.getModel()))
                     {
                         i++; //iterate past the match, do nothing
@@ -269,7 +280,7 @@ namespace CarRentalSystem
                     }
                 }
             }
-            
+
             //Console.WriteLine(JsonConvert.SerializeObject(displayedVehicles)); //Check object in console
 
             //Manually reset binding and refresh -works! (note XAML binding only seemed to work on window creation!)
@@ -282,8 +293,6 @@ namespace CarRentalSystem
             DisplayLvw.Items.Refresh();
 
         }
-        
-
         private Boolean match(String child, String parent)
         {
             //Simple search using substring method in lowercase
@@ -299,7 +308,7 @@ namespace CarRentalSystem
 
             for (int i = 0; i < vehicles.Count; i++)
             {
-                vID = ((Vehicle) vehicles[i]).getVehicleID();
+                vID = ((Vehicle)vehicles[i]).getVehicleID();
                 if (vID >= maxID)
                 {
                     maxID = vID + 1;
@@ -308,17 +317,6 @@ namespace CarRentalSystem
 
             return maxID;
         }
-
-        public ArrayList getVehicleArrayList()
-        {
-            return copyArrayList(vehicles);
-        }
-
-        public List<Vehicle> getVehicleList()
-        {
-            return arrayListToList(vehicles);
-        }
-
         private ArrayList copyArrayList(ArrayList AL)
         {
             ArrayList newAL = new ArrayList();
@@ -337,6 +335,34 @@ namespace CarRentalSystem
                 newL.Add((Vehicle)AL[i]);
             }
             return newL;
+        }
+
+        private void setAdminMode(Boolean mode)
+        {
+            adminMode = mode; //set admin mode
+            AddVehicleBtn.IsHitTestVisible = mode; //set admin button activity
+            VehicleHistoryBtn.IsHitTestVisible = mode;
+            EditVehicleBtn.IsHitTestVisible = mode;
+            DeleteVehicleBtn.IsHitTestVisible = mode;
+            double opac = 1.0;
+            if (!mode) { opac = 0.5; } //admin button opacities
+            EditVehicleBtn.Opacity = opac;
+            AddVehicleBtn.Opacity = opac;
+            VehicleHistoryBtn.Opacity = opac;
+            DeleteVehicleBtn.Opacity = opac;
+        }
+        public Boolean getAdminMode() { return this.adminMode; }
+
+        private void beforeEffects()
+        {
+            this.VisualOpacity = 0.5;
+            this.VisualEffect = new BlurEffect();
+        }
+        private void afterEffects()
+        {
+            this.VisualOpacity = 1;
+            this.VisualEffect = null;
+            performFilterAndRefresh(SearchTxt.Text); //perform the filter on the displayed vehicles!
         }
 
 

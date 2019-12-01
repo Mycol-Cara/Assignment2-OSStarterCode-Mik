@@ -26,7 +26,7 @@
             </ScrollViewer>
         </Border>
         <Button x:Name="ViewDetailsBtn" Click="ViewDetailsBtn_Click"  Content="Details" HorizontalAlignment="Left" Margin="30,373,0,0" VerticalAlignment="Top" Width="85" Background="LightGray"/>
-        <Button x:Name="RentBtn" Click="RentBtn_Click" Content="Rent" HorizontalAlignment="Left" Margin="131,373,0,0" VerticalAlignment="Top" Width="85" Background="Beige"/>
+        <Button x:Name="RentBtn" Click="RentBtn_Click" Content="Pay Journey Rent" HorizontalAlignment="Left" Margin="131,373,0,0" VerticalAlignment="Top" Width="109" Background="Beige"/>
         <Button x:Name="AdminLoginBtn" Click="AdminLoginBtn_Click"  Content="Admin Tools" HorizontalAlignment="Left" Margin="295,373,0,0" VerticalAlignment="Top" Width="85" Background="WhiteSmoke"/>
         <Button x:Name="VehicleHistoryBtn" Click="VehicleHistoryBtn_Click" Content="History" HorizontalAlignment="Left" Margin="397,373,0,0" VerticalAlignment="Top" Width="85" Background="FloralWhite"/>
         <Button x:Name="AddVehicleBtn" Click="AddVehicleBtn_Click" Content="Add" HorizontalAlignment="Left" Margin="501,373,0,0" VerticalAlignment="Top" Width="85" Background="#FF4DF01D"/>

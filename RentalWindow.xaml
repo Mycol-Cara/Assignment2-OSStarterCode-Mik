@@ -5,21 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarRentalSystem"
         mc:Ignorable="d"
-        Title="Request Rental" Height="223.631" Width="431.237">
+        Title="Rental Payment" Height="443.631" Width="431.237">
     <Grid>
-        <Label Content="Full Name*:" HorizontalAlignment="Left" Height="26" Margin="20,24,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="FullNameTxt" HorizontalAlignment="Left" Height="23" Margin="125,24,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272"/>
+        <Label Content="Unpaid Journies for Vehicle(s)" HorizontalAlignment="Left" Height="26" Margin="121,10,0,0" VerticalAlignment="Top" Width="251"/>
 
-        <Label Content="Phone:" HorizontalAlignment="Left" Height="26" Margin="20,54,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="PhoneTxt" HorizontalAlignment="Left" Height="23" Margin="125,54,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272"/>
+        <Border Margin="19,38,21,250">
+            <ScrollViewer Margin="0,0,0,0" HorizontalScrollBarVisibility="Visible">
+                <ListView x:Name="JourniesDisplayLvw" ItemsSource="{Binding displayedJournies}" HorizontalAlignment="Left" Height="1000" Margin="0,0,0,0" VerticalAlignment="Top" Width="1500" Background="Snow" PreviewMouseLeftButtonUp="JourniesDisplayLvw_Compute">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding distanceTravelled}" Header="Distance Travelled (Km)" Width="100" ></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding journeyAt}" Header="Journey At" Width="70"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding created}" Header="Created" Width="70"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding updated}" Header="Updated" Width="70"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding paid}" Header="Paid Rent" Width="100"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+        </Border>
 
-        <Label Content="Email*:" HorizontalAlignment="Left" Height="26" Margin="20,84,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="EmailTxt" HorizontalAlignment="Left" Height="23" Margin="125,84,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272"/>
+        <Label x:Name="CostLbl" Content="$0 will be automatically deducted from your staff account" Margin="17,178,2,191"/>
 
-        <Label x:Name="MessageTxt" Content="  *Please ensure these detail are correct!" HorizontalAlignment="Left" Height="26" Margin="18,115,0,0" VerticalAlignment="Top" Width="379"/>
+        <Label Content="Full Name*:" HorizontalAlignment="Left" Height="26" Margin="19,238,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="FullNameTxt" HorizontalAlignment="Left" Height="23" Margin="124,238,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272"/>
 
-        <Button x:Name="SendBtn" Click="SendBtn_Click" Content="Request" HorizontalAlignment="Left" Margin="18,154,0,0" VerticalAlignment="Top" Width="100" Background="#FF86F176"/>
-        <Button x:Name="CancelBtn" Click="CancelBtn_Click" Content="Cancel" HorizontalAlignment="Left" Margin="297,154,0,0" VerticalAlignment="Top" Width="100" Background="#FFE2625C"/>
+        <Label Content="Phone:" HorizontalAlignment="Left" Height="26" Margin="19,268,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="PhoneTxt" HorizontalAlignment="Left" Height="23" Margin="124,268,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272"/>
+
+        <Label Content="Email*:" HorizontalAlignment="Left" Height="26" Margin="19,298,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="EmailTxt" HorizontalAlignment="Left" Height="23" Margin="124,298,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272"/>
+
+        <Label x:Name="MessageTxt" Content="  *Please ensure these detail are correct!" HorizontalAlignment="Left" Height="26" Margin="17,329,0,0" VerticalAlignment="Top" Width="379"/>
+
+        <Button x:Name="SendBtn" Click="SendBtn_Click" Content="Begin Payment" HorizontalAlignment="Left" Margin="17,368,0,0" VerticalAlignment="Top" Width="100" Background="#FF86F176"/>
+        <Button x:Name="CancelBtn" Click="CancelBtn_Click" Content="Cancel" HorizontalAlignment="Left" Margin="296,368,0,0" VerticalAlignment="Top" Width="100" Background="#FFE2625C"/>
 
     </Grid>
 </Window>

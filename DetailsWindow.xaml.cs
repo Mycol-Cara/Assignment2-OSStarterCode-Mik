@@ -21,7 +21,7 @@ namespace CarRentalSystem
 
     {
         private Details D; //The service to be created
-        
+
         public DetailsWindow (Details D) 
         {
             InitializeComponent();
@@ -29,12 +29,15 @@ namespace CarRentalSystem
             displayDetails();
             
         }
+        
         private void displayDetails() //set the details data into the text fields!
         {
             modelTxt.Text = D.getModel();
             manufacturerTxt.Text = D.getManufacturer();
             serviceTxt.Text = D.getServiceNum().ToString();
             distanceTxt.Text = D.getTotDistance().ToString();
+            revenueTxt.Text = D.getRevenueInfo();
+            distanceSinceServiceTxt.Text = D.getDistanceSinceLastService().ToString();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

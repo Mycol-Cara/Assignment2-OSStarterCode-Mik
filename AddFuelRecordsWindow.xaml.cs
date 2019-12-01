@@ -25,7 +25,7 @@ namespace CarRentalSystem
         public AddFuelRecordsWindow(int vehicleID)
         {
             InitializeComponent();
-            this.F = new FuelPurchase(0, 0, DateTime.Now, DateTime.Now, vehicleID); //Random fuelPurchase
+            this.F = new FuelPurchase(0, 1.0, DateTime.Now, DateTime.Now, vehicleID); //Random fuelPurchase
             saveState = false;           //when window constructed has not been saved yet
             validFuelPurchase = true;
         }
@@ -40,12 +40,12 @@ namespace CarRentalSystem
         private void UpdateFuel()
         {
             int amount;
-            int cost;
+            double price;
             
             try
             {
                 amount = System.Convert.ToInt32(AmountTxt.Text);
-                cost = System.Convert.ToInt32(CostTxt.Text);
+                price = System.Convert.ToDouble(PriceTxt.Text);
               
             }
             catch
@@ -55,7 +55,7 @@ namespace CarRentalSystem
                 return;
             }
 
-            F = new FuelPurchase(amount, cost ,DateTime.Now, DateTime.Now, F.getVehicleID()); //New Fuel with all of the information!
+            F = new FuelPurchase(amount, price ,DateTime.Now, DateTime.Now, F.getVehicleID()); //New Fuel with all of the information!
             validFuelPurchase = true;
         }
 

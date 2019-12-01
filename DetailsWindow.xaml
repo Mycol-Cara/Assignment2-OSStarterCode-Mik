@@ -11,17 +11,20 @@
         <TextBlock Text=" Details Viewer" FontSize="22" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="311,20,328,332" Width="155" Height="34"></TextBlock>
         <Button Content="Got It!" HorizontalAlignment="Left" Height="37" Margin="321,319,0,0" VerticalAlignment="Top" Width="133" Click="Button_Click" FontWeight="Bold"/>
 
-        <TextBox x:Name="modelTxt" IsReadOnly="True" HorizontalAlignment="Left" Margin="183,112,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="149" FontSize="14"/>
-        <Label Content="Model:" HorizontalAlignment="Left" Margin="65,108,0,0" VerticalAlignment="Top" Width="68" FontSize="14" FontWeight="Bold"/>
-        <TextBox x:Name="manufacturerTxt" IsReadOnly="True" HorizontalAlignment="Left" Margin="183,177,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="149" FontSize="14"/>
-        <Label Content="Manufacturer:" HorizontalAlignment="Left" Margin="62,172,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
-        <TextBox x:Name="serviceTxt" IsReadOnly="True" HorizontalAlignment="Left" Margin="574,113,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="149" FontSize="14"/>
-        <Label Content="Total Services:" HorizontalAlignment="Left" Margin="380,108,0,0" VerticalAlignment="Top" Width="102" FontSize="14" FontWeight="Bold"/>
-        <TextBox x:Name="distanceTxt" IsReadOnly="True" HorizontalAlignment="Left" Margin="574,177,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="149" FontSize="14" IsHitTestVisible="False"/>
-        <Label Content="Total Distance Travelled :" HorizontalAlignment="Left" Margin="380,172,0,0" VerticalAlignment="Top" Width="176" FontSize="14" FontWeight="Bold"/>
-        <Label Content="Tips:" HorizontalAlignment="Left" Margin="62,239,0,0" VerticalAlignment="Top" Width="68" FontSize="14" FontWeight="Bold"/>
-        <Label x:Name="tipsLbl" Content="When renting, don't forget to keep your fuel receipts and log your journies in the log book for a 10% discount!"  HorizontalAlignment="Left" Height="28" Margin="89,268,0,0" VerticalAlignment="Top" Width="605"/>
-
+        <TextBox x:Name="modelTxt" IsReadOnly="True" HorizontalAlignment="Left" Margin="187,112,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="149" FontSize="14"/>
+        <Label Content="Model:" HorizontalAlignment="Left" Margin="41,108,0,0" VerticalAlignment="Top" Width="68" FontSize="14" FontWeight="Bold"/>
+        <TextBox x:Name="manufacturerTxt" IsReadOnly="True" HorizontalAlignment="Left" Margin="187,162,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="149" FontSize="14"/>
+        <Label Content="Manufacturer:" HorizontalAlignment="Left" Margin="38,157,0,0" VerticalAlignment="Top" Width="106" FontSize="14" FontWeight="Bold"/>
+        <TextBox x:Name="serviceTxt" IsReadOnly="True" HorizontalAlignment="Left" Margin="601,113,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="149" FontSize="14"/>
+        <Label Content="Total Services:" HorizontalAlignment="Left" Margin="388,113,0,0" VerticalAlignment="Top" Width="114" FontSize="14" FontWeight="Bold"/>
+        <TextBox x:Name="distanceTxt" IsReadOnly="True" HorizontalAlignment="Left" Margin="601,162,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="149" FontSize="14" IsHitTestVisible="False"/>
+        <Label Content="Total Distance Travelled (Km):" HorizontalAlignment="Left" Margin="388,162,0,0" VerticalAlignment="Top" Width="208" FontSize="14" FontWeight="Bold"/>
+        <Label Content="Tips:" HorizontalAlignment="Left" Margin="166,268,0,0" VerticalAlignment="Top" Width="68" FontSize="14" FontWeight="Bold"/>
+        <Label x:Name="tipsLbl" Content="When renting, don't forget to keep your fuel receipts!"  HorizontalAlignment="Left" Height="28" Margin="239,268,0,0" VerticalAlignment="Top" Width="455"/>
+        <TextBox x:Name="distanceSinceServiceTxt" IsReadOnly="True" HorizontalAlignment="Left" Margin="601,211,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="149" FontSize="14" IsHitTestVisible="False"/>
+        <Label Content="Distance Since Service (Km):" HorizontalAlignment="Left" Margin="388,211,0,0" VerticalAlignment="Top" Width="200" FontSize="14" FontWeight="Bold"/>
+        <TextBox x:Name="revenueTxt" IsReadOnly="True" HorizontalAlignment="Left" Margin="187,211,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="24" Width="149" FontSize="14"/>
+        <Label Content="Journey Revenue ($):" HorizontalAlignment="Left" Margin="38,211,0,0" VerticalAlignment="Top" Width="144" FontSize="14" FontWeight="Bold"/>
     </Grid>
 
 </Window>

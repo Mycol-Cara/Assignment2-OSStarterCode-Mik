@@ -22,13 +22,14 @@ namespace CarRentalSystem
         private Journey J; //The journey to be created
         protected Boolean saveState; //was it saved on exit
         protected Boolean validJourney;  //input check
-
+        private Boolean Checked; //radio button state store
         public AddJourneyWindow(int vehicleID)
         {
             InitializeComponent();
-            this.J = new Journey(0, DateTime.Now, DateTime.Now, DateTime.Now, vehicleID); //Random journey
+            this.J = new Journey(0, DateTime.Now, DateTime.Now, DateTime.Now, vehicleID, false); //Random journey
             saveState = false;           //when window constructed has not been saved yet
             validJourney = true;
+            Checked = false;
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
@@ -43,6 +44,7 @@ namespace CarRentalSystem
             int dt;
             DateTime jdate;
             int day, month, year;
+            Boolean jPaid = (Boolean) PaidRadioBtn.IsChecked;
             try
             {
                 dt = System.Convert.ToInt32(DistanceTravelledTxt.Text);
@@ -56,8 +58,8 @@ namespace CarRentalSystem
                 validJourney = false; //Due to likely poor data entry
                 return;
             }
-            
-            J = new Journey(dt, jdate, DateTime.Now, DateTime.Now, J.getVehicleID()); //New journey with all of the information!
+
+            J = new Journey(dt, jdate, DateTime.Now, DateTime.Now, J.getVehicleID(), jPaid); //New journey with all of the information!
             validJourney = true;
         }
 
@@ -79,6 +81,17 @@ namespace CarRentalSystem
             return validJourney;
         }
 
-
+        private void PaidRadioBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (Checked)
+            {
+                PaidRadioBtn.IsChecked = false;
+                Checked = false;
+            }
+            else
+            {
+                Checked = true;
+            }
+        }
     }
 }

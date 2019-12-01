@@ -29,8 +29,7 @@ namespace CarRentalSystem
 
         //private FuelPurchase fuelPurchase; //Fuel purchase history of the car
         private ArrayList services; //services on vehicle
-        private ArrayList journies;  //list of journey
-        private ArrayList fpurchases;
+
 
         /**
          * Class constructor specifying name of make (manufacturer), model and year
@@ -51,10 +50,9 @@ namespace CarRentalSystem
             this.odometerReading = odometerReading;
             this.registrationNumber = registrationNumber;
             this.tankCapacity = tankCapacity;
-            //fuelPurchase = new FuelPurchase();
+
             services = new ArrayList();
-            journies = new ArrayList();
-            fpurchases = new ArrayList();
+
         }
 
         //Getter methods
@@ -78,26 +76,6 @@ namespace CarRentalSystem
         public ArrayList getServices()
         {
             return this.services;
-        }
-        public void setServices(ArrayList services)
-        {
-            this.services = services;
-        }
-        public ArrayList getJournies()
-        {
-            return this.journies;
-        }
-        public void setJournies(ArrayList journies)
-        {
-           this.journies = journies;
-        }
-        public ArrayList getFPurchases()
-        {
-            return this.fpurchases;
-        }
-        public void setFPurchases(ArrayList fpurchases)
-        {
-            this.fpurchases = fpurchases;
         }
 
 

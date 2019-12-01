@@ -92,6 +92,21 @@ namespace CarRentalSystem
             return this.vehicleID;
         }
 
+        //Helper method to find services for a given vehicle in a list
+        public static List<Service> FindServices(List<Service> allServices, int vehicleID)
+        { //Go through serviceData and match services to the car with a vehicleID
+            List<Service> carServices; //intialise service data for a vehicle 
+            carServices = new List<Service>(); //new empty list
+            foreach (Service s in allServices) //Go through service data
+            {
+                if (s.getVehicleID() == vehicleID) //Add to specific car services as Id is the same!
+                {
+                    carServices.Add(s);
+                }
+            }
+            return carServices;
+        }
+
         /**
          * Calculates the total services by dividing kilometers by
          * {@link #SERVICE_KILOMETER_LIMIT} and floors the value. 

@@ -50,10 +50,19 @@ namespace CarRentalSystem
         {
             beforeEffects();                // giving opacity to the main window
 
-            VehicleLauncher vl = new VehicleLauncher(convertListToArrayList(vehicleData), adminMode); //create new vehicles windows with existing vehicle data/list andd same admin mode
+            //Create window with data
+            VehicleLauncher vl = new VehicleLauncher(convertListToArrayList(vehicleData), serviceData, journeyData, fuelData, adminMode); //create new vehicles windows with existing vehicle data and all of the other data andd same admin mode
             vl.ShowDialog();
+
+            //Get data back that may have changed
             vehicleData = new List<Vehicle>();
-            vehicleData = vl.getVehicleList(); //update data
+            vehicleData = vl.getVehicleList(); //update data 
+            serviceData = new List<Service>();
+            serviceData = vl.getServiceList();
+            journeyData = new List<Journey>();
+            journeyData = vl.getJourneyList();
+            fuelData = new List<FuelPurchase>();
+            fuelData = vl.getFuelPurchaseList();
 
             this.adminMode = vl.getAdminMode(); //get the admin mode, incase has disabled...
             setAdminMode(this.adminMode);
@@ -72,10 +81,7 @@ namespace CarRentalSystem
                 serviceData = (List<Service>) data[1];
                 journeyData = (List<Journey>) data[2];
                 fuelData = (List<FuelPurchase>)data[3];
-                //initialiseData
-                initialiseDataServices(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from the loaded serviceData
-                initialiseDataJourney(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from loaded journeyData
-                initialiseDataFuelPurchase();  //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from loaded fuelData
+
                 //Change button
                 LaunchVehiclesBtn.IsHitTestVisible = true; //now vehicle view is usable
                 LaunchVehiclesBtn.Opacity = 1.0;
@@ -85,9 +91,6 @@ namespace CarRentalSystem
 
         private void SaveSQLBtn_Click(object sender, RoutedEventArgs e)
         {
-            buildServiceData(); //Compile service data from vehicles into one list serviceData
-            buildJourneyData(); //Compiling journey data from vehicle into one list journeyData
-            buildFuelPurchaseData(); //Compiling fuel data from vehicle into one list fuelData
             UpdateSQL.ReplaceAll(vehicleData, serviceData, journeyData, fuelData);
         }
 
@@ -131,11 +134,6 @@ namespace CarRentalSystem
                 fuelData = JsonConvert.DeserializeObject<List<FuelPurchase>>(readText);
             }
 
-
-            //initialiseData
-            initialiseDataServices(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from the loaded serviceData
-            initialiseDataJourney(); //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from loaded journeyData
-            initialiseDataFuelPurchase();  //puts the relevant journies and services and purchase in their vehicles acccording to vehicleid from loaded fuelData
             //Change button
             LaunchVehiclesBtn.IsHitTestVisible = true; //now vehicle view is usable
             LaunchVehiclesBtn.Opacity = 1.0;
@@ -148,26 +146,16 @@ namespace CarRentalSystem
             String path = System.AppDomain.CurrentDomain.BaseDirectory + "saveVehiclesFile.txt"; //Path
             File.WriteAllText(path, jsonVehicles); //Write text to file
 
-            //BUILD SERVICE DATA 
-            buildServiceData();
-
             //SERVICES Convert to JSON using JSON .NET package
             String jsonServices = JsonConvert.SerializeObject(serviceData);
             path = System.AppDomain.CurrentDomain.BaseDirectory + "saveServicesFile.txt"; //Path
             File.WriteAllText(path, jsonServices); //Write text to file
 
-            // Build Journey Data
-            buildJourneyData();
-           
             // Journiesconvert to JSON save file
             String jsonJourney = JsonConvert.SerializeObject(journeyData);
             path = System.AppDomain.CurrentDomain.BaseDirectory + "saveJourniesFile.txt";
             File.WriteAllText(path, jsonJourney);
 
-
-            // Build Fuel purchases Data
-            buildFuelPurchaseData();
-           
             //Fuel Purchase Convert to JSON using JSON .NET package
             String jsonFuel = JsonConvert.SerializeObject(fuelData);
             path = System.AppDomain.CurrentDomain.BaseDirectory + "saveFuelPurchaseFile.txt"; //Path
@@ -193,92 +181,6 @@ namespace CarRentalSystem
             }
         }
 
-        private void buildServiceData()
-        { //Puts all the services of each vehicle in serviceData
-            ArrayList services; serviceData.Clear();
-            foreach (Vehicle v in vehicleData)
-            {
-                services = v.getServices(); //Services for a vehicle!
-                foreach (Service s in services) //Get each service and add to big list
-                {
-                    serviceData.Add(s);
-                }
-            }
-        }
-        private void buildJourneyData()
-        { //Put all the journies of all vehicles in journeyData
-            ArrayList journies; journeyData.Clear();
-            foreach (Vehicle v in vehicleData)
-            {
-                journies = v.getJournies(); // Journies for a vehicle
-                foreach (Journey j in journies) //Get each journey and add to big list
-                {
-                    journeyData.Add(j);
-                }
-            }
-        }
-        private void buildFuelPurchaseData()
-        { //Put all the fuel purchases of all the vehicles in fuelData
-            ArrayList fpurchases; fuelData.Clear();
-            foreach (Vehicle v in vehicleData)
-            {
-                fpurchases = v.getFPurchases(); // Fuel for a vehicle
-                foreach (FuelPurchase f in fpurchases) //Get each fuel purchases and add to big list
-                {
-                    fuelData.Add(f);
-                }
-            }
-        }
-
-        private void initialiseDataServices()
-        { //Go through serviceData and match services to the vehicles, add them to vehicleData
-            ArrayList services; //intialise service data for a vehicle 
-            foreach (Vehicle v in vehicleData) //Vehicles
-            { 
-                services = new ArrayList(); //new empty list
-                foreach (Service s in serviceData) //Go through service data and remake the services as shouldnt be any yet
-                {
-                    if (s.getVehicleID() == v.getVehicleID()) //Add to vehicle services as Id the same!
-                    {
-                        services.Add(s);
-                    }
-                }
-                v.setServices(services); //save back to vehicle data
-            }
-        }
-        private void initialiseDataJourney()
-        { //Go through the journeyData and match journies to the vehicles, add them to vehicleData
-            ArrayList journies; //journey data for a vehicle 
-            foreach (Vehicle v in vehicleData) //Vehicles
-            {
-                journies = new ArrayList(); //empty
-                foreach (Journey j in journeyData) //Go through journey data and remake the journies as shouldnt be any yet
-                {
-                    if (j.getVehicleID() == v.getVehicleID()) //Add to vehicle journies as Id the same!
-                    {
-                        journies.Add(j);
-                    }
-                }
-                v.setJournies(journies); //save back to vehicle data
-            }
-        }
-        private void initialiseDataFuelPurchase()
-        {//going through the fuelData and match fpurchases to the vehicles and then adding them to the vehicleData
-            ArrayList fpurchases; //fuel purchase data for a vehicle 
-            foreach (Vehicle v in vehicleData) //Vehicles
-            {
-                fpurchases = new ArrayList();  // empty
-                
-                foreach (FuelPurchase fp in fuelData) //Go through fuel data and remake the fuelpurchases as shouldnt be any yet
-                {
-                    if (fp.getVehicleID() == v.getVehicleID() ) //Add to vehicle fuel purchases as Id the same!
-                    {
-                        fpurchases.Add(fp);
-                    }
-                }
-                v.setFPurchases(fpurchases); //save back to vehicle data
-            }
-        }
 
         private void beforeEffects()
         {
@@ -314,6 +216,9 @@ namespace CarRentalSystem
 
         }
 
-  
+        private void AboutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Car Rental System v1.0; Copyright Michela Carandente 2019. Note: the following packages are used by this program: JSON .NET (Newtonsoft.Json v12.0.2; www.newtonsoft.com/json)");
+        }
     }
 }

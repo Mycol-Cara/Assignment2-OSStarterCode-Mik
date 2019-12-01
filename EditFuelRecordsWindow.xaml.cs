@@ -35,7 +35,7 @@ namespace CarRentalSystem
         private void displayFuel()  // set the vehicle data into the text field
         {
             AmountTxt.Text = F.getAmount().ToString();
-            CostTxt.Text = F.getCost().ToString();
+            PriceTxt.Text = F.getPrice().ToString();
            
         }
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
@@ -49,12 +49,12 @@ namespace CarRentalSystem
         private void UpdateFuel()
         {
             int amount;
-            int cost;
+            double price;
             
             try
             {
                 amount = System.Convert.ToInt32(AmountTxt.Text);
-                cost= System.Convert.ToInt32(CostTxt.Text);
+                price = System.Convert.ToDouble(PriceTxt.Text);
             }
             catch
             {
@@ -63,7 +63,7 @@ namespace CarRentalSystem
                 return;
             }
 
-            F = new FuelPurchase(amount, cost, F.getDatecreated(), DateTime.Now, F.getVehicleID()); //New fuelpurchase with all of the information!
+            F = new FuelPurchase(amount, price, F.getDatecreated(), DateTime.Now, F.getVehicleID()); //New fuelpurchase with all of the information!
             validFuel = true;
         }
 

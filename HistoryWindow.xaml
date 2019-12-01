@@ -14,9 +14,10 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding distanceTravelled}" Header="Distance Travelled (Km)" Width="150"></GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding journeyAt}" Header="Journey At" Width="200"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding journeyAt}" Header="Journey At" Width="150"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding created}" Header="Created" Width="100"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding updated}" Header="Updated" Width="160"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding paid}" Header="Rent Paid" Width="150"></GridViewColumn>
                            
                         </GridView>
                     </ListView.View>
@@ -46,7 +47,7 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding amount}" Header="Amount (L)" Width="125"></GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding cost}" Header="Cost ($)" Width="200"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding price}" Header="Price ($/L)" Width="200"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding created}" Header="Created" Width="150"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding updated}" Header="Updated" Width="150"></GridViewColumn>
                         </GridView>

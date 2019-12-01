@@ -17,12 +17,12 @@
 
 
 
-        <Label Content="Date (D,M,Y):" HorizontalAlignment="Left" Height="26" Margin="24,86,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="JourneyDayTxt" HorizontalAlignment="Left" Height="24" Margin="129,86,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="64"/>
-        <TextBox x:Name="JourneyMonthTxt" HorizontalAlignment="Left" Height="24" Margin="207,86,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="69"/>
-        <TextBox x:Name="JourneyYearTxt" HorizontalAlignment="Left" Height="24" Margin="13,86,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="108" Grid.Column="1"/>
-
-        <Button x:Name="SaveBtn" Click="SaveBtn_Click" Content="Save" HorizontalAlignment="Left" Margin="22,141,0,0" VerticalAlignment="Top" Width="100" Background="#FF86F176" Height="22"/>
-        <Button x:Name="CancelBtn" Click="CancelBtn_Click" Content="Cancel" HorizontalAlignment="Left" Margin="33,141,0,0" VerticalAlignment="Top" Width="100" Background="#FFE2625C" Grid.Column="1" Height="22" />
+        <Label Content="Date (D,M,Y):" HorizontalAlignment="Left" Height="26" Margin="24,98,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="JourneyDayTxt" HorizontalAlignment="Left" Height="24" Margin="129,98,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="64"/>
+        <TextBox x:Name="JourneyMonthTxt" HorizontalAlignment="Left" Height="24" Margin="207,98,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="69"/>
+        <TextBox x:Name="JourneyYearTxt" HorizontalAlignment="Left" Height="24" Margin="13,98,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="108" Grid.Column="1"/>
+        <RadioButton x:Name="PaidRadioBtn" Content="Journey Rent Paid" HorizontalAlignment="Left" Margin="30,69,0,0" VerticalAlignment="Top" IsChecked="False" Click="PaidRadioBtn_Click"/>
+        <Button x:Name="SaveBtn" Click="SaveBtn_Click" Content="Save" HorizontalAlignment="Left" Margin="22,153,0,0" VerticalAlignment="Top" Width="100" Background="#FF86F176" Height="22"/>
+        <Button x:Name="CancelBtn" Click="CancelBtn_Click" Content="Cancel" HorizontalAlignment="Left" Margin="21,153,0,0" VerticalAlignment="Top" Width="100" Background="#FFE2625C" Grid.Column="1" Height="22" />
     </Grid>
 </Window>

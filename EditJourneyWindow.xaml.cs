@@ -22,12 +22,14 @@ namespace CarRentalSystem
         private Journey J; //The journey to be created
         protected Boolean saveState; //was it saved on exit
         protected Boolean validJourney;  //input check
+        private Boolean Checked; //Radio button status
         public EditJourneyWindow(Journey J)
         {
             InitializeComponent();
             this.J = J;
             saveState = false;           //when window constructed has not been saved yet
             validJourney = true;        //TODO code for this
+            Checked = J.isPaid();
             displayJourney();
         }
         private void displayJourney()  // set the vehicle data into the text field
@@ -36,6 +38,8 @@ namespace CarRentalSystem
             JourneyDayTxt.Text = J.getjourneyAt().Day.ToString();
             JourneyMonthTxt.Text = J.getjourneyAt().Month.ToString();
             JourneyYearTxt.Text = J.getjourneyAt().Year.ToString();
+            PaidRadioBtn.IsChecked = J.isPaid();
+
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
@@ -50,6 +54,7 @@ namespace CarRentalSystem
             int dt;
             DateTime jdate;
             int day, month, year;
+            Boolean jPaid = (Boolean) PaidRadioBtn.IsChecked;
             try
             {
                 dt = System.Convert.ToInt32(DistanceTravelledTxt.Text);
@@ -65,7 +70,7 @@ namespace CarRentalSystem
                 return;
             }
 
-            J = new Journey(dt, jdate, J.getDatecreated(), DateTime.Now, J.getVehicleID()); //New journey with all of the information!
+            J = new Journey(dt, jdate, J.getDatecreated(), DateTime.Now, J.getVehicleID(),jPaid); //New journey with all of the information!
             validJourney = true;
         }
 
@@ -85,6 +90,19 @@ namespace CarRentalSystem
         public Boolean getValidity()
         {
             return validJourney;
+        }
+
+        private void PaidRadioBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (Checked)
+            {
+                PaidRadioBtn.IsChecked = false;
+                Checked = false;
+            } else
+            {
+                Checked = true;
+            }
+            
         }
     }
 }

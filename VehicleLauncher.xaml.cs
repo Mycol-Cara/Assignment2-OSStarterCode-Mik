@@ -94,33 +94,26 @@ namespace CarRentalSystem
             afterEffects();
         }
         
-
         private void DeleteVehicleBtn_Click(object sender, RoutedEventArgs e)
         {
             IList iL = DisplayLvw.SelectedItems; //selected items from list view (vehicles)
-            if (iL.Count > 0) //Only proceed if theere is selection
+            if (iL.Count == 1) //Only proceed if theere is a single selection
             {
                 beforeEffects();
-
-                int[] selectInd = new int[iL.Count]; //Selected indicies array
-                for (int i = 0; i < iL.Count; i++)
-                {
-                    selectInd[i] = vehicles.IndexOf((Vehicle)iL[i]); //Store all the indices
-                }
 
                 DeleteVehiclesWindow deleteVehiclesWin = new DeleteVehiclesWindow("Standard"); //Delete  vehicle verification using standard proceedure (message)
                 deleteVehiclesWin.ShowDialog();
 
                 if (deleteVehiclesWin.deletionVerified()) //Check that the user said Yes to the delete action!
                 {
-                    //Removal of the selected vehicles
-                    for (int j = selectInd.Length - 1; j >= 0; j = j - 1) //start at the end (Length-1) and count backwards
-                    { //Loop through selected items
-                        vehicles.RemoveAt(selectInd[j]);
-                    }
+                    //Removal of the selected vehicle
+                    vehicles.Remove(iL[0]);
                 }
 
                 afterEffects();
+            } else
+            {
+                MessageBox.Show("Select a single vehicle to delete");
             }
         }
 

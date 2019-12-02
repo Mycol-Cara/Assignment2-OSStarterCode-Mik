@@ -55,7 +55,7 @@ namespace CarRentalSystem
         }
         
 
-        //SERVICES ADD EDIT DELETE (TODO)
+        //SERVICES ADD EDIT DELETE
         private void AddServicesBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();
@@ -72,11 +72,12 @@ namespace CarRentalSystem
         }
         private void EditServicesBtn_Click(object sender, RoutedEventArgs e)
         {
-            beforeEffects();
+            
             //Get indicies to edit
             IList iL = ServicesDisplayLvw.SelectedItems; //selected items (services)
-            if (iL.Count == 1)
+            if (iL.Count == 1) //Single item selected
             {
+                beforeEffects();
                 EditServiceWindow editServiceWin = new EditServiceWindow((Service) iL[0]); //Send service to be edited
                 editServiceWin.ShowDialog();
                 //Check if saved or not
@@ -87,12 +88,33 @@ namespace CarRentalSystem
                     allServices[allServices.IndexOf((Service) iL[0])] = S; //Overide the service in all services!
                     Console.WriteLine("Service Edited");
                 }
+                afterEffects();
             } else
             {
                 MessageBox.Show("Select a single service to edit");
             }
 
-            afterEffects();
+        }
+        private void DeleteServicesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            IList iL = ServicesDisplayLvw.SelectedItems; //selected items from list view (services)
+            if (iL.Count == 1) //Only proceed if theere is a single selection
+            {
+                beforeEffects();
+                DeleteVehiclesWindow deleteVehiclesWin = new DeleteVehiclesWindow("Standard"); //Delete  vehicle verification using standard proceedure (message)
+                deleteVehiclesWin.ShowDialog();
+                if (deleteVehiclesWin.deletionVerified()) //Check that the user said Yes to the delete action!
+                {
+                    //Removal of the selected service
+                    services.Remove((Service) iL[0]); //Remove from service list for this vehicle
+                    allServices.Remove((Service)iL[0]); //Remove for all services data
+                }
+                afterEffects();
+            }
+            else
+            {
+                MessageBox.Show("Select a single item to delete");
+            }
         }
 
         //JOURNEYS ADD EDIT DELETE (TODO)
@@ -112,10 +134,11 @@ namespace CarRentalSystem
         }
         private void EditJourniesBtn_Click(object sender, RoutedEventArgs e)
         {
-            beforeEffects();
+            
             IList iL = JourniesDisplayLvw.SelectedItems;  //select items (journies)
             if (iL.Count == 1)
             {
+                beforeEffects();
                 EditJourneyWindow editJourneyWin = new EditJourneyWindow((Journey) iL[0]);
                 editJourneyWin.ShowDialog();
                 // Check if saved or not
@@ -125,13 +148,36 @@ namespace CarRentalSystem
                         journies[journies.IndexOf((Journey) iL[0])] = J;              // Overide the service at the editted location
                         allJournies[allJournies.IndexOf((Journey)iL[0])] = J; //Overide the service in all journies!
                         Console.WriteLine(" Journey Edited");
-                    } else
-                {
-                     MessageBox.Show(" Select a single journey to  edit");
-                } 
+                }
+                afterEffects();
             }
-            afterEffects();
+            else
+            {
+                MessageBox.Show(" Select a single journey to  edit");
+            }
+            
 
+        }
+        private void DeleteJourniesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            IList iL = JourniesDisplayLvw.SelectedItems; //selected items from list view (journies)
+            if (iL.Count == 1) //Only proceed if theere is a single selection
+            {
+                beforeEffects();
+                DeleteVehiclesWindow deleteVehiclesWin = new DeleteVehiclesWindow("Standard"); //Delete  vehicle verification using standard proceedure (message)
+                deleteVehiclesWin.ShowDialog();
+                if (deleteVehiclesWin.deletionVerified()) //Check that the user said Yes to the delete action!
+                {
+                    //Removal of the selected service
+                    journies.Remove((Journey)iL[0]); //Remove from journey list for this vehicle
+                    allJournies.Remove((Journey)iL[0]); //Remove for all journies data
+                }
+                afterEffects();
+            }
+            else
+            {
+                MessageBox.Show("Select a single item to delete");
+            }
         }
 
         //FUEL PURCHASES ADD EDIT DELETE (TODO)
@@ -151,10 +197,11 @@ namespace CarRentalSystem
         }
         private void EditFuelPurchasesBtn_Click(object sender, RoutedEventArgs e)
         {
-            beforeEffects();
+            
             IList iL = FuelPurchasesDisplayLvw.SelectedItems;  //select items (fuel purchases)
             if (iL.Count == 1)
             {
+                beforeEffects();
                 EditFuelRecordsWindow editFuelRecordsWin = new EditFuelRecordsWindow((FuelPurchase)iL[0]);
                 editFuelRecordsWin.ShowDialog();
                 // Check if saved or not
@@ -165,12 +212,34 @@ namespace CarRentalSystem
                     allFuelPurchases[allFuelPurchases.IndexOf((FuelPurchase)iL[0])] = F; //Overide the service in all fuel purchases!
                     Console.WriteLine(" Fuel Edited");
                 }
-                else
-                {
-                    MessageBox.Show(" Select a single Fuel Record to edit");
-                }
+                afterEffects();
             }
-            afterEffects();
+            else
+            {
+                MessageBox.Show(" Select a single Fuel Record to edit");
+            }
+            
+        }
+        private void DeleteFuelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            IList iL = FuelPurchasesDisplayLvw.SelectedItems; //selected items from list view (fuel purchase)
+            if (iL.Count == 1) //Only proceed if theere is a single selection
+            {
+                beforeEffects();
+                DeleteVehiclesWindow deleteVehiclesWin = new DeleteVehiclesWindow("Standard"); //Delete  vehicle verification using standard proceedure (message)
+                deleteVehiclesWin.ShowDialog();
+                if (deleteVehiclesWin.deletionVerified()) //Check that the user said Yes to the delete action!
+                {
+                    //Removal of the selected service
+                    FPurchases.Remove((FuelPurchase)iL[0]); //Remove from fpurchase list for this vehicle
+                    allFuelPurchases.Remove((FuelPurchase)iL[0]); //Remove for all fpurchase data
+                }
+                afterEffects();
+            }
+            else
+            {
+                MessageBox.Show("Select a single item to delete");
+            }
         }
 
 
@@ -262,5 +331,7 @@ namespace CarRentalSystem
             }
             return newAL;
         }
+
+        
     }
 }

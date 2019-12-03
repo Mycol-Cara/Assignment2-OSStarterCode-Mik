@@ -107,7 +107,11 @@ namespace CarRentalSystem
                 if (deleteVehiclesWin.deletionVerified()) //Check that the user said Yes to the delete action!
                 {
                     //Removal of the selected vehicle
-                    vehicles.Remove(iL[0]);
+                    int vId = ((Vehicle)iL[0]).getVehicleID(); //Get the id
+                    vehicles.Remove(iL[0]); //remove the object from vehicles
+                    allServices = Service.RemoveServices(allServices, vId);//Remove the services for that vehicle id
+                    allJournies = Journey.RemoveJournies(allJournies, vId);//Remove the journies for that vehicle id
+                    allFuelPurchases = FuelPurchase.RemoveFuelPurchases(allFuelPurchases, vId);//Remove the fuelPurchases for that vehicle id
                 }
 
                 afterEffects();

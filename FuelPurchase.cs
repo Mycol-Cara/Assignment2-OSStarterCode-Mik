@@ -81,5 +81,19 @@ namespace CarRentalSystem
             return carFuelPurchases;
         }
 
+        public static List<FuelPurchase> RemoveFuelPurchases(List<FuelPurchase> allFuelPurchases, int vehicleID)
+        { //Go through fuelData and remove fpurchases of the car with a given vehicleID
+            FuelPurchase fp;
+            for (int i = allFuelPurchases.Count - 1; i >= 0; i--) //Go through fpurchases data backwards
+            {
+                fp = allFuelPurchases[i]; //Get a fpurchases to check
+                if (fp.getVehicleID() == vehicleID) //Add to specific car fpurchases as Id is the same!
+                {
+                    allFuelPurchases.RemoveAt(i); //Remove the fpurchases
+                }
+            }
+            return allFuelPurchases;
+        }
+
     }
 }

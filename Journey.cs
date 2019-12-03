@@ -106,6 +106,21 @@ namespace CarRentalSystem
             return carJournies;
         }
 
+        //Helper method to remove journies for a given vehicleid in a list
+        public static List<Journey> RemoveJournies(List<Journey> allJournies, int vehicleID)
+        { //Go through journeyData and remove services of the car with a given vehicleID
+            Journey j;
+            for (int i = allJournies.Count - 1; i >= 0; i--) //Go through journies data backwards
+            {
+                j = allJournies[i]; //Get a journey to check
+                if (j.getVehicleID() == vehicleID) //Add to specific car journies as Id is the same!
+                {
+                    allJournies.RemoveAt(i); //Remove the journies
+                }
+            }
+            return allJournies;
+        }
+
 
         //OLD code
         /** 

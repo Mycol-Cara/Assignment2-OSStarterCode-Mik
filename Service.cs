@@ -107,6 +107,21 @@ namespace CarRentalSystem
             return carServices;
         }
 
+        //Helper method to remove services for a given vehicleid in a list
+        public static List<Service> RemoveServices(List<Service> allServices, int vehicleID)
+        { //Go through serviceData and remove services of the car with a given vehicleID
+            Service s;
+            for (int i = allServices.Count-1; i>=0;i--) //Go through service data backwards
+            {
+                s = allServices[i]; //Get a service to check
+                if (s.getVehicleID() == vehicleID) //Add to specific car services as Id is the same!
+                {
+                    allServices.RemoveAt(i); //Remove the service
+                }
+            }
+            return allServices;
+        }
+
         /**
          * Calculates the total services by dividing kilometers by
          * {@link #SERVICE_KILOMETER_LIMIT} and floors the value. 

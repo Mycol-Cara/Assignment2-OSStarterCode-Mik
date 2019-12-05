@@ -103,7 +103,6 @@ namespace CarRentalSystem
             String p1, p2, p3, p4, p5, p6, p7;
             //this.adminMode = vl.getAdminMode(); //get the admin mode, incase has disabled...
 
-
             try
             {
                 //Create the connection

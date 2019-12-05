@@ -93,8 +93,8 @@ https://github.com/Mycol-Cara/Assignment2-OSStarterCode-Mik
 - MySql Commands
 
 ### Step 4: Prepare initial data for JSON (.txt) load in
-- Copy .txt files of initial Database table data from databaseBackUp to bin\Debug\
-![dataIni](./images/dataIni.PNG)
+- Download and Copy .txt save files from databaseBackUp to bin\Debug\ (the base directory of the application)
+![dataIni](./images/dataIni.png)
 
 ## Screenshots
 ![mainWindow](./images/mainWindow.PNG)

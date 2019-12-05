@@ -18,7 +18,7 @@ namespace CarRentalSystem
         //Load All() Gets everything in the Sql
         public static Object[] LoadAll()
         {
-            String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
+            String conStr = "user id = cars; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
             String p1, p2, p3, p4, p5, p6, p7;
             DataTable table;
             MySqlDataAdapter adapter;
@@ -99,7 +99,7 @@ namespace CarRentalSystem
         public static void ReplaceAll(List<Vehicle> vehicleData, List<Service> serviceData, List<Journey> journeyData, List<FuelPurchase> fuelData)
         {
             //Connection string
-            String conStr = "user id = root; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
+            String conStr = "user id = cars; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
             String p1, p2, p3, p4, p5, p6, p7;
             //this.adminMode = vl.getAdminMode(); //get the admin mode, incase has disabled...
 

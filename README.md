@@ -8,26 +8,30 @@
 - [Running Tests](#Running Tests)
 
 ## Description
-A BREAD web app tool to manage a vehicle rental business.
+A BREAD web app tool to manage a vehicle rental system.
 The Program is written in C#.
 
 
 ## Installing
 ### STEP 1: Create MySQL database and User
+
 ```bash
-mysql -u root
+mysql -u root 
 ```
+
 ```sql 
 CREATE DATABASE `cars` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
 CREATE DATABASE `cars_test` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci';
-CREATE USER 'cars'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Password1';
-GRANT ALL PRIVILEGES ON cars.* TO 'cars'@'localhost';
 
-GRANT ALL PRIVILEGES ON cars_test.* TO 'nmt_fleet_manager'@'localhost';
+CREATE USER 'cars'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Password1';
+
+GRANT ALL PRIVILEGES ON cars.* TO 'cars'@'localhost';
+GRANT ALL PRIVILEGES ON cars_test.* TO 'cars'@'localhost';
 
 GRANT USAGE ON *.* TO 'cars'@'localhost';
 FLUSH PRIVILEGES;
 
+USE cars;
 ```
 
 MySQL statement 
@@ -88,15 +92,18 @@ https://github.com/Mycol-Cara/Assignment2-OSStarterCode-Mik
 - NewtonSoft.Json
 - MySql Commands
 
+### Step 4: Prepare initial data for JSON (.txt) load in
+- Copy .txt files of initial Database table data from databaseBackUp to bin\Debug\
+![dataIni](./images/dataIni.PNG)
+
 ## Screenshots
 ![mainWindow](./images/mainWindow.PNG)
+![loadingData](./images/loadingData.PNG)
 ![browseVehicles](./images/browseVehicles.PNG)
 ![details](./images/details.PNG)
 ![filterResult](./images/filterResult.PNG)
 ![adminTools](./images/adminTools.PNG)
-![adminControlls](./images/admincontrolls.PNG)
-![loadingData](./images/loadingData.PNG)
-
+![adminControlls](./images/adminControlls.PNG)
 
 
 Starter code for assignment 2 of the Open Source and Testing course.

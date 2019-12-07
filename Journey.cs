@@ -122,7 +122,7 @@ namespace CarRentalSystem
             return allJournies;
         }
 
-        //Check if date for journey exists already
+        //Check if date for journey exists already //TODO FOR THIS VEHICLE!!!!
         public static Boolean JourneyDateExists(List<Journey> allJournies, Journey J)
         {
             foreach (Journey j in allJournies)

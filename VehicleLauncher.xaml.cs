@@ -147,7 +147,7 @@ namespace CarRentalSystem
             IList iL = DisplayLvw.SelectedItems; //selected items from list view (vehicles)
             if (iL.Count == 1) //Only proceed if theere is selection
             {
-                RentalWindow rentalWin = new RentalWindow((Vehicle)iL[0], allJournies, allServices);   //TODO advanced customer detail and contact with customer
+                RentalWindow rentalWin = new RentalWindow(new Rental((Vehicle)iL[0], allJournies, allServices));   //TODO advanced customer detail and contact with customer
                 rentalWin.ShowDialog();
                 allJournies = rentalWin.getAllJournies(); //Update journey data
             } else

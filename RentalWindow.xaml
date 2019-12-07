@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarRentalSystem"
         mc:Ignorable="d"
-        Title="Rental Payment" Height="443.631" Width="431.237">
+        Title="Rental Payment" Height="443.631" Width="431.237" ResizeMode="NoResize">
     <Grid>
-        <Label Content="Unpaid Journies for Vehicle(s)" HorizontalAlignment="Left" Height="26" Margin="121,10,0,0" VerticalAlignment="Top" Width="251"/>
+        <Rectangle Fill="GhostWhite" HorizontalAlignment="Left" Height="41" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="403"/>
+        <Rectangle Fill="GhostWhite" HorizontalAlignment="Left" Height="149" Margin="10,63,0,0" Stroke="Black" VerticalAlignment="Top" Width="403"/>
+        <Label Content="Select an unpaid Journey for Vehicle" HorizontalAlignment="Left" Height="26" Margin="104,69,0,0" VerticalAlignment="Top" Width="251"/>
 
-        <Border Margin="19,38,21,250">
+        <Border Margin="21,100,19,211">
             <ScrollViewer Margin="0,0,0,0" HorizontalScrollBarVisibility="Visible">
                 <ListView x:Name="JourniesDisplayLvw" ItemsSource="{Binding displayedJournies}" HorizontalAlignment="Left" Height="1000" Margin="0,0,0,0" VerticalAlignment="Top" Width="1500" Background="Snow" PreviewMouseLeftButtonUp="JourniesDisplayLvw_Compute">
                     <ListView.View>
@@ -25,21 +27,26 @@
             </ScrollViewer>
         </Border>
 
-        <Label x:Name="CostLbl" Content="$0 will be automatically deducted from your staff account" Margin="17,178,2,191"/>
 
-        <Label Content="Full Name*:" HorizontalAlignment="Left" Height="26" Margin="19,238,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="FullNameTxt" HorizontalAlignment="Left" Height="23" Margin="124,238,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272"/>
+        <Label x:Name="CostLbl" Content="$0 will be automatically deducted from your staff account" Margin="19,217,0,152"/>
 
-        <Label Content="Phone:" HorizontalAlignment="Left" Height="26" Margin="19,268,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="PhoneTxt" HorizontalAlignment="Left" Height="23" Margin="124,268,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272"/>
+        <Label Content="User Name:" HorizontalAlignment="Left" Height="26" Margin="19,266,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="UserNameTxt" Text="Admin1"  HorizontalAlignment="Left" Height="23" Margin="124,266,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272"/>
 
-        <Label Content="Email*:" HorizontalAlignment="Left" Height="26" Margin="19,298,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBox x:Name="EmailTxt" HorizontalAlignment="Left" Height="23" Margin="124,298,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272"/>
+        <Label Content="Password:" HorizontalAlignment="Left" Height="26" Margin="19,296,0,0" VerticalAlignment="Top" Width="100"/>
+        <PasswordBox x:Name="PasswordTxt" HorizontalAlignment="Left" Height="23" Margin="124,296,0,0"  VerticalAlignment="Top" Width="272"/>
 
-        <Label x:Name="MessageTxt" Content="  *Please ensure these detail are correct!" HorizontalAlignment="Left" Height="26" Margin="17,329,0,0" VerticalAlignment="Top" Width="379"/>
+        <!--Label Content="Email:" HorizontalAlignment="Left" Height="26" Margin="19,298,0,0" VerticalAlignment="Top" Width="100"/>
+        <TextBox x:Name="EmailTxt" HorizontalAlignment="Left" Height="23" Margin="124,298,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="272"/-->
 
-        <Button x:Name="SendBtn" Click="SendBtn_Click" Content="Begin Payment" HorizontalAlignment="Left" Margin="17,368,0,0" VerticalAlignment="Top" Width="100" Background="#FF86F176"/>
+        <Label x:Name="MessageTxt" Content="...Please ensure these detail are correct!" HorizontalAlignment="Left" Height="26" Margin="17,329,0,0" VerticalAlignment="Top" Width="379"/>
+
+        <Button x:Name="SendBtn" Click="SendBtn_Click" Content="Agree" HorizontalAlignment="Left" Margin="17,368,0,0" VerticalAlignment="Top" Width="100" Background="#FF86F176"/>
         <Button x:Name="CancelBtn" Click="CancelBtn_Click" Content="Cancel" HorizontalAlignment="Left" Margin="296,368,0,0" VerticalAlignment="Top" Width="100" Background="#FFE2625C"/>
+
+        <Label Content=" Add a new Journey" HorizontalAlignment="Left" Height="27" Margin="17,16,0,0" VerticalAlignment="Top" FontSize="12" Width="379"/>
+        <Button x:Name="NewJourneyBtn" Click="NewJourneyBtn_Click" Content="Add Journey" HorizontalAlignment="Left" Margin="300,19,0,0" VerticalAlignment="Top" Width="96" Background="#FF86F176"/>
+
 
     </Grid>
 </Window>

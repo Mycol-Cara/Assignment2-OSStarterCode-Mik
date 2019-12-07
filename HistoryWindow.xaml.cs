@@ -117,11 +117,11 @@ namespace CarRentalSystem
             }
         }
 
-        //JOURNEYS ADD EDIT DELETE (TODO)
+        //JOURNEYS ADD EDIT DELETE
         private void AddJourniesBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();
-            AddJourneyWindow addJourneyWin = new AddJourneyWindow(vehicleID);
+            AddJourneyWindow addJourneyWin = new AddJourneyWindow(vehicleID,true);
             addJourneyWin.ShowDialog();
             if (addJourneyWin.getSaveState() && addJourneyWin.getValidity())
             {
@@ -180,7 +180,7 @@ namespace CarRentalSystem
             }
         }
 
-        //FUEL PURCHASES ADD EDIT DELETE (TODO)
+        //FUEL PURCHASES ADD EDIT DELETE 
         private void AddFuelPurchasesBtn_Click(object sender, RoutedEventArgs e)
         {
             beforeEffects();

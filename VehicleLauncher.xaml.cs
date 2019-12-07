@@ -127,12 +127,14 @@ namespace CarRentalSystem
             if (iL.Count == 1) //Only proceed if theere is a  single selection
             {
                 beforeEffects();
+                //Get vehicle
                 Vehicle v = (Vehicle) iL[0];
-                //Compute details
-                Details D = Details.computeDetails(v, allServices, allJournies);
-                //Open window
+                //Create details
+                Details D = new Details(v, allServices, allJournies);
+                //View details
                 DetailsWindow detailsWin = new DetailsWindow(D);
                 detailsWin.ShowDialog();
+                //
                 afterEffects();
             } else
             {
@@ -145,10 +147,9 @@ namespace CarRentalSystem
             IList iL = DisplayLvw.SelectedItems; //selected items from list view (vehicles)
             if (iL.Count == 1) //Only proceed if theere is selection
             {
-                RentalWindow rentalWin = new RentalWindow(((Vehicle)iL[0]).vehicleID, allJournies);
+                RentalWindow rentalWin = new RentalWindow((Vehicle)iL[0], allJournies, allServices);   //TODO advanced customer detail and contact with customer
                 rentalWin.ShowDialog();
-                //TODO advanced customer detail and contact with customer
-                allJournies = rentalWin.getAllJournies(); //Update journey data, assuming details lead to successful payments
+                allJournies = rentalWin.getAllJournies(); //Update journey data
             } else
             {
                 MessageBox.Show("Please select a single vehicle to pay rent!");

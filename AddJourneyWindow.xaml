@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarRentalSystem"
         mc:Ignorable="d"
-        Title="AddJourneyWindow" Height="233.198" Width="453.846">
+        Title="Add Journey" Height="233.198" Width="453.846" ResizeMode="NoResize">
     <Grid Background="#FFD5ECE9">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="143*"/>
             <ColumnDefinition Width="80*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Distance Travelled" HorizontalAlignment="Left" Height="26" Margin="24,26,0,0" VerticalAlignment="Top" Width="105"/>
+        <Label Content="Distance (Km):" HorizontalAlignment="Left" Height="26" Margin="24,26,0,0" VerticalAlignment="Top" Width="105"/>
         <TextBox x:Name="DistanceTravelledTxt" HorizontalAlignment="Left" Height="24" Margin="129,26,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="278" Grid.ColumnSpan="2"/>
 
 

@@ -23,13 +23,18 @@ namespace CarRentalSystem
         protected Boolean saveState; //was it saved on exit
         protected Boolean validJourney;  //input check
         private Boolean Checked; //radio button state store
-        public AddJourneyWindow(int vehicleID)
+        public AddJourneyWindow(int vehicleID, Boolean payable)
         {
             InitializeComponent();
             this.J = new Journey(0, DateTime.Now, DateTime.Now, DateTime.Now, vehicleID, false); //Random journey
             saveState = false;           //when window constructed has not been saved yet
             validJourney = true;
             Checked = false;
+            //Disable specifiable as payable (admin only)
+            if (!payable)
+            {
+                PaidRadioBtn.IsHitTestVisible = false; PaidRadioBtn.Opacity = 0.5;
+            }
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
@@ -44,7 +49,7 @@ namespace CarRentalSystem
             int dt;
             DateTime jdate;
             int day, month, year;
-            Boolean jPaid = (Boolean) PaidRadioBtn.IsChecked;
+            Boolean jPaid = (Boolean)PaidRadioBtn.IsChecked;
             try
             {
                 dt = System.Convert.ToInt32(DistanceTravelledTxt.Text);
@@ -52,7 +57,8 @@ namespace CarRentalSystem
                 month = System.Convert.ToInt32(JourneyMonthTxt.Text);
                 year = System.Convert.ToInt32(JourneyYearTxt.Text);
                 jdate = new DateTime(year, month, day);
-            } catch
+            }
+            catch
             {
                 Console.WriteLine("Error reading numeric values!");
                 validJourney = false; //Due to likely poor data entry
@@ -65,7 +71,7 @@ namespace CarRentalSystem
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();   
+            this.Close();
         }
         public Journey getJourney()
         {
@@ -92,6 +98,7 @@ namespace CarRentalSystem
             {
                 Checked = true;
             }
+
         }
     }
 }

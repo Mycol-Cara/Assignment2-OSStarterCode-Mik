@@ -122,6 +122,17 @@ namespace CarRentalSystem
             return allServices;
         }
 
+        //Helper method for distance since last service
+        public static int DistanceSinceServiceKm(List<Service> vehicleServices, Vehicle v)
+        {
+            int lastServiceOdom = 0; //initialise
+            foreach (Service s in vehicleServices) //loop through services s of vehicle v
+            {
+                //Find highest odometer reading
+                if (s.getLastServiceOdometerKm() > lastServiceOdom) { lastServiceOdom = s.getLastServiceOdometerKm(); }
+            }
+            return (int)v.getOdometerReading() - lastServiceOdom;
+        }
         /**
          * Calculates the total services by dividing kilometers by
          * {@link #SERVICE_KILOMETER_LIMIT} and floors the value. 

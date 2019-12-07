@@ -8,17 +8,16 @@ using System.Threading.Tasks;
 
 namespace CarRentalSystem
 {
-    public class UpdateSQL
+    public class SQLConnector
     {
 
-        public UpdateSQL()
+        public SQLConnector()
         {
         }
 
         //Load All() Gets everything in the Sql
-        public static Object[] LoadAll()
+        public static Object[] LoadAll(String conStr)
         {
-            String conStr = "user id = cars; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
             String p1, p2, p3, p4, p5, p6, p7;
             DataTable table;
             MySqlDataAdapter adapter;
@@ -96,12 +95,10 @@ namespace CarRentalSystem
         }
 
         //ReplaceAll() Delets and adds all to the sql
-        public static void ReplaceAll(List<Vehicle> vehicleData, List<Service> serviceData, List<Journey> journeyData, List<FuelPurchase> fuelData)
+        public static void ReplaceAll(List<Vehicle> vehicleData, List<Service> serviceData, List<Journey> journeyData, List<FuelPurchase> fuelData, String conStr)
         {
-            //Connection string
-            String conStr = "user id = cars; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;";
+
             String p1, p2, p3, p4, p5, p6, p7;
-            //this.adminMode = vl.getAdminMode(); //get the admin mode, incase has disabled...
 
             try
             {

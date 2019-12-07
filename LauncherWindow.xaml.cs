@@ -74,7 +74,7 @@ namespace CarRentalSystem
         private void LoadSQLBtn_Click(object sender, RoutedEventArgs e)
         {
 
-            Object[] data = UpdateSQL.LoadAll();
+            Object[] data = SQLConnector.LoadAll("user id = cars; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;");
             if (data != null)
             {
                 vehicleData = (List<Vehicle>) data[0]; //put list from object in here
@@ -91,7 +91,7 @@ namespace CarRentalSystem
 
         private void SaveSQLBtn_Click(object sender, RoutedEventArgs e)
         {
-            UpdateSQL.ReplaceAll(vehicleData, serviceData, journeyData, fuelData);
+            SQLConnector.ReplaceAll(vehicleData, serviceData, journeyData, fuelData, "user id = cars; persistsecurityinfo = True; server = localhost; database = cars; password=Password1;");
         }
 
         private void LoadTxtBtn_Click(object sender, RoutedEventArgs e)

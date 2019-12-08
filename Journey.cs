@@ -8,7 +8,8 @@ namespace CarRentalSystem
 {
     public class Journey
     {
-        public static readonly int JOURNEY_RENT_KM_LIMIT = 500; //Can't rent longer than 500km
+        public static readonly int JOURNEY_RENT_KM_MAX_LIMIT = 500; //Can't rent longer than 500km
+        public static readonly int JOURNEY_RENT_KM_MIN_LIMIT = 0; //Can't rent 0 KM
         private double journeyPricePerKm = 1.0; //$/km
 
         public int distanceTravelled { get; set; }
@@ -122,13 +123,13 @@ namespace CarRentalSystem
             return allJournies;
         }
 
-        //Check if date for journey exists already //TODO FOR THIS VEHICLE!!!!
+        //Check if date for journey exists already 
         public static Boolean JourneyDateExists(List<Journey> allJournies, Journey J)
         {
             foreach (Journey j in allJournies)
             {
                 //Check if a date is within 24 hours!
-                if ((j.getjourneyAt() - J.getjourneyAt()).TotalHours < 24)
+                if (Math.Abs((j.getjourneyAt() - J.getjourneyAt()).TotalHours) < 24 && j.getVehicleID() == J.getVehicleID())
                 {
                     return true;
                 }

@@ -40,7 +40,7 @@ namespace CarRentalSystem
             if (J.getjourneyAt().Year - v.getMakeYear() < 0) 
             { rentable[2] = false;  } //Car doesn't exist yet!
 
-            if (J.getdistanceTravelled() > Journey.JOURNEY_RENT_KM_LIMIT) 
+            if (J.getdistanceTravelled() > Journey.JOURNEY_RENT_KM_MAX_LIMIT || J.getdistanceTravelled() <= Journey.JOURNEY_RENT_KM_MIN_LIMIT) 
             { rentable[3] = false; } //Journey too long!
 
             Console.WriteLine("Rentability: " + rentable[0] + ", "+rentable[1] + ", "+rentable[2] + ", "+rentable[3]);

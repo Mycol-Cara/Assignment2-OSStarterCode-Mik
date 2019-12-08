@@ -11,6 +11,22 @@
 A BREAD web app tool to manage a vehicle rental system.
 The Program is written in C#.
 
+## Features
+Database management for vehicles and their journies, services and fuel purchases using the BREAD approach (Browse, Read, Edit, Add, Delete).
+
+Program has both mySQL load and save, and text file (JSON) load and save for all data fields.
+
+A basic user can browse the vehicle list, select vehicles to view their details and create journies they would like to rent a vehicle for. The program is missing a customer database, but the journies can have status changed from unpaid to paid using fake admin details in this version (Admin1, Password1). The cost is calculated and limits are placed on Journies for rent:
+  -1 Journey per car per day.
+  -Cannot journey when vehicle service required.
+  -Cannot rent a journey before the makeYear of the vehicle
+  -Cannot journey more than 500KM at once
+
+Using the admin tools vehicle histories for a selected vehicle are viewable and may be editted, added or deleted 
+Histories include services, journies and fuel purchases.
+
+## Prerequisites
+Visual studio with C# and mySQL (see Installation below)
 
 ## Installing
 ### STEP 1: Create MySQL database and User

@@ -121,8 +121,19 @@ https://github.com/Mycol-Cara/Assignment2-OSStarterCode-Mik
 ![adminTools](./images/adminTools.PNG)
 ![adminControlls](./images/adminControlls.PNG)
 
+## Testing Screenshots
 
-Starter code for assignment 2 of the Open Source and Testing course.
+![test1](./images/test1.PNG)
+![test2](./images/test2.PNG)
+![test3](./images/test3.PNG)
+![test4](./images/test4.PNG)
+![test5](./images/test5.PNG)
+![test6](./images/test6.PNG)
+![test7](./images/test7.PNG)
+![test8](./images/test8.PNG)
+![test9](./images/test9.PNG)
+![test10](./images/test10.PNG)
+
 
 This repository contains the classes for the vehicle rental system.
 You can modify and extend the existing code as well as add new classes to make the application functional and user-friendly.

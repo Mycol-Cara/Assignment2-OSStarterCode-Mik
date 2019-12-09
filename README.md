@@ -5,7 +5,7 @@
 - **[Prerequisites](#Prerequisites)**<br>
 - **[Installing](#Installing)**<br>
 - **[Design](#Design)**<br>
-- **[Running Tests](#Running Tests)**<br>
+- **[Testing](#Testing)**<br>
 
 
 ## Description
@@ -113,7 +113,8 @@ https://github.com/Mycol-Cara/Assignment2-OSStarterCode-Mik
 - Download and Copy .txt save files from databaseBackUp to bin\Debug\ (the base directory of the application)
 ![dataIni](./images/dataIni.png)
 
-## Screenshots
+## Design
+### Screenshots
 ![mainWindow](./images/mainWindow.PNG)
 ![loadingData](./images/loadingData.PNG)
 ![browseVehicles](./images/browseVehicles.PNG)
@@ -122,7 +123,7 @@ https://github.com/Mycol-Cara/Assignment2-OSStarterCode-Mik
 ![adminTools](./images/adminTools.PNG)
 ![adminControlls](./images/adminControlls.PNG)
 
-## Running Tests
+## Testing
 ### Create Unit Tests
 - Go to the solution 'CarRentalSystem' at the very top of Solutione explorer
 - Right Click on the solution

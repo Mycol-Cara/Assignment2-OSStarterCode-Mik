@@ -121,7 +121,8 @@ https://github.com/Mycol-Cara/Assignment2-OSStarterCode-Mik
 ![adminTools](./images/adminTools.PNG)
 ![adminControlls](./images/adminControlls.PNG)
 
-## Create Unit Tests
+## Running Unit Tests
+### Create Unit Tests
 - Go to the solution 'CarRentalSystem' at the very top of Solutione explorer
 - Right Click on the solution
 - Add New Project 

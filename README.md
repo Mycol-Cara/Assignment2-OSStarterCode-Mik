@@ -121,6 +121,14 @@ https://github.com/Mycol-Cara/Assignment2-OSStarterCode-Mik
 ![adminTools](./images/adminTools.PNG)
 ![adminControlls](./images/adminControlls.PNG)
 
+## Create Unit Tests
+- Go to the solution 'CarRentalSystem' at the very top of Solutione explorer
+- Right Click on the solution
+- Add New Project 
+- Choose Unit Test Project
+- In the unit test project, add a reference to the project you want to test by right-clicking on References or Dependencies and then      choosing Add Reference.
+
+
 ## Testing Screenshots
 
 ![test1](./images/test1.PNG)

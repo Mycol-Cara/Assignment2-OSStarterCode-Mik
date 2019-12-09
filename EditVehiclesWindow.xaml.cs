@@ -83,8 +83,6 @@ namespace CarRentalSystem
                 return;
             }
 
-            //TODO additional check to ensure vehicle is valid! I.e. belongs to a set list of models, make years and possible registration numbers!!!
-
             //THIS METHOD UPDATES THE VEHICLE CLASS WITH ALL OF THE TEXT CONTENT!
             V.setMakeYear(year);
             V.setOdometerReading(odom);
@@ -92,7 +90,9 @@ namespace CarRentalSystem
             V.setManufacturer(ManufacturerTxt.Text);
             V.setModel(ModelTxt.Text);
             V.setRegistrationNumber(RegistrationTxt.Text);
-           
+
+            //TODO additional check to ensure vehicle is valid! I.e. belongs to a set list of models, make years and possible registration numbers!!!
+            validVehicle = V.isRegistrationValid();
         }
 
         public Vehicle getVehicle()

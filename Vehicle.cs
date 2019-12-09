@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CarRentalSystem
@@ -17,7 +18,7 @@ namespace CarRentalSystem
         //private float odometerReading; //in KM
         //private float tankCapacity; //in L
 
-       //Change to allow it to bind in the grid view
+        //Change to allow it to bind in the grid view
 
         public int vehicleID { get; set; }
         public String manufacturer { get; set; }
@@ -53,6 +54,25 @@ namespace CarRentalSystem
 
             services = new ArrayList();
 
+        }
+
+        //Check if the vehicle Registration valid! 1-9 Char long, 0-9 Numbers, A-Z letters
+        public Boolean isRegistrationValid()
+        {
+            Boolean validity = true; //start true;
+            //Length!
+            if (registrationNumber.Length > 9 || registrationNumber.Length < 1)
+            {
+                validity = false;
+            }
+            //Content!
+            String res1 = Regex.Replace(registrationNumber, "([0-9])",""); //Remove numbers
+            String res2 = Regex.Replace(registrationNumber, "([A-Z])", ""); //Remove capitals
+            if ((res1+res2).Length != registrationNumber.Length)
+            {
+                validity = false;
+            }
+            return validity;
         }
 
         //Getter methods

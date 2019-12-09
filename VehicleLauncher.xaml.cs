@@ -363,6 +363,6 @@ namespace CarRentalSystem
             performFilterAndRefresh(SearchTxt.Text); //perform the filter on the displayed vehicles!
         }
 
-
+   
     }
 }

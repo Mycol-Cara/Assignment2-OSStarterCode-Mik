@@ -28,7 +28,7 @@ namespace CarRentalSystem
             InitializeComponent();
             this.R = R;
             this.DataContext = this;
-            performRefresh(); //Update binding information
+            formatDates("{0:dd/MM/yyyy}");  performRefresh(); //Update binding information
         }
 
         //Add new journey
@@ -41,16 +41,17 @@ namespace CarRentalSystem
             {
                 Journey J = addJourneyWin.getJourney(); // Get the new journey
                 Boolean[] rentable = R.isJourneyRentable(J); //use rental of vehicle to check if vehicle can be rented for this journey
-                
+
                 //Add to the list of unpaid journies
-                if (rentable[0]  && rentable[1] && rentable[2] && rentable[3]) //Rentable as met all conditions
+                if (rentable[0] && rentable[1] && rentable[2] && rentable[3]) //Rentable as met all conditions
                 {
                     R.addTemporaryRental(J); //set rental awaiting payment                                    
                     performRefresh(); //Refresh display
                     //Disable button, one sucessful rent for window
                     NewJourneyBtn.IsHitTestVisible = false;
                     NewJourneyBtn.Opacity = 0.5;
-                } else
+                }
+                else
                 { //not rentable
                     String errorMsg = "Not Rentable:";
                     if (!rentable[0]) { errorMsg = errorMsg + " Date Taken!"; } //Check if journey of same date exists in database!
@@ -59,7 +60,8 @@ namespace CarRentalSystem
                     if (!rentable[3]) { errorMsg = errorMsg + " Journey too long!"; } //Journey too long!
                     MessageBox.Show(errorMsg); //WHy not rentable
                 }
-            } else if (!addJourneyWin.getValidity()) { MessageBox.Show("Invalid Data Inputs"); }
+            }
+            else if (!addJourneyWin.getValidity()) { MessageBox.Show("Invalid Data Inputs"); }
 
 
         }
@@ -117,7 +119,13 @@ namespace CarRentalSystem
             JourniesDisplayLvw.Items.Refresh();
 
         }
-        
 
+        //Put dates in a format
+        private void formatDates(String format)
+        {
+            JourniesGridView.Columns[1].DisplayMemberBinding.StringFormat = format;
+            JourniesGridView.Columns[2].DisplayMemberBinding.StringFormat = format;
+            JourniesGridView.Columns[3].DisplayMemberBinding.StringFormat = format;
+        }
     }
 }

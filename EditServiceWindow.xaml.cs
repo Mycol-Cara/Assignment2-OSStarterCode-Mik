@@ -43,13 +43,21 @@ namespace CarRentalSystem
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            saveState = true; //set vehicle to saved before exit!
-            UpdateService(); //Update the vehicle
-            this.Close(); //CLOSE WINDOW!
+            UpdateService(); //Update the service
+            if (validService)
+            {
+                saveState = true; //set service to saved before exit!
+                this.Close(); //CLOSE WINDOW!
+            }
+            else
+            {
+                MessageBox.Show("Error with inputs, please try again!");
+            }
         }
 
         private void UpdateService()
         {
+            validService = true; //start valid
             int sNum;
             int odom;
             DateTime sdate;
@@ -66,7 +74,7 @@ namespace CarRentalSystem
             catch
             {
                 Console.WriteLine("Error reading numeric values!");
-                validService = false; //Due to likely poor data entry
+                validService = false; //Due to likely poor data entry //Invalid
                 return;
             }
 
@@ -77,8 +85,7 @@ namespace CarRentalSystem
             S.setServiceCount(sNum);
             S.setLastServiceDate(sdate);
             S.setDateUpdated(DateTime.Now);
-
-            validService = true;
+           
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)

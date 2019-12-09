@@ -44,13 +44,21 @@ namespace CarRentalSystem
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            saveState = true;
-            UpdateJourney();
-            this.Close();
+            UpdateJourney(); //Update the jounrey
+            if (validJourney)
+            {
+                saveState = true; //set journey to saved before exit!
+                this.Close(); //CLOSE WINDOW!
+            }
+            else
+            {
+                MessageBox.Show("Error with inputs, please try again!");
+            }
         }
 
         private void UpdateJourney()
         {
+            validJourney = true; //start true
             int dt;
             DateTime jdate;
             int day, month, year;
@@ -66,12 +74,12 @@ namespace CarRentalSystem
             catch
             {
                 Console.WriteLine("Error reading numeric values!");
-                validJourney = false; //Due to likely poor data entry
+                validJourney = false; //Due to likely poor data entry //false
                 return;
             }
 
             J = new Journey(dt, jdate, J.getDatecreated(), DateTime.Now, J.getVehicleID(),jPaid); //New journey with all of the information!
-            validJourney = true;
+            
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)

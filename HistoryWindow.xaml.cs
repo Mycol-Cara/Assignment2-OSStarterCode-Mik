@@ -51,7 +51,7 @@ namespace CarRentalSystem
             this.allFuelPurchases = allFuelPurchases;
             this.FPurchases = FuelPurchase.FindFuelPurchases(allFuelPurchases, vehicleID);
 
-            this.DataContext = this; performRefresh(); //Binding
+            this.DataContext = this; formatDates("{0:dd/MM/yyyy}");  performRefresh(); //Binding
         }
         
 
@@ -261,6 +261,7 @@ namespace CarRentalSystem
         //HELPERS
         private void performRefresh()
         {
+           
 
             displayedServices = copyToArrayList(services); //Initialise displayed data 
             displayedJournies = copyToArrayList(journies);
@@ -332,6 +333,18 @@ namespace CarRentalSystem
             return newAL;
         }
 
+        //Put dates in a format
+        private void formatDates(String format)
+        {
+            JourniesGridView.Columns[1].DisplayMemberBinding.StringFormat = format;
+            JourniesGridView.Columns[2].DisplayMemberBinding.StringFormat = format;
+            JourniesGridView.Columns[3].DisplayMemberBinding.StringFormat = format;
+            ServiceGridView.Columns[2].DisplayMemberBinding.StringFormat = format;
+            ServiceGridView.Columns[3].DisplayMemberBinding.StringFormat = format;
+            ServiceGridView.Columns[4].DisplayMemberBinding.StringFormat = format;
+            FuelPurchasesGridView.Columns[2].DisplayMemberBinding.StringFormat = format;
+            FuelPurchasesGridView.Columns[3].DisplayMemberBinding.StringFormat = format;
+        }
         
     }
 }

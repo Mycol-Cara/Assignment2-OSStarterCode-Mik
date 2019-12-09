@@ -32,13 +32,21 @@ namespace CarRentalSystem
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            saveState = true; //set vehicle to saved before exit!
-            UpdateFuel(); //Update the vehicle
-            this.Close(); //CLOSE WINDOW!
+            UpdateFuel(); //Update the fuel purchase
+            if (validFuelPurchase)
+            {
+                saveState = true; //set fuelpurchase to saved before exit!
+                this.Close(); //CLOSE WINDOW!
+            }
+            else
+            {
+                MessageBox.Show("Error with inputs, please try again!");
+            }
         }
 
         private void UpdateFuel()
         {
+            validFuelPurchase = true; //start at true
             int amount;
             double price;
             
@@ -56,7 +64,6 @@ namespace CarRentalSystem
             }
 
             F = new FuelPurchase(amount, price ,DateTime.Now, DateTime.Now, F.getVehicleID()); //New Fuel with all of the information!
-            validFuelPurchase = true;
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)

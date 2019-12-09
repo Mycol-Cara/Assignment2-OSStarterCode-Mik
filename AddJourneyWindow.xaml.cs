@@ -39,13 +39,21 @@ namespace CarRentalSystem
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            saveState = true; //set vehicle to saved before exit!
-            UpdateJourney(); //Update the vehicle
-            this.Close(); //CLOSE WINDOW!
+            UpdateJourney(); //Update the jounrey
+            if (validJourney)
+            {
+                saveState = true; //set journey to saved before exit!
+                this.Close(); //CLOSE WINDOW!
+            }
+            else
+            {
+                MessageBox.Show("Error with inputs, please try again!");
+            }
         }
 
         private void UpdateJourney()
         {
+            validJourney = true;
             int dt;
             DateTime jdate;
             int day, month, year;
@@ -66,7 +74,6 @@ namespace CarRentalSystem
             }
 
             J = new Journey(dt, jdate, DateTime.Now, DateTime.Now, J.getVehicleID(), jPaid); //New journey with all of the information!
-            validJourney = true;
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)

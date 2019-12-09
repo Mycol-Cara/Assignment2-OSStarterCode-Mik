@@ -12,7 +12,7 @@
             <ScrollViewer Margin="0,0,0,0" HorizontalScrollBarVisibility="Visible">
                 <ListView x:Name="DisplayLvw" ItemsSource="{Binding displayedVehicles}" HorizontalAlignment="Left" Height="1000" Margin="0,0,0,0" VerticalAlignment="Top" Width="1500" Background="#FFE2C8C8">
                     <ListView.View>
-                        <GridView>
+                        <GridView x:Name="DisplayGridView">
                             <GridViewColumn DisplayMemberBinding="{Binding vehicleID}" Header="ID" Width="125"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding manufacturer}" Header="Manufacturer" Width="125"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding model}" Header="Model" Width="200"></GridViewColumn>

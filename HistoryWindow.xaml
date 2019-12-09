@@ -12,10 +12,10 @@
             <ScrollViewer Margin="0,0,0,0" HorizontalScrollBarVisibility="Visible">
                 <ListView x:Name="JourniesDisplayLvw" ItemsSource="{Binding displayedJournies}" HorizontalAlignment="Left" Height="1000" Margin="0,0,0,0" VerticalAlignment="Top" Width="1500" Background="PeachPuff">
                     <ListView.View>
-                        <GridView>
+                        <GridView x:Name="JourniesGridView">
                             <GridViewColumn DisplayMemberBinding="{Binding distanceTravelled}" Header="Distance Travelled (Km)" Width="150"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding journeyAt}" Header="Journey At" Width="150"></GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding created}" Header="Created" Width="100"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding created}" Header="Created" Width="100" ></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding updated}" Header="Updated" Width="160"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding paid}" Header="Rent Paid" Width="150"></GridViewColumn>
 
@@ -29,7 +29,7 @@
             <ScrollViewer Margin="0,0,0,0" HorizontalScrollBarVisibility="Visible">
                 <ListView x:Name="ServicesDisplayLvw" ItemsSource="{Binding displayedServices}" HorizontalAlignment="Left" Height="1000" Margin="0,0,0,0" VerticalAlignment="Top" Width="1500" Background="PeachPuff">
                     <ListView.View>
-                        <GridView>
+                        <GridView x:Name="ServiceGridView">
                             <GridViewColumn DisplayMemberBinding="{Binding lastServiceOdometerKm}" Header="Odometer (Km)" Width="125"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding serviceCount}" Header="Service Number" Width="200"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding lastServiceDate}" Header="Service Date" Width="75"></GridViewColumn>
@@ -45,7 +45,7 @@
             <ScrollViewer Margin="0,0,0,0" HorizontalScrollBarVisibility="Visible">
                 <ListView x:Name="FuelPurchasesDisplayLvw" ItemsSource="{Binding displayedFPurchases}" HorizontalAlignment="Left" Height="1000" Margin="0,0,0,0" VerticalAlignment="Top" Width="1500" Background="PeachPuff">
                     <ListView.View>
-                        <GridView>
+                        <GridView x:Name="FuelPurchasesGridView">
                             <GridViewColumn DisplayMemberBinding="{Binding amount}" Header="Amount (L)" Width="125"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding price}" Header="Price ($/L)" Width="200"></GridViewColumn>
                             <GridViewColumn DisplayMemberBinding="{Binding created}" Header="Created" Width="150"></GridViewColumn>

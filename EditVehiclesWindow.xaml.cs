@@ -45,9 +45,16 @@ namespace CarRentalSystem
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            saveState = true; //set vehicle to saved before exit!
             UpdateVehicle(); //Update the vehicle
-            this.Close(); //CLOSE WINDOW!
+            if (validVehicle)
+            {
+                saveState = true; //set vehicle to saved before exit!
+                this.Close(); //CLOSE WINDOW!
+            }
+            else
+            {
+                MessageBox.Show("Error with inputs, please try again!");
+            }
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
@@ -57,6 +64,7 @@ namespace CarRentalSystem
 
         private void UpdateVehicle()
         {
+            validVehicle = true; //start valid
 
             //Read numeric values
             int year = V.getMakeYear();
@@ -71,7 +79,7 @@ namespace CarRentalSystem
             catch
             {
                 Console.WriteLine("Error reading numeric values!");
-                validVehicle = false; //Due to likely poor data entry
+                validVehicle = false; //Due to likely poor data entry //invalidd!
                 return;
             }
 
@@ -84,7 +92,7 @@ namespace CarRentalSystem
             V.setManufacturer(ManufacturerTxt.Text);
             V.setModel(ModelTxt.Text);
             V.setRegistrationNumber(RegistrationTxt.Text);
-            validVehicle = true;
+           
         }
 
         public Vehicle getVehicle()

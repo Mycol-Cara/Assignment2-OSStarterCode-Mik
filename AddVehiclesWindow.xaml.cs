@@ -35,9 +35,15 @@ namespace CarRentalSystem
         
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            saveState = true; //set vehicle to saved before exit!
             UpdateVehicle(); //Update the vehicle
-            this.Close(); //CLOSE WINDOW!
+            if (validVehicle)
+            {
+                saveState = true; //set vehicle to saved before exit!
+                this.Close(); //CLOSE WINDOW!
+            } else
+            {
+                MessageBox.Show("Error with inputs, please try again!");
+            }
         }
 
         private void CancelBtn_Click(object sender, RoutedEventArgs e)
@@ -47,7 +53,9 @@ namespace CarRentalSystem
 
         private void UpdateVehicle()
         {
-            
+            //Assume valid
+            validVehicle = true;
+
             //Read numeric values
             int year = V.getMakeYear();
             float odom = V.getOdometerReading();
@@ -57,9 +65,9 @@ namespace CarRentalSystem
                 year = System.Convert.ToInt32(MakeYearTxt.Text); //Change text entry to integer!
                 odom = (float)System.Convert.ToDecimal(OdometerReadingTxt.Text); //Change text entry to float!
                 capacity = (float)System.Convert.ToDecimal(TankCapacityTxt.Text); //Change text entry to float!
-            } catch { 
+            } catch {
                 Console.WriteLine("Error reading numeric values!");
-                validVehicle = false; //Due to likely poor data entry
+                validVehicle = false; //Due to likely poor data entry Set invalid
                 return; 
             }
 
@@ -72,7 +80,6 @@ namespace CarRentalSystem
             V.setManufacturer(ManufacturerTxt.Text);
             V.setModel(ModelTxt.Text);
             V.setRegistrationNumber(RegistrationTxt.Text);
-            validVehicle = true;
         }
 
         public Vehicle getVehicle()
